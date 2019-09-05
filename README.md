@@ -1,5 +1,5 @@
 # Compressiontron
-Simple program to compress text files using different entropy-based compression algorithms.
+Simple program to compress text files using different [entropy-based compression](https://en.wikipedia.org/wiki/Entropy_encoding) algorithms.
 The project is for a datastructures and algorithms course at the University of Helsinki. 
 
 ## Some links to documentation
