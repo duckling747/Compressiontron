@@ -9,8 +9,7 @@
 * Did some research on how these compression things actually work. 
 * Tried to find a good book with some detailed explanations of different compression algorithms. So far found one. 
 
-Most of the time spent went to designing and deciding on implementation. A lot of consideration went to not have the design be too 
-simple. A nice middle way between "ambitious" and "clear cut" had to be found. 
+Most of the time spent went to designing and deciding on implementation. A lot of consideration went to not have the design be too simple. A nice middle way between "ambitious" and "clear cut" had to be found. 
 
 ## Problems 
 

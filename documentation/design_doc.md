@@ -7,8 +7,7 @@ Decoding (i.e. decompression) is also possible. At the very least two algorithms
 
 The algorithms will be imlemented each in their own respective class and the possible data structures they utilize in their own respective classes. The algorithms, the data structures (utility structures), and whatever disk I/O or text mangling will all also be found in one package for each group. 
 
-The AC algorithm divides an interval into subintervals so that each subinterval represents a probability for a symbol to 
-be found in the respective context. Each interval becomes the next interval to be divided, one for each symbol encoded. The probabilities will be assigned using a model of probabilities that can be either fixed or auto-updating. Using the model and the resulting probabilities the original message can be decoded. Because the model is required for decoding, it will most likely be saved to disk as well with the encoded data. 
+The AC algorithm divides an interval into subintervals so that each subinterval represents a probability for a symbol to be found in the respective context. Each interval becomes the next interval to be divided, one for each symbol encoded. The probabilities will be assigned using a model of probabilities that can be either fixed or auto-updating. Using the model and the resulting probabilities the original message can be decoded. Because the model is required for decoding, it will most likely be saved to disk as well with the encoded data. 
 
 The time complexity for AC (both encode and decode) should be linear (that is O(n)), as the algorithm merely reads the input file, counts (or reads directly) the frequencies for the symbols from the file and then outputs the encoded or decoded message bit by bit based on these frequencies. 
 
@@ -30,7 +29,7 @@ As the emphasis of the course (for which this program is created for) is on the 
 
 # Sources 
 
-Inspiration is drawn especially from the book Introduction to Data Compression, fourth edition, by K. Sayood, and from Wikipedia. 
+Inspiration is drawn especially from the book "Introduction to Data Compression", fourth edition, by K. Sayood, and from Wikipedia. Also the paper "Arithmetic Coding for Data Compression" by Ian H. Witten, Radford M. Neal and John G. Cleary is clearly very helpful for the purposes of this project. 
 
 # Design diagrams
 
