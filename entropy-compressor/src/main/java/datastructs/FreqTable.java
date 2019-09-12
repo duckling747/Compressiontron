@@ -35,7 +35,7 @@ public interface FreqTable {
     /**
      * Returns the cumulative frequency for given character (represented as integer)
      * @param c
-     * @return Cumulative frequencies int array 
+     * @return Cumulative frequency
      */
     public int getCumFreq(int c);
     

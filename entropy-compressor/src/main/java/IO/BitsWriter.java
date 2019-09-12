@@ -1,24 +1,23 @@
 package IO;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public final class BitsWriter implements AutoCloseable {
 
     private int current;
     private int bitsReady;
+    private DataOutputStream os;
 
-    private final OutputStream os;
-
-    public BitsWriter(OutputStream os) {
+    public BitsWriter(DataOutputStream os) {
         this.current = 0;
         this.bitsReady = 0;
         this.os = os;
     }
 
     /**
-     * Stores a bit into a byte (that's represented as an int) until all 8 bits
-     * of it are ready. Then writes it to file.
+     * If a byte is not ready, stores a bit into a bit buffer, else writes the ready
+     * byte into the output stream.
      *
      * @param bit
      * @throws IOException
@@ -33,8 +32,18 @@ public final class BitsWriter implements AutoCloseable {
     }
 
     /**
-     * Write any bits left not yet written, flush the underlying stream and
-     * then close it.
+     * Writes an integer to file as four bytes.
+     *
+     * @param i
+     * @throws IOException
+     */
+    public void writeInt(int i) throws IOException {
+        os.writeInt(i);
+    }
+
+    /**
+     * Write any bits left not yet written, flush the underlying stream and then
+     * close it.
      *
      * @throws IOException
      */
