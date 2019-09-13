@@ -2,7 +2,6 @@ package datastructs;
 
 public class FreqTableSimple implements FreqTable {
 
-    private int sum;
     private int symbolLimit;
     private int[] freqs;
     private int[] cumFreqs;
@@ -10,43 +9,42 @@ public class FreqTableSimple implements FreqTable {
     private static final int MAXFREQ = 16000;
 
     public FreqTableSimple(int symbolLimit) {
+        if (symbolLimit < 2) {
+            throw new IllegalArgumentException("Symbol limit cannot be less than 2");
+        }
         this.symbolLimit = symbolLimit;
         freqs = new int[symbolLimit + 1];
         for (int i = 1; i < freqs.length; i++) {
             freqs[i] = 1;
         }
         cumFreqs = new int[symbolLimit + 1];
-        
-        sum = 0;
     }
 
     @Override
     public int getFreq(int c) {
+        freqRangeCheck(c);
         return freqs[c];
     }
 
     @Override
     public int getTotalSumFreq() {
-        return sum;
+        return cumFreqs[0];
     }
 
     @Override
     public void addFreq(int c) {
+        freqRangeCheck(c);
         freqs[c]++;
-        sum++;
-        if (freqs[0] == MAXFREQ) {
-            int sum = 0;
-            for (int i = symbolLimit; i >= 0; i--) {
+        if (freqs[c] == MAXFREQ) {
+            for (int i = symbolLimit; i > 0; i--) {
                 freqs[i] = (freqs[i] + 1) / 2;
-                cumFreqs[i] = sum;
-                sum += freqs[i];
             }
         }
     }
 
     @Override
     public int getSymbolLimit() {
-        return freqs.length;
+        return symbolLimit;
     }
 
     @Override
@@ -58,13 +56,14 @@ public class FreqTableSimple implements FreqTable {
 
     @Override
     public int getCumFreq(int c) {
+        cumFreqRangeCheck(c);
         return cumFreqs[c];
     }
-    
+
     /**
-     * Implements a binary search for the index of the highest 
-     * cumulative frequency such that it is less than or equal 
-     * to the inputted symbol.
+     * Implements a binary search for the index of the highest cumulative
+     * frequency such that it is less than or equal to the inputted symbol.
+     *
      * @param value
      * @return index
      */
@@ -79,6 +78,18 @@ public class FreqTableSimple implements FreqTable {
             }
         }
         return b;
+    }
+
+    private void cumFreqRangeCheck(int c) {
+        if (c < 0 || c > symbolLimit) {
+            throw new IllegalArgumentException("Out of symbol range");
+        }
+    }
+    
+    private void freqRangeCheck(int c) {
+        if (c < 1 || c > symbolLimit) {
+            throw new IllegalArgumentException("Out of symbol range");
+        }
     }
 
 }

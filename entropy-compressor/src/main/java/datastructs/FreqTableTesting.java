@@ -4,10 +4,15 @@ public class FreqTableTesting extends FreqTableSimple {
 
     public FreqTableTesting(int symbolLimit) {
         super(symbolLimit);
-        for (int i = 1; i < symbolLimit; i++) {
-            super.addFreq(i);
+    }
+    
+    public void setFreqs(int val) {
+        if (val == 1) {
+            
         }
-        super.calcCumFreq();
+        for (int i = 1; i < super.getSymbolLimit(); i++) {
+            
+        }
     }
 
 }

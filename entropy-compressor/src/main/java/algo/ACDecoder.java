@@ -26,6 +26,6 @@ public class ACDecoder extends ACCore {
     }
 
     private int inputBit(BitsReader in) {
-
+        return 0;
     }
 }
