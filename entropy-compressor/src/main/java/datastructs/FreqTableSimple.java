@@ -68,16 +68,17 @@ public class FreqTableSimple implements FreqTable {
      * @return index
      */
     public int findCumFreq(int value) {
-        int a = 1, b = symbolLimit;
-        while (b - a > 1) {
-            int k = (a + b) >>> 1;
-            if (cumFreqs[k] > value) {
-                a = k;
+        int a = 0, b = symbolLimit, z = -1;
+        while (a <= b) {
+            int k = (a + b) / 2;
+            if (cumFreqs[k] <= value) {
+                b = k - 1;
+                z = k;
             } else {
-                b = k;
+                a = k + 1;
             }
         }
-        return b;
+        return z;
     }
 
     private void cumFreqRangeCheck(int c) {

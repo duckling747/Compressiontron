@@ -66,7 +66,7 @@ public class ACCompress {
      * @throws IOException
      */
     private void writeFrequencies(BitsWriter bitswriter) throws IOException {
-        for (int i = 0; i < SYMBOLLIMIT; i++) {
+        for (int i = 1; i <= SYMBOLLIMIT; i++) {
             bitswriter.writeInt(freqs.getFreq(i));
         }
     }
