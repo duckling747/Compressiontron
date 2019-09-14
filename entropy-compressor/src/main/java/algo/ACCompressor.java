@@ -10,19 +10,18 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ACCompress {
+public class ACCompressor extends ACCore {
 
     private ACEncoder encoder;
     private FreqTable freqs;
-    private String filename;
+    private String filenameIn;
+    private String filenameOut;
 
-    private final static int SYMBOLLIMIT = 1000;
-    // private final static int EOF = SYMBOLLIMIT + 1;
-
-    public ACCompress(String fname) {
+    public ACCompressor(String fnameIn, String fnameOut) {
         freqs = new FreqTableSimple(SYMBOLLIMIT);
         encoder = new ACEncoder(freqs);
-        filename = fname;
+        filenameIn = fnameIn;
+        filenameOut = fnameOut;
     }
 
     /**
@@ -30,14 +29,14 @@ public class ACCompress {
      * before the actual encoded message.
      */
     public void compress() {
-        try (BufferedReader in = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn))) {
             readFileSetFreqs(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try (BufferedReader in = new BufferedReader(new FileReader(filename));
+        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
                 BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
-                        new BufferedOutputStream(new FileOutputStream("AC-compressed"))))) {
+                        new BufferedOutputStream(new FileOutputStream(filenameOut))))) {
             writeFrequencies(bitswriter);
             writeEncodedText(in, bitswriter);
         } catch (IOException e) {
@@ -84,6 +83,14 @@ public class ACCompress {
             encoder.encodeSymbol((char) c, bitswriter);
         }
         encoder.finalize(bitswriter);
+    }
+    
+    /**
+     * Return this compressor's frequency table. Mostly for unit testing purposes.
+     * @return 
+     */
+    public FreqTable getFreqs() {
+        return this.freqs;
     }
 
 }

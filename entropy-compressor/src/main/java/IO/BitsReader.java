@@ -49,10 +49,10 @@ public final class BitsReader implements AutoCloseable {
 
     /**
      * Closes the underlying stream.
-     * @throws Exception 
+     * @throws IOException 
      */
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         in.close();
     }
 

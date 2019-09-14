@@ -39,4 +39,14 @@ public interface FreqTable {
      */
     public int getCumFreq(int c);
     
+    /**
+     * Returns the character with the highest cumulative frequency in the table that 
+     * is less than or equal to a given value.
+     * @param value
+     * @return a character represented as an int
+     */
+    public int findCumFreq(int value);
+    
+    public void setFreq(int symbol, int freq);
+    
 }

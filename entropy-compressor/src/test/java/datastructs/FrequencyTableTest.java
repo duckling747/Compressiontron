@@ -111,18 +111,18 @@ public class FrequencyTableTest {
             f.addFreq(2);
         }
         f.calcCumFreq();
-        assertThat(((FreqTableSimple) f).findCumFreq(7), is(equalTo(2)));
+        assertThat(f.findCumFreq(7), is(equalTo(2)));
     }
 
     @Test
     public void findCumFreqCorrect2() {
         f.calcCumFreq();
-        assertThat(((FreqTableSimple) f).findCumFreq(5), is(equalTo(0)));
-        assertThat(((FreqTableSimple) f).findCumFreq(4), is(equalTo(1)));
-        assertThat(((FreqTableSimple) f).findCumFreq(3), is(equalTo(2)));
-        assertThat(((FreqTableSimple) f).findCumFreq(2), is(equalTo(3)));
-        assertThat(((FreqTableSimple) f).findCumFreq(1), is(equalTo(4)));
-        assertThat(((FreqTableSimple) f).findCumFreq(0), is(equalTo(5)));
+        assertThat((f).findCumFreq(5), is(equalTo(0)));
+        assertThat((f).findCumFreq(4), is(equalTo(1)));
+        assertThat((f).findCumFreq(3), is(equalTo(2)));
+        assertThat((f).findCumFreq(2), is(equalTo(3)));
+        assertThat((f).findCumFreq(1), is(equalTo(4)));
+        assertThat((f).findCumFreq(0), is(equalTo(5)));
     }
 
 }

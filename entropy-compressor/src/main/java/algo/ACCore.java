@@ -7,4 +7,6 @@ public class ACCore {
     protected static final long FIRSTQUARTER = (TOPVALUE / 4 + 1);
     protected static final long HALF = (2 * FIRSTQUARTER);
     protected static final long THIRDQUARTER = (3 * FIRSTQUARTER);
+    protected static final int SYMBOLLIMIT = 1000;
+
 }

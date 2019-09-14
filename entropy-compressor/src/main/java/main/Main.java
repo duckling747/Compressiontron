@@ -1,12 +1,15 @@
 package main;
 
-import algo.ACCompress;
+import algo.ACCompressor;
+import algo.ACDecompressor;
 
 public class Main {
 
     public static void main(String[] args) {
-        ACCompress compress = new ACCompress("Lorem_ipsum.txt");
-        compress.compress();
+        ACCompressor compressor = new ACCompressor("lorem_short.txt", "compr.bits");
+        compressor.compress();
+        ACDecompressor decom = new ACDecompressor("compr.bits", "decompressed.txt");
+        decom.decompress();
     }
 
 }

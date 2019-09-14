@@ -35,11 +35,7 @@ public class FreqTableSimple implements FreqTable {
     public void addFreq(int c) {
         freqRangeCheck(c);
         freqs[c]++;
-        if (freqs[c] == MAXFREQ) {
-            for (int i = symbolLimit; i > 0; i--) {
-                freqs[i] = (freqs[i] + 1) / 2;
-            }
-        }
+        maxFreqCheck(c);
     }
 
     @Override
@@ -67,10 +63,11 @@ public class FreqTableSimple implements FreqTable {
      * @param value
      * @return index
      */
+    @Override
     public int findCumFreq(int value) {
         int a = 0, b = symbolLimit, z = -1;
         while (a <= b) {
-            int k = (a + b) / 2;
+            int k = (a + b) >>> 1;
             if (cumFreqs[k] <= value) {
                 b = k - 1;
                 z = k;
@@ -86,10 +83,30 @@ public class FreqTableSimple implements FreqTable {
             throw new IllegalArgumentException("Out of symbol range");
         }
     }
-    
+
     private void freqRangeCheck(int c) {
         if (c < 1 || c > symbolLimit) {
             throw new IllegalArgumentException("Out of symbol range");
+        }
+    }
+
+    @Override
+    public void setFreq(int c, int freq) {
+        freqRangeCheck(c);
+        freqs[c] = freq;
+        maxFreqCheck(c);
+    }
+
+    /**
+     * Checks whether a frequency is over a specified limit. If the frequency at the given
+     *  index is over the {@code MAXFREQ} limit, then halve all the frequencies in the table. 
+     * @param c 
+     */
+    private void maxFreqCheck(int c) {
+        if (freqs[c] >= MAXFREQ) {
+            for (int i = symbolLimit; i > 0; i--) {
+                freqs[i] = (freqs[i] + 1) / 2;
+            }
         }
     }
 
