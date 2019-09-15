@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -17,8 +17,8 @@ public final class BitsReader implements AutoCloseable {
 
     /**
      * Reads a bit from the stream. Uses a byte buffer to store each byte from
-     * the stream and returns the next bit from the byte on call. Returns -1 if 
-     * end of stream is reached. 
+     * the stream and returns the next bit from the byte on call. Returns -1 if
+     * end of stream is reached.
      *
      * @return
      * @throws IOException
@@ -36,10 +36,11 @@ public final class BitsReader implements AutoCloseable {
     }
 
     /**
-     * Reads an int from the stream. Reads an integer as four bytes from the 
+     * Reads an int from the stream. Reads an integer as four bytes from the
      * stream and returns it.
+     *
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     public int readInt() throws IOException {
         return in.readInt();
@@ -47,7 +48,8 @@ public final class BitsReader implements AutoCloseable {
 
     /**
      * Closes the underlying stream.
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     @Override
     public void close() throws IOException {
@@ -61,7 +63,5 @@ public final class BitsReader implements AutoCloseable {
     public int getBitsLeft() {
         return bitsLeft;
     }
-    
-    
 
 }

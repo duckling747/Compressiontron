@@ -1,5 +1,7 @@
-package IO;
+package Io;
 
+import io.BitsWriter;
+import io.BitsReader;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;

@@ -1,6 +1,6 @@
 package algo;
 
-import IO.BitsReader;
+import io.BitsReader;
 import datastructs.FreqTable;
 import java.io.IOException;
 
@@ -31,8 +31,10 @@ public class ACDecoder extends ACCore {
         long range = high - low + 1;
         long cum = (((value - low) + 1) * freqs.getCumFreq(0) - 1) / range;
         int symbol = freqs.findCumFreq((int) cum);
-        high = low + (range * freqs.getCumFreq(symbol - 1)) / freqs.getCumFreq(0) - 1;
-        low = low + (range * freqs.getCumFreq(symbol)) / freqs.getCumFreq(0);
+        high = low + (range * freqs.getCumFreq(symbol - 1))
+                / freqs.getCumFreq(0) - 1;
+        low = low + (range * freqs.getCumFreq(symbol))
+                / freqs.getCumFreq(0);
         while (true) {
             if (high < HALF) {
             } else if (low >= HALF) {

@@ -1,6 +1,6 @@
 package algo;
 
-import IO.BitsWriter;
+import io.BitsWriter;
 import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import java.io.BufferedOutputStream;
@@ -29,17 +29,21 @@ public class ACCompressor extends ACCore {
      * before the actual encoded message.
      */
     public void compress() {
-        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn))) {
+        try (BufferedReader in = new BufferedReader(
+                new FileReader(filenameIn))) {
             readFileSetFreqs(in);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
                 BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
-                        new BufferedOutputStream(new FileOutputStream(filenameOut))))) {
+                        new BufferedOutputStream(
+                                new FileOutputStream(filenameOut))))) {
             writeFrequencies(bitswriter);
             writeEncodedText(in, bitswriter);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -77,17 +81,20 @@ public class ACCompressor extends ACCore {
      * @param bitswriter
      * @throws IOException
      */
-    private void writeEncodedText(BufferedReader in, BitsWriter bitswriter) throws IOException {
+    private void writeEncodedText(BufferedReader in, BitsWriter bitswriter)
+            throws IOException {
         int c;
         while ((c = in.read()) != -1) {
             encoder.encodeSymbol(c, bitswriter);
         }
         encoder.finalize(bitswriter);
     }
-    
+
     /**
-     * Return this compressor's frequency table. Mostly for unit testing purposes.
-     * @return 
+     * Return this compressor's frequency table. Mostly for unit testing
+     * purposes.
+     *
+     * @return
      */
     public FreqTable getFreqs() {
         return this.freqs;

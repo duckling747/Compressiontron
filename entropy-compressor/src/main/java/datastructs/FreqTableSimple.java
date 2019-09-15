@@ -10,7 +10,8 @@ public class FreqTableSimple implements FreqTable {
 
     public FreqTableSimple(int symbolLimit) {
         if (symbolLimit < 2) {
-            throw new IllegalArgumentException("Symbol limit cannot be less than 2");
+            throw new IllegalArgumentException("Symbol limit cannot "
+                    + "be less than 2");
         }
         this.symbolLimit = symbolLimit;
         freqs = new int[symbolLimit + 1];
@@ -98,9 +99,11 @@ public class FreqTableSimple implements FreqTable {
     }
 
     /**
-     * Checks whether a frequency is over a specified limit. If the frequency at the given
-     *  index is over the {@code MAXFREQ} limit, then halve all the frequencies in the table. 
-     * @param c 
+     * Checks whether a frequency is over a specified limit. If the frequency at
+     * the given index is over the {@code MAXFREQ} limit, then halve all the
+     * frequencies in the table.
+     *
+     * @param c
      */
     private void maxFreqCheck(int c) {
         if (freqs[c] >= MAXFREQ) {

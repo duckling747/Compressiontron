@@ -1,1 +1,4 @@
 /entropy-compressor/target/
+/entropy-compressor/compr.bits
+/entropy-compressor/decompressed.txt
+/entropy-compressor/lorem_short.txt

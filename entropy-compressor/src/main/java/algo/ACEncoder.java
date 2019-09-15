@@ -1,6 +1,6 @@
 package algo;
 
-import IO.BitsWriter;
+import io.BitsWriter;
 import datastructs.FreqTable;
 import java.io.IOException;
 
@@ -26,8 +26,10 @@ public class ACEncoder extends ACCore {
      */
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         long range = high - low + 1;
-        high = low + (range * freqs.getCumFreq(symbol - 1)) / freqs.getCumFreq(0) - 1;
-        low = low + (range * freqs.getCumFreq(symbol)) / freqs.getCumFreq(0);
+        high = low + (range * freqs.getCumFreq(symbol - 1))
+                / freqs.getCumFreq(0) - 1;
+        low = low + (range * freqs.getCumFreq(symbol))
+                / freqs.getCumFreq(0);
         while (true) {
             if (high < HALF) {
                 bitPlusFollow(0, out);
@@ -63,7 +65,7 @@ public class ACEncoder extends ACCore {
     }
 
     /**
-     * Output bits to follow opposite bits. 
+     * Output bits to follow opposite bits.
      *
      * @param bit
      * @param out

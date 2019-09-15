@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -63,6 +63,5 @@ public final class BitsWriter implements AutoCloseable {
     public int getBitsReady() {
         return bitsReady;
     }
-    
-    
+
 }

@@ -1,6 +1,6 @@
 package algo;
 
-import IO.BitsReader;
+import io.BitsReader;
 import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import java.io.BufferedInputStream;
@@ -27,11 +27,13 @@ public class ACDecompressor extends ACCore {
         try (BitsReader in = new BitsReader(
                 new DataInputStream(new BufferedInputStream(
                         new FileInputStream(filenameIn))));
-                BufferedWriter out = new BufferedWriter(new FileWriter(filenameOut))) {
+                BufferedWriter out = new BufferedWriter(
+                        new FileWriter(filenameOut))) {
             readFreqsCreateTable(in);
             decoder = new ACDecoder(freqs, in);
             writeDecodedText(in, out);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -49,10 +51,12 @@ public class ACDecompressor extends ACCore {
             out.write(symbol);
         }
     }
-    
+
     /**
-     * Return this decompressor's frequency table. Mostly for unit testing purposes.
-     * @return 
+     * Return this decompressor's frequency table. Mostly for unit testing
+     * purposes.
+     *
+     * @return
      */
     public FreqTable getFreqTable() {
         return this.freqs;
