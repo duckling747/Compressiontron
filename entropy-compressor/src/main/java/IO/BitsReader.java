@@ -6,13 +6,13 @@ import java.io.IOException;
 public final class BitsReader implements AutoCloseable {
 
     private DataInputStream in;
-    private int nextByte;
+    private int buffer;
     private int bitsLeft;
 
     public BitsReader(DataInputStream in) {
         this.in = in;
         this.bitsLeft = 0;
-        this.nextByte = 0;
+        this.buffer = 0;
     }
 
     /**
@@ -25,16 +25,14 @@ public final class BitsReader implements AutoCloseable {
      */
     public int read() throws IOException {
         if (bitsLeft == 0) {
-            nextByte = in.read();
-            if (nextByte == -1) {
+            buffer = in.read();
+            if (buffer == -1) {
                 return -1;
             }
             bitsLeft = 8;
         }
-        int bit = nextByte & 1;
-        nextByte >>= 1;
         bitsLeft--;
-        return bit;
+        return (buffer >>> bitsLeft) & 1;
     }
 
     /**
@@ -55,5 +53,15 @@ public final class BitsReader implements AutoCloseable {
     public void close() throws IOException {
         in.close();
     }
+
+    public int getBuffer() {
+        return buffer;
+    }
+
+    public int getBitsLeft() {
+        return bitsLeft;
+    }
+    
+    
 
 }

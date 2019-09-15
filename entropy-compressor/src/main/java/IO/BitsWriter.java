@@ -5,28 +5,28 @@ import java.io.IOException;
 
 public final class BitsWriter implements AutoCloseable {
 
-    private int current;
+    private int buffer;
     private int bitsReady;
     private DataOutputStream os;
 
     public BitsWriter(DataOutputStream os) {
-        this.current = 0;
+        this.buffer = 0;
         this.bitsReady = 0;
         this.os = os;
     }
 
     /**
-     * If a byte is not ready, stores a bit into a bit buffer, else writes the ready
-     * byte into the output stream.
+     * If a byte is not ready, stores a bit into a bit buffer, else writes the
+     * ready byte into the output stream.
      *
      * @param bit
      * @throws IOException
      */
     public void write(int bit) throws IOException {
-        current = (current << 1) | bit;
+        buffer = (buffer << 1) | bit;
         if (++bitsReady == 8) {
-            os.write(bit);
-            current = 0;
+            os.write(buffer);
+            buffer = 0;
             bitsReady = 0;
         }
     }
@@ -49,10 +49,20 @@ public final class BitsWriter implements AutoCloseable {
      */
     @Override
     public void close() throws IOException {
-        while (bitsReady > 0) {
+        /*while (bitsReady > 0) {
             write(0);
-        }
+        }*/
         os.flush();
         os.close();
     }
+
+    public int getBuffer() {
+        return buffer;
+    }
+
+    public int getBitsReady() {
+        return bitsReady;
+    }
+    
+    
 }

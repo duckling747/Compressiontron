@@ -8,7 +8,7 @@ public class ACDecoder extends ACCore {
 
     private FreqTable freqs;
     private long low, high;
-    private int value;
+    private long value;
 
     public ACDecoder(FreqTable f, BitsReader in) throws IOException {
         value = 0;

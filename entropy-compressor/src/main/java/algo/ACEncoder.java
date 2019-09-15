@@ -24,10 +24,10 @@ public class ACEncoder extends ACCore {
      * @param out
      * @throws IOException
      */
-    public void encodeSymbol(char symbol, BitsWriter out) throws IOException {
+    public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         long range = high - low + 1;
-        high = low + (range * freqs.getCumFreq((int) symbol - 1)) / freqs.getCumFreq(0) - 1;
-        low = low + (range * freqs.getCumFreq((int) symbol)) / freqs.getCumFreq(0);
+        high = low + (range * freqs.getCumFreq(symbol - 1)) / freqs.getCumFreq(0) - 1;
+        low = low + (range * freqs.getCumFreq(symbol)) / freqs.getCumFreq(0);
         while (true) {
             if (high < HALF) {
                 bitPlusFollow(0, out);
@@ -63,7 +63,7 @@ public class ACEncoder extends ACCore {
     }
 
     /**
-     * Output bits and following opposite bits
+     * Output bits to follow opposite bits. 
      *
      * @param bit
      * @param out

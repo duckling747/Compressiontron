@@ -80,7 +80,7 @@ public class ACCompressor extends ACCore {
     private void writeEncodedText(BufferedReader in, BitsWriter bitswriter) throws IOException {
         int c;
         while ((c = in.read()) != -1) {
-            encoder.encodeSymbol((char) c, bitswriter);
+            encoder.encodeSymbol(c, bitswriter);
         }
         encoder.finalize(bitswriter);
     }
