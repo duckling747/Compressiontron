@@ -6,14 +6,39 @@ public class HuffmanTree {
 
         private Node left;
         private Node right;
-        private long frequency;
+        private int frequency;
+        private int symbol;
 
-        private Node(long f) {
-            this.frequency = f;
+        private Node(int symbol, int freq) {
+            this.symbol = symbol;
+            this.frequency = freq;
         }
     }
+    
+    private Node current;
+    
 
     public HuffmanTree(FreqTable f) {
+        
+    }
+    
+    public void addNode(int leftFreq, int rightFreq, int sumFreq) {
+        
+    }
+    
+    public void move(int bit) {
+        
+    }
+    
+    public boolean currentHasNoNeighbors() {
+        return true;
+    }
+    
+    public int getCurrentSymbol() {
+        return 1;
+    }
+    
+    public void reset() {
         
     }
 }

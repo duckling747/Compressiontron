@@ -13,14 +13,15 @@ public class HuffmanEncoder {
         this.tree = new HuffmanTree(freqs);
     }
 
-    public void encode() {
+    public HuffmanTree encode() {
         for (int i = 1; i < freqs.getSymbolLimit(); i += 2) {
             int leftFreq = freqs.getFreq(i);
             int rightFreq = freqs.getFreq(i + 1);
             if (leftFreq < rightFreq) {
                 throw new AssertionError("Frequencies are not in order from highest to lowest");
             }
-            tree.addNode(i, i + 1, leftFreq + rightFreq);
+            tree.addNode(leftFreq, rightFreq, leftFreq + rightFreq);
         }
+        return tree;
     }
 }
