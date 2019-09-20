@@ -11,3 +11,4 @@ Date     | time | synopsis |
 2019/09/14 | 6h | Writing tests, working out bugs |
 2019/09/15 | 6h | A couple of hours of vain research on how to get different maven plugins working on Java 11, plus writing some fixes, tests and documentation for the week |
 2019/09/19 | 1h | Setting up classes and things for Huffman |
+2019/09/20 | 2h | Create more classes, work on Huffman coding |
