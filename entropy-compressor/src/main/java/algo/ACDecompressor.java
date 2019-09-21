@@ -57,7 +57,7 @@ public class ACDecompressor extends ACCore {
      *
      * @return
      */
-    public FreqTable getFreqTable() {
+    public FreqTableCumulative getFreqTable() {
         return this.freqs;
     }
 }

@@ -18,7 +18,7 @@ public class HuffmanTree implements Comparable<HuffmanTree> {
         this.frequency = left.frequency + right.frequency;
     }
 
-    public boolean currentHasNoChildren() {
+    public boolean hasNoChildren() {
         return this.leftChild == null && this.rightChild == null;
     }
 

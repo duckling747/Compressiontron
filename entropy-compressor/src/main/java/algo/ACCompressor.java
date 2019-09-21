@@ -96,7 +96,7 @@ public class ACCompressor extends ACCore {
      *
      * @return
      */
-    public FreqTable getFreqs() {
+    public FreqTableCumulative getFreqs() {
         return this.freqs;
     }
 

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class FrequencyTableTest {
 
-    private FreqTable f;
+    private FreqTableCumulative f;
     private int symbolLimit;
 
     @Before
