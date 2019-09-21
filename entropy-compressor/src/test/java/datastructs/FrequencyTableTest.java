@@ -14,7 +14,7 @@ public class FrequencyTableTest {
     @Before
     public void init() {
         symbolLimit = 5;
-        f = new FreqTableSimple(symbolLimit);
+        f = new FreqTableCumulative(symbolLimit);
     }
 
     @Test(expected = IllegalArgumentException.class)

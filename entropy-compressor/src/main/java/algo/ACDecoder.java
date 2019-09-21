@@ -2,15 +2,16 @@ package algo;
 
 import io.BitsReader;
 import datastructs.FreqTable;
+import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
 public class ACDecoder extends ACCore {
 
-    private FreqTable freqs;
+    private FreqTableCumulative freqs;
     private long low, high;
     private long value;
 
-    public ACDecoder(FreqTable f, BitsReader in) throws IOException {
+    public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
         for (int i = 1; i <= CODEVALUEBITS; i++) {
             value = 2 * value + inputBit(in);

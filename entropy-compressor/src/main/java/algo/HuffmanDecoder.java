@@ -11,12 +11,16 @@ public class HuffmanDecoder {
     }
 
     public int decode(int bit) {
+        /*
         int symbol = -1;
         tree.move(bit);
-        if (tree.currentHasNoNeighbors()) {
+        if (tree.currentHasNoChildren()) {
             symbol = tree.getCurrentSymbol();
             tree.reset();
         }
         return symbol;
+        */
+        
+        return -1;
     }
 }

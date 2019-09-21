@@ -2,7 +2,7 @@ package algo;
 
 import io.BitsWriter;
 import datastructs.FreqTable;
-import datastructs.FreqTableSimple;
+import datastructs.FreqTableCumulative;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,12 +13,12 @@ import java.io.IOException;
 public class ACCompressor extends ACCore {
 
     private ACEncoder encoder;
-    private FreqTable freqs;
+    private FreqTableCumulative freqs;
     private String filenameIn;
     private String filenameOut;
 
     public ACCompressor(String fnameIn, String fnameOut) {
-        freqs = new FreqTableSimple(SYMBOLLIMIT);
+        freqs = new FreqTableCumulative(SYMBOLLIMIT);
         encoder = new ACEncoder(freqs);
         filenameIn = fnameIn;
         filenameOut = fnameOut;

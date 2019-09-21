@@ -31,29 +31,6 @@ public interface FreqTable {
      */
     public int getSymbolLimit();
 
-    /**
-     * Calculates the cumulative frequencies.
-     */
-    public void calcCumFreq();
-
-    /**
-     * Returns the cumulative frequency for given character (represented as
-     * integer)
-     *
-     * @param c
-     * @return Cumulative frequency
-     */
-    public int getCumFreq(int c);
-
-    /**
-     * Returns the character with the highest cumulative frequency in the table
-     * that is less than or equal to a given value.
-     *
-     * @param value
-     * @return a character represented as an int
-     */
-    public int findCumFreq(int value);
-
     public void setFreq(int symbol, int freq);
 
 }

@@ -1,16 +1,16 @@
 package algo;
 
 import io.BitsWriter;
-import datastructs.FreqTable;
+import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
 public class ACEncoder extends ACCore {
 
-    private FreqTable freqs;
+    private FreqTableCumulative freqs;
     private long low, high;
     private long bitsToFollow;
 
-    public ACEncoder(FreqTable f) {
+    public ACEncoder(FreqTableCumulative f) {
         freqs = f;
         low = 0;
         high = TOPVALUE;

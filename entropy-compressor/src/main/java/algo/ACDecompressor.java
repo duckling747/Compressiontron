@@ -2,7 +2,7 @@ package algo;
 
 import io.BitsReader;
 import datastructs.FreqTable;
-import datastructs.FreqTableSimple;
+import datastructs.FreqTableCumulative;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ACDecompressor extends ACCore {
 
-    private FreqTable freqs;
+    private FreqTableCumulative freqs;
     private ACDecoder decoder;
     private String filenameIn;
     private String filenameOut;
@@ -20,7 +20,7 @@ public class ACDecompressor extends ACCore {
     public ACDecompressor(String fnameIn, String fnameOut) {
         filenameIn = fnameIn;
         filenameOut = fnameOut;
-        freqs = new FreqTableSimple(SYMBOLLIMIT);
+        freqs = new FreqTableCumulative(SYMBOLLIMIT);
     }
 
     public void decompress() {
@@ -32,8 +32,7 @@ public class ACDecompressor extends ACCore {
             readFreqsCreateTable(in);
             decoder = new ACDecoder(freqs, in);
             writeDecodedText(in, out);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

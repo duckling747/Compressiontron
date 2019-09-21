@@ -1,44 +1,29 @@
 package datastructs;
 
-public class HuffmanTree {
+public class HuffmanTree implements Comparable<HuffmanTree> {
 
-    private static class Node {
+    @Override
+    public int compareTo(HuffmanTree o) {
+        return this.frequency < o.frequency ? -1 : this.frequency > o.frequency ? 1 : 0;
+    }
 
-        private Node left;
-        private Node right;
-        private int frequency;
-        private int symbol;
+    private HuffmanTree leftChild, rightChild;
+    private final int frequency;
 
-        private Node(int symbol, int freq) {
-            this.symbol = symbol;
-            this.frequency = freq;
-        }
+    public HuffmanTree(int frequency) {
+        this.frequency = frequency;
     }
-    
-    private Node current;
-    
 
-    public HuffmanTree(FreqTable f) {
-        
+    public HuffmanTree(HuffmanTree left, HuffmanTree right) {
+        this.frequency = left.frequency + right.frequency;
     }
-    
-    public void addNode(int leftFreq, int rightFreq, int sumFreq) {
-        
+
+    public boolean currentHasNoChildren() {
+        return this.leftChild == null && this.rightChild == null;
     }
-    
-    public void move(int bit) {
-        
+
+    public boolean isLeaf() {
+        return false;
     }
-    
-    public boolean currentHasNoNeighbors() {
-        return true;
-    }
-    
-    public int getCurrentSymbol() {
-        return 1;
-    }
-    
-    public void reset() {
-        
-    }
+
 }
