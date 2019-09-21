@@ -27,4 +27,12 @@ public class HuffmanEncoder extends HuffmanCore {
             out.write(c);
         }
     }
+    
+    /**
+     * Returns the lookup table used by this encoder. Mostly for unit testing.
+     * @return lookup table
+     */
+    public LookUpTable getLookupTable() {
+        return this.look;
+    }
 }

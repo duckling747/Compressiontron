@@ -5,8 +5,6 @@ public class HuffmanTree implements Comparable<HuffmanTree> {
     private final HuffmanTree leftChild, rightChild;
     private final int frequency;
 
-    protected StringBuilder prefix = new StringBuilder();
-
     public HuffmanTree(int frequency) {
         this.frequency = frequency;
         this.leftChild = null;
@@ -17,10 +15,6 @@ public class HuffmanTree implements Comparable<HuffmanTree> {
         this.frequency = left.frequency + right.frequency;
         this.leftChild = left;
         this.rightChild = right;
-        this.leftChild.prefix.append(this.prefix)
-                .append('0');
-        this.rightChild.prefix.append(this.prefix)
-                .append('1');
     }
 
     public boolean isLeaf() {

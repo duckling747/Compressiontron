@@ -19,7 +19,7 @@ public class HuffmanLeaf extends HuffmanTree {
     }
     
     public String getCode() {
-        return super.prefix.toString();
+        return "";
     }
 
 }

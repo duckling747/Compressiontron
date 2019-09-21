@@ -13,11 +13,10 @@ public class LookUpTable {
     }
 
     private void constructBreadthWide(HuffmanTree root) {
-        HuffmanTree current = root;
         Queue<HuffmanTree> q = new ArrayDeque<>();
         q.offer(root);
         while (!q.isEmpty()) {
-            current = q.poll();
+            HuffmanTree current = q.poll();
             if (current.isLeaf()) {
                 arr[((HuffmanLeaf) current).getSymbol()] = ((HuffmanLeaf) current).getCode();
             } else {
