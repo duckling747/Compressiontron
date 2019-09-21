@@ -1,7 +1,6 @@
 package algo;
 
 import io.BitsReader;
-import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
 import java.io.IOException;
 

@@ -13,5 +13,13 @@ public class HuffmanLeaf extends HuffmanTree {
     public boolean isLeaf() {
         return true;
     }
+    
+    public int getSymbol() {
+        return symbol;
+    }
+    
+    public String getCode() {
+        return super.prefix.toString();
+    }
 
 }

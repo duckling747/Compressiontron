@@ -1,19 +1,30 @@
 package algo;
 
 import datastructs.FreqTable;
-import datastructs.HuffmanTree;
+import datastructs.LookUpTable;
+import io.BitsWriter;
+import java.io.IOException;
 
-public class HuffmanEncoder {
+public class HuffmanEncoder extends HuffmanCore {
 
-    private FreqTable freqs;
-    private HuffmanTree tree;
+    private final LookUpTable look;
 
-    public HuffmanEncoder(FreqTable f) {
-        this.freqs = f;
-        this.tree = new HuffmanTree(freqs);
+    /**
+     * Construct a Huffman tree if not yet instantiated and create a lookup
+     * table for quick access to the resulting Huffman codes.
+     *
+     * @param frequencyTable
+     */
+    public HuffmanEncoder(FreqTable frequencyTable) {
+        if (super.root == null) {
+            super.genTree(frequencyTable);
+        }
+        look = new LookUpTable(frequencyTable.getSymbolLimit(), root);
     }
 
-    public HuffmanTree encode() {
-        return tree;
+    public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
+        for (int c : look.getCode(symbol).toCharArray()) {
+            out.write(c);
+        }
     }
 }
