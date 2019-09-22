@@ -13,3 +13,4 @@ Date     | time | synopsis |
 2019/09/19 | 1h | Setting up classes and things for Huffman |
 2019/09/20 | 2h | Create more classes, work on Huffman coding |
 2019/09/21 | 7h | Work on Huffman some more, figure out at least one way how to make it work without getting confused by optimizations |
+2019/09/22 | 8h | Work on Huffman, refractor code |
