@@ -8,6 +8,13 @@ import java.nio.file.Paths;
 
 public class Main {
 
+    /**
+     * Global maximum amount of symbols supported. Most datastructs are inteded
+     * to work with characters as ints, so this effectively translates to the
+     * character range.
+     */
+    public final static int SYMBOLLIMIT = 1000;
+
     public static void main(String[] args) {
 
         ACCompressor compressor = new ACCompressor("lorem_short.txt", "compr.bits");

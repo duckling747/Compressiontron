@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import main.Main;
 
 public class ACCompressor extends ACCore {
 
@@ -18,7 +19,7 @@ public class ACCompressor extends ACCore {
     private String filenameOut;
 
     public ACCompressor(String fnameIn, String fnameOut) {
-        freqs = new FreqTableCumulative(SYMBOLLIMIT);
+        freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
         encoder = new ACEncoder(freqs);
         filenameIn = fnameIn;
         filenameOut = fnameOut;
@@ -69,7 +70,7 @@ public class ACCompressor extends ACCore {
      * @throws IOException
      */
     private void writeFrequencies(BitsWriter bitswriter) throws IOException {
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
+        for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
             bitswriter.writeInt(freqs.getFreq(i));
         }
     }

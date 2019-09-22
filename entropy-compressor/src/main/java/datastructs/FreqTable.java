@@ -14,7 +14,7 @@ public abstract class FreqTable {
         }
         freqs = new int[symbolLimit + 1];
         for (int i = 1; i <= symbolLimit; i++) {
-            setFreq(i, 1);
+            freqs[i] = 1;
         }
         this.symbolLimit = symbolLimit;
     }

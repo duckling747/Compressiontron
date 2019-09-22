@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import main.Main;
 
 public class ACDecompressor extends ACCore {
 
@@ -20,7 +21,7 @@ public class ACDecompressor extends ACCore {
     public ACDecompressor(String fnameIn, String fnameOut) {
         filenameIn = fnameIn;
         filenameOut = fnameOut;
-        freqs = new FreqTableCumulative(SYMBOLLIMIT);
+        freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
     }
 
     public void decompress() {
@@ -38,7 +39,7 @@ public class ACDecompressor extends ACCore {
     }
 
     private void readFreqsCreateTable(BitsReader in) throws IOException {
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
+        for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
             freqs.setFreq(i, in.readInt());
         }
         freqs.calcCumFreq();
