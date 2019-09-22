@@ -1,38 +1,46 @@
 package algo;
 
 import datastructs.FreqTable;
-import datastructs.LookUpTable;
+import datastructs.LookupTable;
 import io.BitsWriter;
 import java.io.IOException;
 
 public class HuffmanEncoder extends HuffmanCore {
 
-    private final LookUpTable look;
+    private LookupTable table;
 
     /**
-     * Construct a Huffman tree if not yet instantiated and create a lookup
-     * table for quick access to the resulting Huffman codes.
+     * Construct a Huffman tree if not yet constructed and use it to get the
+     * Huffman codes for the table. Construct a Huffman tree to get the codes
+     * for the individual symbols, then use it to create a lookup table, and
+     * finally the tree can be discarded.
      *
      * @param frequencyTable
      */
     public HuffmanEncoder(FreqTable frequencyTable) {
-        if (super.root == null) {
-            super.genTree(frequencyTable);
+        if (root == null) {
+            genTree(frequencyTable);
         }
-        look = new LookUpTable(frequencyTable.getSymbolLimit(), root);
+        table = new LookupTable(root, frequencyTable.getSymbolLimit() + 1);
+        root = null;
     }
 
+    /**
+     * Encode a given symbol and write it to stream one bit at a time.
+     *
+     * @param symbol
+     * @param out
+     * @throws IOException
+     */
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
-        for (int c : look.getCode(symbol).toCharArray()) {
+        String code = table.getCode(symbol);
+        for (int c : code.toCharArray()) {
             out.write(c);
         }
     }
-    
-    /**
-     * Returns the lookup table used by this encoder. Mostly for unit testing.
-     * @return lookup table
-     */
-    public LookUpTable getLookupTable() {
-        return this.look;
+
+    public LookupTable getTable() {
+        return table;
     }
+
 }

@@ -12,11 +12,12 @@ public class HuffmanCore {
     /**
      * Create a Huffman tree containing the Huffman codes using a priority
      * queue.
-     * @param frequencyTable 
+     *
+     * @param frequencyTable
      */
-    protected void genTree(FreqTable frequencyTable) {
+    protected final void genTree(FreqTable frequencyTable) {
         PriorityQueue<HuffmanTree> q = new PriorityQueue<>();
-        for (int i = 1; i < frequencyTable.getSymbolLimit(); i++) {
+        for (int i = 1; i <= frequencyTable.getSymbolLimit(); i++) {
             q.offer(new HuffmanLeaf(i, frequencyTable.getFreq(i)));
         }
         while (q.size() > 1) {
@@ -24,6 +25,5 @@ public class HuffmanCore {
             q.offer(branch);
         }
         root = q.poll();
-        q = null;
     }
 }
