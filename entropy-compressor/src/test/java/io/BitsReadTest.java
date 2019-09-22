@@ -1,4 +1,4 @@
-package Io;
+package io;
 
 import io.BitsWriter;
 import io.BitsReader;

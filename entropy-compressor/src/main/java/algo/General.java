@@ -5,17 +5,22 @@ import datastructs.HuffmanLeaf;
 import datastructs.HuffmanTree;
 import java.util.PriorityQueue;
 
-public class HuffmanCore {
+public class General {
 
-    protected HuffmanTree root;
+    protected static final int CODEVALUEBITS = 32;
+    protected static final long TOPVALUE = (1L << CODEVALUEBITS) - 1;
+    protected static final long FIRSTQUARTER = (TOPVALUE / 4 + 1);
+    protected static final long HALF = (2 * FIRSTQUARTER);
+    protected static final long THIRDQUARTER = (3 * FIRSTQUARTER);
 
     /**
      * Create a Huffman tree containing the Huffman codes using a priority
      * queue.
      *
      * @param frequencyTable
+     * @return Huffman tree
      */
-    protected final void genTree(FreqTable frequencyTable) {
+    protected final static HuffmanTree genTree(FreqTable frequencyTable) {
         PriorityQueue<HuffmanTree> q = new PriorityQueue<>();
         for (int i = 1; i <= frequencyTable.getSymbolLimit(); i++) {
             q.offer(new HuffmanLeaf(i, frequencyTable.getFreq(i)));
@@ -24,6 +29,7 @@ public class HuffmanCore {
             HuffmanTree branch = new HuffmanTree(q.poll(), q.poll());
             q.offer(branch);
         }
-        root = q.poll();
+        return q.poll();
     }
+
 }

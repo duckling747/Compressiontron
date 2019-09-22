@@ -4,7 +4,7 @@ import io.BitsWriter;
 import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
-public class ACEncoder extends ACCore {
+public class ACEncoder extends General implements Encoder {
 
     private FreqTableCumulative freqs;
     private long low, high;
@@ -24,6 +24,7 @@ public class ACEncoder extends ACCore {
      * @param out
      * @throws IOException
      */
+    @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         long range = high - low + 1;
         high = low + (range * freqs.getCumFreq(symbol - 1))

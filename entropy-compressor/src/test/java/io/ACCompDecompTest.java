@@ -1,4 +1,4 @@
-package Io;
+package io;
 
 import algo.ACCompressor;
 import algo.ACDecompressor;
@@ -70,7 +70,7 @@ public class ACCompDecompTest {
                     is(equalTo(decom.getFreqTable().findCumFreq(i))));
         }
     }
-/*
+    /*
     @Test
     public void filesIdentical1() throws IOException, URISyntaxException {
         File fCompressed = new File(temp.getRoot(), "test.txt");
@@ -86,5 +86,5 @@ public class ACCompDecompTest {
         String text2 = Files.readString(Paths.get(fDecompressed.getPath()));
         assertThat(text2, is(equalTo(text1)));
     }
-*/
+     */
 }

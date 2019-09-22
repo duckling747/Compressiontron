@@ -1,4 +1,4 @@
-package Io;
+package io;
 
 import io.BitsWriter;
 import java.io.BufferedInputStream;
@@ -39,8 +39,9 @@ public class BitsWriteTest {
         assertThat(writer.getBitsReady(), is(equalTo(1)));
         writer.write(0);
         assertThat(writer.getBitsReady(), is(equalTo(2)));
-        writer.close();
         assertThat(writer.getBuffer(), is(equalTo(2)));
+        writer.close();
+        assertThat(writer.getBuffer(), is(equalTo(0)));
     }
 
     @Test
@@ -60,9 +61,11 @@ public class BitsWriteTest {
         for (int i = 0; i < 7; i++) {
             writer.write(1);
         }
-        writer.close();
         assertThat(Integer.bitCount(writer.getBuffer()), is(7));
         assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(25));
+        writer.close();
+        assertThat(Integer.bitCount(writer.getBuffer()), is(0));
+        assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(32));
     }
 
     @Test
@@ -72,9 +75,11 @@ public class BitsWriteTest {
             writer.write(1);
         }
         writer.write(0);
-        writer.close();
         assertThat(Integer.bitCount(writer.getBuffer()), is(3));
         assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(26));
+        writer.close();
+        assertThat(Integer.bitCount(writer.getBuffer()), is(0));
+        assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(32));
     }
 
     @Test

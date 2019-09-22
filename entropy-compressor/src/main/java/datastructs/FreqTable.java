@@ -5,7 +5,7 @@ public abstract class FreqTable {
     protected int[] freqs;
     protected int symbolLimit;
 
-    private static final int MAXFREQ = 16000;
+    private static final int MAXFREQ = 255;
 
     public FreqTable(int symbolLimit) {
         if (symbolLimit < 2) {

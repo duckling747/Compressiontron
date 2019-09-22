@@ -40,6 +40,15 @@ public final class BitsWriter implements AutoCloseable {
     public void writeInt(int i) throws IOException {
         os.writeInt(i);
     }
+    
+    /**
+     * Writes a byte to file.
+     * @param i
+     * @throws IOException 
+     */
+    public void writeByte(int i) throws IOException {
+        os.writeByte(i);
+    }
 
     /**
      * Write any bits left not yet written, flush the underlying stream and then
@@ -49,9 +58,9 @@ public final class BitsWriter implements AutoCloseable {
      */
     @Override
     public void close() throws IOException {
-        /*while (bitsReady > 0) {
+        while (bitsReady > 0) {
             write(0);
-        }*/
+        }
         os.flush();
         os.close();
     }

@@ -1,7 +1,6 @@
 package algo;
 
 import io.BitsWriter;
-import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -11,67 +10,33 @@ import java.io.FileReader;
 import java.io.IOException;
 import main.Main;
 
-public class ACCompressor extends ACCore {
+public class ACCompressor extends Compressor {
 
     private ACEncoder encoder;
-    private FreqTableCumulative freqs;
-    private String filenameIn;
-    private String filenameOut;
 
     public ACCompressor(String fnameIn, String fnameOut) {
         freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
-        encoder = new ACEncoder(freqs);
+        encoder = new ACEncoder((FreqTableCumulative) freqs);
         filenameIn = fnameIn;
         filenameOut = fnameOut;
+        readFileSetFreqs();
+        ((FreqTableCumulative) freqs).calcCumFreq();
     }
 
     /**
      * Produces the encoded file so that it contains the symbol frequencies
      * before the actual encoded message.
      */
+    @Override
     public void compress() {
-        try (BufferedReader in = new BufferedReader(
-                new FileReader(filenameIn))) {
-            readFileSetFreqs(in);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
         try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
                 BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
                         new BufferedOutputStream(
                                 new FileOutputStream(filenameOut))))) {
             writeFrequencies(bitswriter);
             writeEncodedText(in, bitswriter);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Reads a text file and sets up the frequency table.
-     *
-     * @param in
-     * @throws IOException
-     */
-    private void readFileSetFreqs(BufferedReader in) throws IOException {
-        int c;
-        while ((c = in.read()) != -1) {
-            freqs.addFreq(c);
-        }
-        freqs.calcCumFreq();
-    }
-
-    /**
-     * Writes the frequencies from the table to file.
-     *
-     * @param bitswriter
-     * @throws IOException
-     */
-    private void writeFrequencies(BitsWriter bitswriter) throws IOException {
-        for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
-            bitswriter.writeInt(freqs.getFreq(i));
         }
     }
 
@@ -98,7 +63,7 @@ public class ACCompressor extends ACCore {
      * @return
      */
     public FreqTableCumulative getFreqs() {
-        return this.freqs;
+        return (FreqTableCumulative) freqs;
     }
 
 }

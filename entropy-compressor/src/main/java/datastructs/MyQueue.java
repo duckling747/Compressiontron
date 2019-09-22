@@ -4,22 +4,23 @@ public interface MyQueue<T> {
 
     /**
      * Add an item to the tail of the queue.
-     * @param item 
+     *
+     * @param item
      */
     public void push(T item);
-    
+
     /**
      * Removes and returns the head of this queue.
-     * @return 
+     *
+     * @return
      */
     public T pop();
-    
+
     /**
      * Returns the size of this queue.
-     * @return 
+     *
+     * @return
      */
     public int size();
-    
-    
 
 }

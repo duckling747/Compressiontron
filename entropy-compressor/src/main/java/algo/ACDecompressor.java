@@ -11,12 +11,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import main.Main;
 
-public class ACDecompressor extends ACCore {
+public class ACDecompressor extends Decompressor {
 
-    private FreqTableCumulative freqs;
     private ACDecoder decoder;
-    private String filenameIn;
-    private String filenameOut;
 
     public ACDecompressor(String fnameIn, String fnameOut) {
         filenameIn = fnameIn;
@@ -24,6 +21,7 @@ public class ACDecompressor extends ACCore {
         freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
     }
 
+    @Override
     public void decompress() {
         try (BitsReader in = new BitsReader(
                 new DataInputStream(new BufferedInputStream(
@@ -31,7 +29,7 @@ public class ACDecompressor extends ACCore {
                 BufferedWriter out = new BufferedWriter(
                         new FileWriter(filenameOut))) {
             readFreqsCreateTable(in);
-            decoder = new ACDecoder(freqs, in);
+            decoder = new ACDecoder((FreqTableCumulative) freqs, in);
             writeDecodedText(in, out);
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,7 +40,7 @@ public class ACDecompressor extends ACCore {
         for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
             freqs.setFreq(i, in.readInt());
         }
-        freqs.calcCumFreq();
+        ((FreqTableCumulative) freqs).calcCumFreq();
     }
 
     private void writeDecodedText(BitsReader in, BufferedWriter out) throws IOException {
@@ -59,6 +57,6 @@ public class ACDecompressor extends ACCore {
      * @return
      */
     public FreqTableCumulative getFreqTable() {
-        return this.freqs;
+        return (FreqTableCumulative) freqs;
     }
 }

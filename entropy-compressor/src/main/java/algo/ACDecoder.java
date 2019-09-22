@@ -4,7 +4,7 @@ import io.BitsReader;
 import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
-public class ACDecoder extends ACCore {
+public class ACDecoder extends General implements Decoder {
 
     private FreqTableCumulative freqs;
     private long low, high;
@@ -27,6 +27,7 @@ public class ACDecoder extends ACCore {
      * @return
      * @throws IOException
      */
+    @Override
     public int decodeSymbol(BitsReader in) throws IOException {
         long range = high - low + 1;
         long cum = (((value - low) + 1) * freqs.getCumFreq(0) - 1) / range;

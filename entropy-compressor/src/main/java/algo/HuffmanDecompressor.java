@@ -1,5 +1,6 @@
 package algo;
 
-public class HuffmanDecompressor {
+public class HuffmanDecompressor extends Decompressor {
+
     
 }

@@ -11,7 +11,7 @@ public class Main {
     /**
      * Global maximum amount of symbols supported. Most datastructs are inteded
      * to work with characters as ints, so this effectively translates to the
-     * character range.
+     * character range 0-SYMBOLLIMIT (inclusive).
      */
     public final static int SYMBOLLIMIT = 1000;
 
