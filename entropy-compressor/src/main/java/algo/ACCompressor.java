@@ -19,41 +19,25 @@ public class ACCompressor extends Compressor {
         encoder = new ACEncoder((FreqTableCumulative) freqs);
         filenameIn = fnameIn;
         filenameOut = fnameOut;
-        readFileSetFreqs();
+        super.readFileSetFreqs();
         ((FreqTableCumulative) freqs).calcCumFreq();
-    }
-
-    /**
-     * Produces the encoded file so that it contains the symbol frequencies
-     * before the actual encoded message.
-     */
-    @Override
-    public void compress() {
-        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
-                BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
-                        new BufferedOutputStream(
-                                new FileOutputStream(filenameOut))))) {
-            writeFrequencies(bitswriter);
-            writeEncodedText(in, bitswriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * Writes the encoded message to file.
      *
      * @param in
-     * @param bitswriter
+     * @param out
      * @throws IOException
      */
-    private void writeEncodedText(BufferedReader in, BitsWriter bitswriter)
+    @Override
+    protected void writeEncodedText(BufferedReader in, BitsWriter out)
             throws IOException {
         int c;
         while ((c = in.read()) != -1) {
-            encoder.encodeSymbol(c, bitswriter);
+            encoder.encodeSymbol(c, out);
         }
-        encoder.finalize(bitswriter);
+        encoder.finalize(out);
     }
 
     /**
@@ -62,6 +46,7 @@ public class ACCompressor extends Compressor {
      *
      * @return
      */
+    @Override
     public FreqTableCumulative getFreqs() {
         return (FreqTableCumulative) freqs;
     }

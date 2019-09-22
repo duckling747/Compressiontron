@@ -32,22 +32,13 @@ public final class BitsWriter implements AutoCloseable {
     }
 
     /**
-     * Writes an integer to file as four bytes.
+     * Writes a byte to file.
      *
      * @param i
      * @throws IOException
      */
-    public void writeInt(int i) throws IOException {
-        os.writeInt(i);
-    }
-    
-    /**
-     * Writes a byte to file.
-     * @param i
-     * @throws IOException 
-     */
     public void writeByte(int i) throws IOException {
-        os.writeByte(i);
+        os.write(i);
     }
 
     /**

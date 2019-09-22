@@ -36,23 +36,13 @@ public final class BitsReader implements AutoCloseable {
     }
 
     /**
-     * Reads an int from the stream. Reads an integer as four bytes from the
-     * stream and returns it.
+     * Reads a byte from the stream.
      *
-     * @return
+     * @return the byte as an integer
      * @throws IOException
      */
-    public int readInt() throws IOException {
-        return in.readInt();
-    }
-    
-    /**
-     * Reads a byte from the stream.
-     * @return the byte as an integer
-     * @throws IOException 
-     */
     public int readByte() throws IOException {
-        return in.readByte();
+        return in.read();
     }
 
     /**

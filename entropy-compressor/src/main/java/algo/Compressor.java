@@ -2,7 +2,10 @@ package algo;
 
 import datastructs.FreqTable;
 import io.BitsWriter;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import main.Main;
@@ -13,15 +16,36 @@ public abstract class Compressor extends General {
     protected String filenameOut;
     protected FreqTable freqs;
 
-    public abstract void compress();
+    /**
+     * Compress the given file. This method is intended to be the top level
+     * compression method, and is hence public.
+     */
+    public void compress() {
+        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
+                BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream(filenameOut))))) {
+            writeFrequencies(bitswriter);
+            writeEncodedText(in, bitswriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    protected abstract void writeEncodedText(BufferedReader in, BitsWriter bitswriter)
-            throws IOException;
+    /**
+     * Write the encoded text into the underlying stream.
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    protected abstract void writeEncodedText(BufferedReader in,
+            BitsWriter out) throws IOException;
 
     /**
      * Reads a text file and sets up the frequency table.
      */
-    protected final void readFileSetFreqs() {
+    protected void readFileSetFreqs() {
         try (BufferedReader in = new BufferedReader(
                 new FileReader(filenameIn))) {
             int c;
@@ -39,9 +63,14 @@ public abstract class Compressor extends General {
      * @param bitswriter
      * @throws IOException
      */
-    protected final void writeFrequencies(BitsWriter bitswriter) throws IOException {
+    private void writeFrequencies(BitsWriter bitswriter)
+            throws IOException {
         for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
             bitswriter.writeByte(freqs.getFreq(i));
         }
+    }
+
+    public FreqTable getFreqs() {
+        return freqs;
     }
 }

@@ -51,7 +51,7 @@ public class FreqTableCumulative extends FreqTable {
         return z;
     }
 
-    protected void cumFreqRangeCheck(int c) {
+    private void cumFreqRangeCheck(int c) {
         if (c < 0 || c > symbolLimit) {
             throw new IllegalArgumentException("Out of symbol range");
         }

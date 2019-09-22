@@ -69,7 +69,7 @@ public abstract class FreqTable {
         maxFreqCheck(c);
     }
 
-    protected void freqRangeCheck(int c) {
+    private void freqRangeCheck(int c) {
         if (c < 1 || c > symbolLimit) {
             throw new IllegalArgumentException("Out of symbol range");
         }

@@ -38,7 +38,7 @@ public class ACDecompressor extends Decompressor {
 
     private void readFreqsCreateTable(BitsReader in) throws IOException {
         for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
-            freqs.setFreq(i, in.readInt());
+            freqs.setFreq(i, in.readByte());
         }
         ((FreqTableCumulative) freqs).calcCumFreq();
     }
