@@ -39,7 +39,7 @@ public class HuffmanEncoder extends General implements Encoder {
         }
     }
 
-    public LookupTable getTable() {
+    public LookupTable getLookupTable() {
         return table;
     }
 

@@ -2,11 +2,7 @@ package algo;
 
 import io.BitsWriter;
 import datastructs.FreqTableCumulative;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import main.Main;
 

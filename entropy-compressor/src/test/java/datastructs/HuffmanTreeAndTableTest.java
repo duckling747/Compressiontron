@@ -21,7 +21,7 @@ public class HuffmanTreeAndTableTest {
         f.setFreq('d' - 'a' + 1, 2);
         f.setFreq('e' - 'a' + 1, 100);
         HuffmanEncoder enc1 = new HuffmanEncoder(f);
-        LookupTable l = enc1.getTable();
+        LookupTable l = enc1.getLookupTable();
         assertThat(l.getCode('a' - 'a' + 1), is("111"));
         assertThat(l.getCode('b' - 'a' + 1), is("1101"));
         assertThat(l.getCode('c' - 'a' + 1), is("10"));
@@ -39,7 +39,7 @@ public class HuffmanTreeAndTableTest {
         f.setFreq('e' - 'a' + 1, 4);
         f.setFreq('g' - 'a' + 1, 8);
         HuffmanEncoder enc1 = new HuffmanEncoder(f);
-        LookupTable l = enc1.getTable();
+        LookupTable l = enc1.getLookupTable();
         assertThat(l.getCode('g' - 'a' + 1), is("011"));
         assertThat(l.getCode('d' - 'a' + 1), is("001"));
         assertThat(l.getCode('c' - 'a' + 1), is("0100"));

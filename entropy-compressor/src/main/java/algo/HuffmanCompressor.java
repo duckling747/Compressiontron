@@ -26,5 +26,9 @@ public class HuffmanCompressor extends Compressor {
             encoder.encodeSymbol(c, out);
         }
     }
+    
+    public FreqTable getTable() {
+        return this.freqs;
+    }
 
 }
