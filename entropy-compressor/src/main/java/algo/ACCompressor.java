@@ -10,11 +10,12 @@ public class ACCompressor extends Compressor {
 
     private ACEncoder encoder;
 
-    public ACCompressor(String fnameIn, String fnameOut) {
+    public ACCompressor(String fnameIn, String fnameOutCompression, String fnameOutFrequencies) {
         freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
         encoder = new ACEncoder((FreqTableCumulative) freqs);
         filenameIn = fnameIn;
-        filenameOut = fnameOut;
+        filenameOutCompressed = fnameOutCompression;
+        filenameOutFreqs = fnameOutFrequencies;
         super.readFileSetFreqs();
         ((FreqTableCumulative) freqs).calcCumFreq();
     }

@@ -11,11 +11,12 @@ public class HuffmanCompressor extends Compressor {
 
     private HuffmanEncoder encoder;
 
-    public HuffmanCompressor(String fileIn, String fileOut) {
+    public HuffmanCompressor(String fileIn, String fileOutCompression, String fileOutFrequencies) {
         freqs = new FreqTableSimple(Main.SYMBOLLIMIT);
         encoder = new HuffmanEncoder(freqs);
         filenameIn = fileIn;
-        filenameOut = fileOut;
+        filenameOutCompressed = fileOutCompression;
+        filenameOutFreqs = fileOutFrequencies;
         super.readFileSetFreqs();
     }
 

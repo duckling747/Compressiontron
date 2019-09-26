@@ -14,8 +14,9 @@ public class ACDecompressor extends Decompressor {
 
     private ACDecoder decoder;
 
-    public ACDecompressor(String fnameIn, String fnameOut) {
-        filenameIn = fnameIn;
+    public ACDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut) {
+        filenameInCompression = fnameInCompression;
+        filenameInFrequencies = fnameInFrequencies;
         filenameOut = fnameOut;
         freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
     }
@@ -24,11 +25,20 @@ public class ACDecompressor extends Decompressor {
     public void decompress() {
         try (BitsReader in = new BitsReader(
                 new DataInputStream(new BufferedInputStream(
-                        new FileInputStream(filenameIn))));
-                DataOutputStream out = new DataOutputStream(
-                        new FileOutputStream(filenameOut))) {
+                        new FileInputStream(filenameInFrequencies))))) {
             readFreqsCreateTable(in);
             decoder = new ACDecoder((FreqTableCumulative) freqs, in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (decoder == null) {
+            throw new IllegalStateException("the decoder is null");
+        }
+        try (BitsReader in = new BitsReader(
+                new DataInputStream(new BufferedInputStream(
+                        new FileInputStream(filenameInCompression))));
+                DataOutputStream out = new DataOutputStream(
+                        new FileOutputStream(filenameOut))) {
             writeDecodedText(in, out);
         } catch (IOException e) {
             e.printStackTrace();

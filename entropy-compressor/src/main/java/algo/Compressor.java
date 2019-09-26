@@ -15,19 +15,27 @@ import main.Main;
 public abstract class Compressor extends General {
 
     protected String filenameIn;
-    protected String filenameOut;
+    protected String filenameOutCompressed;
+    protected String filenameOutFreqs;
     protected FreqTable freqs;
 
     /**
      * Compress the given file. This method is intended to be the top level
-     * compression method, and is hence public.
+     * compression method, and is hence public. The frequencies are stored in
+     * one file, the compressed message in another. 
      */
     public void compress() {
+        try (BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream(filenameOutFreqs))))) {
+            writeFrequencies(bitswriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (DataInputStream in = new DataInputStream(new FileInputStream(filenameIn));
                 BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
                         new BufferedOutputStream(
-                                new FileOutputStream(filenameOut))))) {
-            writeFrequencies(bitswriter);
+                                new FileOutputStream(filenameOutCompressed))))) {
             writeEncodedText(in, bitswriter);
         } catch (IOException e) {
             e.printStackTrace();

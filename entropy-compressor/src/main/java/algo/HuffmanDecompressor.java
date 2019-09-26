@@ -15,8 +15,9 @@ public class HuffmanDecompressor extends Decompressor {
 
     private HuffmanDecoder decoder;
 
-    public HuffmanDecompressor(String fnameIn, String fnameOut) {
-        filenameIn = fnameIn;
+    public HuffmanDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut) {
+        filenameInCompression = fnameInCompression;
+        filenameInFrequencies = fnameInFrequencies;
         filenameOut = fnameOut;
         freqs = new FreqTableSimple(Main.SYMBOLLIMIT);
 
@@ -25,12 +26,20 @@ public class HuffmanDecompressor extends Decompressor {
     @Override
     public void decompress() {
         try (BitsReader in = new BitsReader(
-                new DataInputStream(new BufferedInputStream(
-                        new FileInputStream(filenameIn))));
-                BufferedWriter out = new BufferedWriter(
-                        new FileWriter(filenameOut))) {
+                new DataInputStream(new FileInputStream(filenameInFrequencies)))) {
             readFileCreateFreqTable(in);
             decoder = new HuffmanDecoder(freqs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (decoder == null) {
+            throw new IllegalStateException("decoder is null");
+        }
+        try (BitsReader in = new BitsReader(
+                new DataInputStream(new BufferedInputStream(
+                        new FileInputStream(filenameInCompression))));
+                BufferedWriter out = new BufferedWriter(
+                        new FileWriter(filenameOut))) {
             writeDecodedText(in, out);
         } catch (IOException e) {
             e.printStackTrace();

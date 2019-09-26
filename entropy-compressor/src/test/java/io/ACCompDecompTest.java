@@ -4,9 +4,7 @@ import algo.ACCompressor;
 import algo.ACDecompressor;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import static main.Main.SYMBOLLIMIT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,8 +19,6 @@ public class ACCompDecompTest {
     private ACCompressor compr;
     private ACDecompressor decom;
 
-    private final static int SYMBOLLIMIT = 1000;
-
     @Before
     public void init() {
     }
@@ -32,21 +28,24 @@ public class ACCompDecompTest {
 
     @Test
     public void compressorStoresFile() throws IOException {
-        File f = new File(temp.getRoot(), "test.txt");
+        File fCompression = new File(temp.getRoot(), "testCompression.txt");
+        File fFreqs = new File(temp.getRoot(), "testFreqs.txt");
         compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
-                f.getPath());
+                fCompression.getPath(), fFreqs.getPath());
         compr.compress();
-        assertTrue(f.exists());
+        assertTrue(fFreqs.exists());
+        assertTrue(fCompression.exists());
     }
 
     @Test
     public void decompressorRetrievesFreqs() {
         File fCompressed = new File(temp.getRoot(), "test.txt");
+        File fFreqs = new File(temp.getRoot(), "testFreqs.txt");
         compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
-                fCompressed.getPath());
+                fCompressed.getPath(), fFreqs.getPath());
         compr.compress();
         File fDecompressed = new File(temp.getRoot(), "decompressed.txt");
-        decom = new ACDecompressor(fCompressed.getPath(),
+        decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
                 fDecompressed.getPath());
         decom.decompress();
         for (int i = 1; i <= SYMBOLLIMIT; i++) {
@@ -58,11 +57,13 @@ public class ACCompDecompTest {
     @Test
     public void findFreqsRetrievesSame() {
         File fCompressed = new File(temp.getRoot(), "test.txt");
+        File fFreqs = new File(temp.getRoot(), "test.txt");
+
         compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
-                fCompressed.getPath());
+                fCompressed.getPath(), fFreqs.getPath());
         compr.compress();
         File fDecompressed = new File(temp.getRoot(), "decompressed.txt");
-        decom = new ACDecompressor(fCompressed.getPath(),
+        decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
                 fDecompressed.getPath());
         decom.decompress();
         for (int i = 1; i <= SYMBOLLIMIT; i++) {
