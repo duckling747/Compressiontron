@@ -3,10 +3,10 @@ package algo;
 import io.BitsReader;
 import datastructs.FreqTableCumulative;
 import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import main.Main;
 
@@ -25,8 +25,8 @@ public class ACDecompressor extends Decompressor {
         try (BitsReader in = new BitsReader(
                 new DataInputStream(new BufferedInputStream(
                         new FileInputStream(filenameIn))));
-                BufferedWriter out = new BufferedWriter(
-                        new FileWriter(filenameOut))) {
+                DataOutputStream out = new DataOutputStream(
+                        new FileOutputStream(filenameOut))) {
             readFreqsCreateTable(in);
             decoder = new ACDecoder((FreqTableCumulative) freqs, in);
             writeDecodedText(in, out);
@@ -42,7 +42,7 @@ public class ACDecompressor extends Decompressor {
         ((FreqTableCumulative) freqs).calcCumFreq();
     }
 
-    private void writeDecodedText(BitsReader in, BufferedWriter out) throws IOException {
+    private void writeDecodedText(BitsReader in, DataOutputStream out) throws IOException {
         int symbol;
         while ((symbol = decoder.decodeSymbol(in)) != -1) {
             out.write(symbol);

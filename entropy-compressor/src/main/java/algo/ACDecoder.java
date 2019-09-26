@@ -61,6 +61,6 @@ public class ACDecoder extends General implements Decoder {
     }
 
     private int inputBit(BitsReader in) throws IOException {
-        return in.read();
+        return in.readBit();
     }
 }

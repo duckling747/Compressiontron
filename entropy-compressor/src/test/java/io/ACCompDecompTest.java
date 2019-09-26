@@ -72,7 +72,7 @@ public class ACCompDecompTest {
     }
     /*
     @Test
-    public void filesIdentical1() throws IOException, URISyntaxException {
+    public void filesIdentical() throws IOException, URISyntaxException {
         File fCompressed = new File(temp.getRoot(), "test.txt");
         compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
                 fCompressed.getPath());

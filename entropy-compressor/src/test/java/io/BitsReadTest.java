@@ -30,14 +30,14 @@ public class BitsReadTest {
         writer = new BitsWriter(new DataOutputStream(
                 new BufferedOutputStream(new FileOutputStream(f.getPath()))));
         for (int i = 0; i < 8; i++) {
-            writer.write(1);
+            writer.writeBit(1);
         }
         for (int i = 0; i < 8; i++) {
-            writer.write(0);
+            writer.writeBit(0);
         }
         for (int i = 0; i < 4; i++) {
-            writer.write(0);
-            writer.write(1);
+            writer.writeBit(0);
+            writer.writeBit(1);
         }
         writer.close();
         reader = new BitsReader(new DataInputStream(
@@ -55,15 +55,15 @@ public class BitsReadTest {
 
     @Test
     public void readerBufferSane2() throws IOException {
-        reader.read();
+        reader.readBit();
         assertThat(reader.getBitsLeft(), is(7));
         reader.close();
     }
 
     @Test
     public void readerBufferSane3() throws IOException {
-        reader.read();
-        reader.read();
+        reader.readBit();
+        reader.readBit();
         assertThat(reader.getBitsLeft(), is(6));
         reader.close();
     }
@@ -71,7 +71,7 @@ public class BitsReadTest {
     @Test
     public void readerBufferSane4() throws IOException {
         for (int i = 0; i < 8; i++) {
-            reader.read();
+            reader.readBit();
         }
         assertThat(reader.getBitsLeft(), is(0));
         reader.close();
@@ -79,7 +79,7 @@ public class BitsReadTest {
 
     @Test
     public void readerReadsBitsCorrect1() throws IOException {
-        int i = reader.read();
+        int i = reader.readBit();
         assertThat(Integer.numberOfLeadingZeros(i), is(31));
         assertThat(Integer.numberOfTrailingZeros(i), is(0));
         reader.close();
@@ -88,14 +88,14 @@ public class BitsReadTest {
     @Test
     public void readerReadsBitsCorrect2() throws IOException {
         for (int i = 0; i < 8; i++) {
-            assertThat(reader.read(), is(1));
+            assertThat(reader.readBit(), is(1));
         }
         for (int i = 0; i < 8; i++) {
-            assertThat(reader.read(), is(0));
+            assertThat(reader.readBit(), is(0));
         }
         for (int i = 0; i < 4; i++) {
-            assertThat(reader.read(), is(0));
-            assertThat(reader.read(), is(1));
+            assertThat(reader.readBit(), is(0));
+            assertThat(reader.readBit(), is(1));
         }
         reader.close();
     }
@@ -103,7 +103,7 @@ public class BitsReadTest {
     @Test
     public void endOfFileReachable() throws IOException {
         int c;
-        while ((c = reader.read()) != -1);
+        while ((c = reader.readBit()) != -1);
         reader.close();
         assertTrue(true);
     }

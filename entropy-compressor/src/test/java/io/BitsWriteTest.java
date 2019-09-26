@@ -35,9 +35,9 @@ public class BitsWriteTest {
     @Test
     public void writerBufferSane1() throws IOException {
         assertThat(writer.getBitsReady(), is(equalTo(0)));
-        writer.write(1);
+        writer.writeBit(1);
         assertThat(writer.getBitsReady(), is(equalTo(1)));
-        writer.write(0);
+        writer.writeBit(0);
         assertThat(writer.getBitsReady(), is(equalTo(2)));
         assertThat(writer.getBuffer(), is(equalTo(2)));
         writer.close();
@@ -47,7 +47,7 @@ public class BitsWriteTest {
     @Test
     public void writerBufferSane2() throws IOException {
         for (int i = 0; i < 8; i++) {
-            writer.write(1);
+            writer.writeBit(1);
         }
         writer.close();
         assertThat(writer.getBuffer(), is(equalTo(0)));
@@ -59,7 +59,7 @@ public class BitsWriteTest {
     @Test
     public void writerBufferSane3() throws IOException {
         for (int i = 0; i < 7; i++) {
-            writer.write(1);
+            writer.writeBit(1);
         }
         assertThat(Integer.bitCount(writer.getBuffer()), is(7));
         assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(25));
@@ -71,10 +71,10 @@ public class BitsWriteTest {
     @Test
     public void writerBufferSane4() throws IOException {
         for (int i = 0; i < 3; i++) {
-            writer.write(0);
-            writer.write(1);
+            writer.writeBit(0);
+            writer.writeBit(1);
         }
-        writer.write(0);
+        writer.writeBit(0);
         assertThat(Integer.bitCount(writer.getBuffer()), is(3));
         assertThat(Integer.numberOfLeadingZeros(writer.getBuffer()), is(26));
         writer.close();
@@ -85,8 +85,8 @@ public class BitsWriteTest {
     @Test
     public void writerWritesBitsCorrect1() throws IOException {
         for (int i = 0; i < 4; i++) {
-            writer.write(0);
-            writer.write(1);
+            writer.writeBit(0);
+            writer.writeBit(1);
         }
         writer.close();
         DataInputStream read = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
@@ -100,7 +100,7 @@ public class BitsWriteTest {
     @Test
     public void writerWritesBitsCorrect2() throws IOException {
         for (int i = 0; i < 8; i++) {
-            writer.write(1);
+            writer.writeBit(1);
         }
         writer.close();
         DataInputStream read = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
@@ -114,7 +114,7 @@ public class BitsWriteTest {
     @Test
     public void writerWritesBitsCorrect3() throws IOException {
         for (int i = 0; i < 8; i++) {
-            writer.write(0);
+            writer.writeBit(0);
         }
         writer.close();
         DataInputStream read = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));

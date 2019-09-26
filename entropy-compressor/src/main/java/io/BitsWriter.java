@@ -22,7 +22,7 @@ public final class BitsWriter implements AutoCloseable {
      * @param bit
      * @throws IOException
      */
-    public void write(int bit) throws IOException {
+    public void writeBit(int bit) throws IOException {
         buffer = (buffer << 1) | bit;
         if (++bitsReady == 8) {
             os.write(buffer);
@@ -34,11 +34,13 @@ public final class BitsWriter implements AutoCloseable {
     /**
      * Writes a byte to file.
      *
-     * @param i
+     * @param value
      * @throws IOException
      */
-    public void writeByte(int i) throws IOException {
-        os.write(i);
+    public void writeByte(int value) throws IOException {
+        for (int j = 7; j >= 0; j--) {
+            writeBit((value >>> j) & 1);
+        }
     }
 
     /**
@@ -50,7 +52,7 @@ public final class BitsWriter implements AutoCloseable {
     @Override
     public void close() throws IOException {
         while (bitsReady > 0) {
-            write(0);
+            writeBit(0);
         }
         os.flush();
         os.close();

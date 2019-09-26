@@ -2,7 +2,7 @@ package algo;
 
 import io.BitsWriter;
 import datastructs.FreqTableCumulative;
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import main.Main;
 
@@ -27,7 +27,7 @@ public class ACCompressor extends Compressor {
      * @throws IOException
      */
     @Override
-    protected void writeEncodedText(BufferedReader in, BitsWriter out)
+    protected void writeEncodedText(DataInputStream in, BitsWriter out)
             throws IOException {
         int c;
         while ((c = in.read()) != -1) {

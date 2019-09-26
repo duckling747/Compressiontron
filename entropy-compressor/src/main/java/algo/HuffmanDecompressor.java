@@ -49,7 +49,7 @@ public class HuffmanDecompressor extends Decompressor {
             out.write(symbol);
         }
     }
-    
+
     public FreqTable getTable() {
         return this.freqs;
     }

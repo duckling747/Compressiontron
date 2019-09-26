@@ -34,13 +34,12 @@ public class HuffmanEncoder extends General implements Encoder {
     @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         String code = table.getCode(symbol);
-        for (int c : code.toCharArray()) {
-            out.write(c);
+        for (char c : code.toCharArray()) {
+            out.writeBit(c);
         }
     }
 
     public LookupTable getLookupTable() {
         return table;
     }
-
 }

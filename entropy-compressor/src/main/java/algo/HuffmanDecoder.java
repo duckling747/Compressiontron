@@ -33,7 +33,7 @@ public class HuffmanDecoder extends General implements Decoder {
         int bit;
         int symbol;
         current = root;
-        while ((bit = in.read()) != -1) {
+        while ((bit = in.readBit()) != -1) {
             if ((symbol = decode(bit)) != -1) {
                 return symbol;
             }

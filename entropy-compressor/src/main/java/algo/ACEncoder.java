@@ -73,9 +73,9 @@ public class ACEncoder extends General implements Encoder {
      * @throws IOException
      */
     private void bitPlusFollow(int bit, BitsWriter out) throws IOException {
-        out.write(bit);
+        out.writeBit(bit);
         for (; bitsToFollow > 0; bitsToFollow--) {
-            out.write(bit);
+            out.writeBit(bit);
         }
     }
 

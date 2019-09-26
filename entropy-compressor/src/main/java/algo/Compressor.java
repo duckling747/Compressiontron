@@ -4,7 +4,9 @@ import datastructs.FreqTable;
 import io.BitsWriter;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public abstract class Compressor extends General {
      * compression method, and is hence public.
      */
     public void compress() {
-        try (BufferedReader in = new BufferedReader(new FileReader(filenameIn));
+        try (DataInputStream in = new DataInputStream(new FileInputStream(filenameIn));
                 BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
                         new BufferedOutputStream(
                                 new FileOutputStream(filenameOut))))) {
@@ -39,15 +41,15 @@ public abstract class Compressor extends General {
      * @param out
      * @throws IOException
      */
-    protected abstract void writeEncodedText(BufferedReader in,
+    protected abstract void writeEncodedText(DataInputStream in,
             BitsWriter out) throws IOException;
 
     /**
      * Reads a text file and sets up the frequency table.
      */
     protected void readFileSetFreqs() {
-        try (BufferedReader in = new BufferedReader(
-                new FileReader(filenameIn))) {
+        try (DataInputStream in = new DataInputStream(
+                new FileInputStream(filenameIn))) {
             int c;
             while ((c = in.read()) != -1) {
                 freqs.addFreq(c);
