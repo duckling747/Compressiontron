@@ -23,6 +23,9 @@ public final class BitsWriter implements AutoCloseable {
      * @throws IOException
      */
     public void writeBit(int bit) throws IOException {
+        if (bit != 0 && bit != 1) {
+            throw new IllegalArgumentException("Bit must be either 0 or 1");
+        }
         buffer = (buffer << 1) | bit;
         if (++bitsReady == 8) {
             os.write(buffer);

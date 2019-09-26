@@ -35,7 +35,7 @@ public class HuffmanEncoder extends General implements Encoder {
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         String code = table.getCode(symbol);
         for (char c : code.toCharArray()) {
-            out.writeBit(c);
+            out.writeBit(c - 48);// 0 char is 48 in integer and 1 char is 49
         }
     }
 
