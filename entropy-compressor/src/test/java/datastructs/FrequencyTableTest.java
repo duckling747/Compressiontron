@@ -25,17 +25,17 @@ public class FrequencyTableTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void outOfRangeFreqDown1() {
-        f.addFreq(0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void outOfRangeFreqDown2() {
         f.addFreq(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void outOfRangeFreqDown2() {
+        f.addFreq(-2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void outOfRangeCumFreqUp() {
-        f.getCumFreq(symbolLimit + 1);
+        f.getCumFreq(symbolLimit + 2);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -56,20 +56,21 @@ public class FrequencyTableTest {
 
     @Test
     public void freqsAtStart1() {
-        assertThat(f.getFreq(1), is(equalTo(1)));
-        assertThat(f.getFreq(2), is(equalTo(1)));
-        assertThat(f.getFreq(3), is(equalTo(1)));
-        assertThat(f.getFreq(4), is(equalTo(1)));
-        assertThat(f.getFreq(5), is(equalTo(1)));
+        assertThat(f.getFreq(1), is(equalTo(0)));
+        assertThat(f.getFreq(2), is(equalTo(0)));
+        assertThat(f.getFreq(3), is(equalTo(0)));
+        assertThat(f.getFreq(4), is(equalTo(0)));
+        assertThat(f.getFreq(5), is(equalTo(0)));
     }
 
     @Test
     public void calcCumFreqCorrect1() {
-        assertThat(f.getFreq(1), is(equalTo(1)));
+        assertThat(f.getCumFreq(1), is(equalTo(0)));
     }
 
     @Test
     public void calcCumFreqCorrect2() {
+        f.addFreq(1);
         assertThat(f.getCumFreq(1), is(equalTo(0)));
     }
 
@@ -77,56 +78,65 @@ public class FrequencyTableTest {
     public void calcCumFreqCorrect3() {
         f.addFreq(1);
         f.calcCumFreq();
-        assertThat(f.getCumFreq(0), is(equalTo(6)));
+        assertThat(f.getCumFreq(2), is(equalTo(1)));
     }
 
     @Test
     public void calcCumFreqCorrect4() {
-        for (int i = 0; i < 2; i++) {
-            f.addFreq(1);
-            f.addFreq(3);
-            f.addFreq(5);
-        }
-        for (int i = 0; i < 3; i++) {
-            f.addFreq(2);
-        }
-        assertThat(f.getFreq(1), is(equalTo(3)));
-        assertThat(f.getFreq(2), is(equalTo(4)));
+        f.setFreq(0, 0);
+        f.setFreq(1, 2);
+        f.setFreq(3, 2);
+        f.setFreq(5, 2);
+        f.setFreq(2, 3);
+        f.setFreq(4, 0);
+        assertThat(f.getFreq(1), is(equalTo(2)));
+        assertThat(f.getFreq(2), is(equalTo(3)));
         f.calcCumFreq();
-        assertThat(f.getCumFreq(0), is(equalTo(14)));
-        assertThat(f.getCumFreq(1), is(equalTo(11)));
-        assertThat(f.getCumFreq(2), is(equalTo(7)));
-        assertThat(f.getCumFreq(3), is(equalTo(4)));
-        assertThat(f.getCumFreq(4), is(equalTo(3)));
-        assertThat(f.getCumFreq(5), is(equalTo(0)));
+        assertThat(f.getCumFreq(0), is(equalTo(0)));
+        assertThat(f.getCumFreq(1), is(equalTo(0)));
+        assertThat(f.getCumFreq(2), is(equalTo(2)));
+        assertThat(f.getCumFreq(3), is(equalTo(5)));
+        assertThat(f.getCumFreq(4), is(equalTo(7)));
+        assertThat(f.getCumFreq(5), is(equalTo(7)));
+        assertThat(f.getCumFreq(6), is(equalTo(9)));
     }
 
     @Test
     public void findCumFreqCorrect1() {
-        for (int i = 0; i < 2; i++) {
-            f.addFreq(1);
-            f.addFreq(3);
-            f.addFreq(5);
-        }
-        for (int i = 0; i < 3; i++) {
-            f.addFreq(2);
-        }
+        f.setFreq(0, 0);
+        f.setFreq(1, 2);
+        f.setFreq(3, 2);
+        f.setFreq(5, 2);
+        f.setFreq(2, 3);
+        f.setFreq(4, 0);
+        assertThat(f.getFreq(0), is(0));
+        assertThat(f.getFreq(1), is(2));
+        assertThat(f.getFreq(2), is(3));
+        assertThat(f.getFreq(3), is(2));
+        assertThat(f.getFreq(4), is(0));
+        assertThat(f.getFreq(5), is(2));
         f.calcCumFreq();
-        assertThat(f.findCumFreq(7), is(equalTo(2)));
-        assertThat(f.findCumFreq(8), is(equalTo(2)));
-        assertThat(f.findCumFreq(11), is(equalTo(1)));
-        assertThat(f.findCumFreq(15), is(equalTo(1)));
+        assertThat(f.findCumFreq(7), is(equalTo(5)));
+        assertThat(f.findCumFreq(8), is(equalTo(5)));
+        assertThat(f.findCumFreq(11), is(equalTo(6)));
+        assertThat(f.findCumFreq(0), is(equalTo(1)));
     }
 
     @Test
     public void findCumFreqCorrect2() {
+        f.setFreq(0, 1);
+        f.setFreq(1, 1);
+        f.setFreq(3, 1);
+        f.setFreq(5, 1);
+        f.setFreq(2, 1);
+        f.setFreq(4, 1);
         f.calcCumFreq();
-        assertThat((f).findCumFreq(5), is(equalTo(1))); // Index 0 is reserved for total frequency
-        assertThat((f).findCumFreq(4), is(equalTo(1)));
-        assertThat((f).findCumFreq(3), is(equalTo(2)));
-        assertThat((f).findCumFreq(2), is(equalTo(3)));
-        assertThat((f).findCumFreq(1), is(equalTo(4)));
-        assertThat((f).findCumFreq(0), is(equalTo(5)));
+        assertThat((f).findCumFreq(5), is(equalTo(5)));
+        assertThat((f).findCumFreq(4), is(equalTo(4)));
+        assertThat((f).findCumFreq(3), is(equalTo(3)));
+        assertThat((f).findCumFreq(2), is(equalTo(2)));
+        assertThat((f).findCumFreq(1), is(equalTo(1)));
+        assertThat((f).findCumFreq(0), is(equalTo(0)));
     }
 
 }

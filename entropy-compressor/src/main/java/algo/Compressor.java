@@ -60,9 +60,6 @@ public abstract class Compressor extends General {
                 new FileInputStream(filenameIn))) {
             int c;
             while ((c = in.read()) != -1) {
-                if (c == 0) {
-                    c = 32; // In case of whitespace 0, make it whitespace 32 
-                }
                 freqs.addFreq(c);
             }
         } catch (IOException e) {

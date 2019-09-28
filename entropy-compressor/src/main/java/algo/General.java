@@ -22,7 +22,10 @@ public class General {
      */
     protected final static HuffmanTree genTree(FreqTable frequencyTable) {
         PriorityQueue<HuffmanTree> q = new PriorityQueue<>();
-        for (int i = 1; i <= frequencyTable.getSymbolLimit(); i++) {
+        for (int i = 0; i <= frequencyTable.getSymbolLimit(); i++) {
+            if (frequencyTable.getFreq(i) == 0) {
+                continue;
+            }
             q.offer(new HuffmanLeaf(i, frequencyTable.getFreq(i)));
         }
         while (q.size() > 1) {

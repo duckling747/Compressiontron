@@ -15,35 +15,34 @@ public class HuffmanTreeAndTableTest {
     @Test
     public void testCode1() {
         FreqTable f = new FreqTableSimple(5);
-        f.setFreq('a' - 'a' + 1, 40);
-        f.setFreq('b' - 'a' + 1, 30);
-        f.setFreq('c' - 'a' + 1, 50);
-        f.setFreq('d' - 'a' + 1, 2);
-        f.setFreq('e' - 'a' + 1, 100);
+        f.setFreq('a' - 'a', 40);
+        f.setFreq('b' - 'a', 30);
+        f.setFreq('c' - 'a', 50);
+        f.setFreq('d' - 'a', 2);
+        f.setFreq('e' - 'a', 100);
         HuffmanEncoder enc1 = new HuffmanEncoder(f);
         LookupTable l = enc1.getLookupTable();
-        assertThat(l.getCode('a' - 'a' + 1), is("111"));
-        assertThat(l.getCode('b' - 'a' + 1), is("1101"));
-        assertThat(l.getCode('c' - 'a' + 1), is("10"));
-        assertThat(l.getCode('d' - 'a' + 1), is("1100"));
-        assertThat(l.getCode('e' - 'a' + 1), is("0"));
+        assertThat(l.getCode('a' - 'a'), is("111"));
+        assertThat(l.getCode('b' - 'a'), is("1101"));
+        assertThat(l.getCode('c' - 'a'), is("10"));
+        assertThat(l.getCode('d' - 'a'), is("1100"));
+        assertThat(l.getCode('e' - 'a'), is("0"));
     }
 
     @Test
     public void testCode2() {
         FreqTable f = new FreqTableSimple(7);
-        f.setFreq('a' - 'a' + 1, 2);
-        f.setFreq('b' - 'a' + 1, 100);
-        f.setFreq('c' - 'a' + 1, 3);
-        f.setFreq('d' - 'a' + 1, 5);
-        f.setFreq('e' - 'a' + 1, 4);
-        f.setFreq('g' - 'a' + 1, 8);
+        f.setFreq('a' - 'a', 2);
+        f.setFreq('b' - 'a', 100);
+        f.setFreq('c' - 'a', 3);
+        f.setFreq('d' - 'a', 5);
+        f.setFreq('g' - 'a', 8);
         HuffmanEncoder enc1 = new HuffmanEncoder(f);
         LookupTable l = enc1.getLookupTable();
-        assertThat(l.getCode('g' - 'a' + 1), is("011"));
-        assertThat(l.getCode('d' - 'a' + 1), is("001"));
-        assertThat(l.getCode('c' - 'a' + 1), is("0100"));
-        assertThat(l.getCode('b' - 'a' + 1), is("1"));
-        assertThat(l.getCode('a' - 'a' + 1), is("01011"));
+        assertThat(l.getCode('g' - 'a'), is("00"));
+        assertThat(l.getCode('d' - 'a'), is("010"));
+        assertThat(l.getCode('c' - 'a'), is("0111"));
+        assertThat(l.getCode('b' - 'a'), is("1"));
+        assertThat(l.getCode('a' - 'a'), is("0110"));
     }
 }

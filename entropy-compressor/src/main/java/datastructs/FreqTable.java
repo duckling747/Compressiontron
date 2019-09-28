@@ -13,9 +13,6 @@ public abstract class FreqTable {
                     + "be less than 2");
         }
         freqs = new int[symbolLimit + 1];
-        for (int i = 1; i <= symbolLimit; i++) {
-            freqs[i] = 1;
-        }
         this.symbolLimit = symbolLimit;
     }
 
@@ -37,7 +34,7 @@ public abstract class FreqTable {
      */
     public int getTotalSumFreq() {
         int sum = 0;
-        for (int i = 1; i <= symbolLimit; i++) {
+        for (int i = 0; i <= symbolLimit; i++) {
             sum += freqs[i];
         }
         return sum;
@@ -70,7 +67,7 @@ public abstract class FreqTable {
     }
 
     private void freqRangeCheck(int c) {
-        if (c < 1 || c > symbolLimit) {
+        if (c < 0 || c > symbolLimit) {
             throw new IllegalArgumentException("Out of symbol range: " + c);
         }
     }
@@ -84,7 +81,7 @@ public abstract class FreqTable {
      */
     private void maxFreqCheck(int c) {
         if (freqs[c] >= MAXFREQ) {
-            for (int i = symbolLimit; i > 0; i--) {
+            for (int i = 0; i <= symbolLimit; i++) {
                 freqs[i] = (freqs[i] + 1) / 2;
             }
         }

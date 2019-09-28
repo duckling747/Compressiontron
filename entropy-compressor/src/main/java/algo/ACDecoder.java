@@ -9,7 +9,7 @@ public class ACDecoder extends General implements Decoder {
     private FreqTableCumulative freqs;
     private long low, high;
     private long value;
-    
+
     private boolean flag = false;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
@@ -31,7 +31,9 @@ public class ACDecoder extends General implements Decoder {
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
-        if (flag) return -1;
+        if (flag) {
+            return -1;
+        }
         long range = high - low + 1;
         long cum = (((value - low) + 1) * freqs.getTotalSumFreq() - 1) / range;
         int symbol = freqs.findCumFreq(cum);
@@ -61,7 +63,9 @@ public class ACDecoder extends General implements Decoder {
             low = 2 * low;
             high = 2 * high + 1;
             int input = inputBit(in);
-            if (input == -1) flag = true;
+            if (input == -1) {
+                flag = true;
+            }
             value = 2 * value + input;
         }
         return symbol;

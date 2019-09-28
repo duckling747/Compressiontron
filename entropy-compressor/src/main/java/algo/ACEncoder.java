@@ -30,8 +30,8 @@ public class ACEncoder extends General implements Encoder {
         long range = high - low + 1;
         long total = freqs.getTotalSumFreq();
         long symbolLow = freqs.getCumFreq(symbol);
-        long symbolHigh = freqs.getCumFreq(symbol - 1);
-        high = low + symbolHigh * range / total;
+        long symbolHigh = freqs.getCumFreq(symbol + 1);
+        high = low + symbolHigh * range / total - 1;
         low = low + symbolLow * range / total;
         while (true) {
             if (high < HALF) {

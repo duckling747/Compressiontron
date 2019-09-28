@@ -6,21 +6,23 @@ public class FreqTableCumulative extends FreqTable {
 
     public FreqTableCumulative(int symbolLimit) {
         super(symbolLimit);
-        cumFreqs = new int[symbolLimit + 1];
+        cumFreqs = new int[freqs.length + 1];
     }
 
     /**
      * Calculates the cumulative frequencies.
      */
     public void calcCumFreq() {
-        for (int i = symbolLimit; i > 0; i--) {
-            cumFreqs[i - 1] = cumFreqs[i] + freqs[i];
+        int sum = 0;
+        for (int i = 0; i < freqs.length; i++) {
+            sum += freqs[i];
+            cumFreqs[i + 1] = sum;
         }
     }
 
     @Override
     public int getTotalSumFreq() {
-        return cumFreqs[0];
+        return cumFreqs[cumFreqs.length - 1];
     }
 
     /**
@@ -43,30 +45,23 @@ public class FreqTableCumulative extends FreqTable {
      * @return index
      */
     public int findCumFreq(long value) {
-        /*
-        int a = 0, b = symbolLimit, z = -1;
+        int a = 0, b = cumFreqs.length - 1, z = -1;
         while (a <= b) {
             int k = (a + b) >>> 1;
-            if (cumFreqs[k] <= value) {
+            if (cumFreqs[k] == value) {
+                return k;
+            } else if (cumFreqs[k] > value) {
                 b = k - 1;
-                z = k;
             } else {
                 a = k + 1;
+                z = k;
             }
         }
-        return (z == 0) ? 1 : z;
-         */
-        int symbol = 1;
-        for (symbol = 1; cumFreqs[symbol] > value; symbol++) {
-            if (symbol == symbolLimit) {
-                break;
-            }
-        }
-        return symbol;
+        return z;
     }
 
     private void cumFreqRangeCheck(int c) {
-        if (c < 0 || c > symbolLimit) {
+        if (c < 0 || c > cumFreqs.length - 1) {
             throw new IllegalArgumentException("Out of symbol range " + c);
         }
     }
