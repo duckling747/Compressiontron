@@ -14,4 +14,4 @@ Date     | time | synopsis |
 2019/09/22 | 8h | Work on Huffman, refractor code |
 2019/09/26 | 10h | Complete the code and now have two finished nonfunctional compression algorithms, write tests, work on problems, reflect on life |
 2019/09/27 | 8h | Hours of staring at the code, wondering why it doesn't work. Marginal changes here and there, more tests. |
-2019/09/28 | 8h | Spent most of the day staring at the code, reading and rewriting everything several times, trying to find what's wrong with it. |
+2019/09/28 | 12h | Spent most of the day staring at the code, reading and rewriting everything several times, trying to find what's wrong with it. No luck. |
