@@ -18,6 +18,11 @@ public class FreqTableCumulative extends FreqTable {
         }
     }
 
+    @Override
+    public int getTotalSumFreq() {
+        return cumFreqs[0];
+    }
+
     /**
      * Returns the cumulative frequency for given character (represented as
      * integer)
@@ -37,7 +42,8 @@ public class FreqTableCumulative extends FreqTable {
      * @param value
      * @return index
      */
-    public int findCumFreq(int value) {
+    public int findCumFreq(long value) {
+        /*
         int a = 0, b = symbolLimit, z = -1;
         while (a <= b) {
             int k = (a + b) >>> 1;
@@ -48,12 +54,20 @@ public class FreqTableCumulative extends FreqTable {
                 a = k + 1;
             }
         }
-        return z;
+        return (z == 0) ? 1 : z;
+         */
+        int symbol = 1;
+        for (symbol = 1; cumFreqs[symbol] > value; symbol++) {
+            if (symbol == symbolLimit) {
+                break;
+            }
+        }
+        return symbol;
     }
 
     private void cumFreqRangeCheck(int c) {
         if (c < 0 || c > symbolLimit) {
-            throw new IllegalArgumentException("Out of symbol range");
+            throw new IllegalArgumentException("Out of symbol range " + c);
         }
     }
 

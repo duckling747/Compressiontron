@@ -8,6 +8,7 @@ public class ACEncoder extends General implements Encoder {
 
     private FreqTableCumulative freqs;
     private long low, high;
+    
     private long bitsToFollow;
 
     public ACEncoder(FreqTableCumulative f) {
@@ -27,10 +28,11 @@ public class ACEncoder extends General implements Encoder {
     @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
         long range = high - low + 1;
-        high = low + (range * freqs.getCumFreq(symbol - 1))
-                / freqs.getCumFreq(0) - 1;
-        low = low + (range * freqs.getCumFreq(symbol))
-                / freqs.getCumFreq(0);
+        long total = freqs.getTotalSumFreq();
+        long symbolLow = freqs.getCumFreq(symbol);
+        long symbolHigh = freqs.getCumFreq(symbol - 1);
+        high = low + symbolHigh * range / total;
+        low = low + symbolLow * range / total;
         while (true) {
             if (high < HALF) {
                 bitPlusFollow(0, out);

@@ -22,7 +22,7 @@ public abstract class Compressor extends General {
     /**
      * Compress the given file. This method is intended to be the top level
      * compression method, and is hence public. The frequencies are stored in
-     * one file, the compressed message in another. 
+     * one file, the compressed message in another.
      */
     public void compress() {
         try (BitsWriter bitswriter = new BitsWriter(new DataOutputStream(
@@ -60,6 +60,9 @@ public abstract class Compressor extends General {
                 new FileInputStream(filenameIn))) {
             int c;
             while ((c = in.read()) != -1) {
+                if (c == 0) {
+                    c = 32; // In case of whitespace 0, make it whitespace 32 
+                }
                 freqs.addFreq(c);
             }
         } catch (IOException e) {

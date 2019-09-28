@@ -7,6 +7,7 @@ import java.io.IOException;
 import static main.Main.SYMBOLLIMIT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import org.hamcrest.core.IsNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -55,9 +56,30 @@ public class ACCompDecompTest {
     }
 
     @Test
+    public void decompressorRetrievesCumFreqs() {
+        File fCompressed = new File(temp.getRoot(), "test.txt");
+        File fFreqs = new File(temp.getRoot(), "testFreqs.txt");
+        compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
+                fCompressed.getPath(), fFreqs.getPath());
+        compr.compress();
+        File fDecompressed = new File(temp.getRoot(), "decompressed.txt");
+        decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
+                fDecompressed.getPath());
+        assertTrue(decom.getFreqTable() != null);
+        assertTrue(compr.getFreqs() != null);
+        decom.decompress();
+        compr.getFreqs().calcCumFreq();
+        decom.getFreqTable().calcCumFreq();
+        for (int i = 1; i <= SYMBOLLIMIT; i++) {
+            assertThat(compr.getFreqs().getCumFreq(i),
+                    is(equalTo(decom.getFreqTable().getCumFreq(i))));
+        }
+    }
+
+    @Test
     public void findFreqsRetrievesSame() {
         File fCompressed = new File(temp.getRoot(), "test.txt");
-        File fFreqs = new File(temp.getRoot(), "test.txt");
+        File fFreqs = new File(temp.getRoot(), "testFreqs.txt");
 
         compr = new ACCompressor(getClass().getResource("/lorem_short.txt").getFile(),
                 fCompressed.getPath(), fFreqs.getPath());
@@ -66,6 +88,8 @@ public class ACCompDecompTest {
         decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
                 fDecompressed.getPath());
         decom.decompress();
+        compr.getFreqs().calcCumFreq();
+        decom.getFreqTable().calcCumFreq();
         for (int i = 1; i <= SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().findCumFreq(i),
                     is(equalTo(decom.getFreqTable().findCumFreq(i))));

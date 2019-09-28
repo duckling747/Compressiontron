@@ -17,7 +17,13 @@ public class Main {
     public static void main(String[] args) {
 
         String s1 = "lorem_short.txt", s2 = "ACcompr.bits", s3 = "HUFFcompr.bits",
-                s4 = "AC_out.txt", s5 = "Huffman_out.txt";
+                s4 = "ac_freqs", s5 = "huffFreqs",
+                s6 = "AC_out.txt", s7 = "Huffman_out.txt";
+        ACCompressor ac = new ACCompressor(s1, s2, s4);
+        ac.compress();
+        ACDecompressor acd = new ACDecompressor(s2, s4, s6);
+        acd.decompress();
+        
         
     }
 

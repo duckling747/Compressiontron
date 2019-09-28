@@ -9,6 +9,8 @@ public class ACDecoder extends General implements Decoder {
     private FreqTableCumulative freqs;
     private long low, high;
     private long value;
+    
+    private boolean flag = false;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
@@ -29,15 +31,22 @@ public class ACDecoder extends General implements Decoder {
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
+        if (flag) return -1;
         long range = high - low + 1;
-        long cum = (((value - low) + 1) * freqs.getCumFreq(0) - 1) / range;
-        int symbol = freqs.findCumFreq((int) cum);
-        high = low + (range * freqs.getCumFreq(symbol - 1))
-                / freqs.getCumFreq(0) - 1;
-        low = low + (range * freqs.getCumFreq(symbol))
-                / freqs.getCumFreq(0);
+        long cum = (((value - low) + 1) * freqs.getTotalSumFreq() - 1) / range;
+        int symbol = freqs.findCumFreq(cum);
+        if (symbol == -1) {
+            throw new AssertionError("Leq cumulative freq not found! Cum: " + cum);
+        }
+        long total = freqs.getTotalSumFreq();
+        long symbolLow = freqs.getCumFreq(symbol);
+        long symbolHigh = freqs.getCumFreq(symbol - 1);
+        high = low + symbolHigh * range / total - 1;
+        low = low + symbolLow * range / total;
+
         while (true) {
             if (high < HALF) {
+                // do nothing
             } else if (low >= HALF) {
                 value -= HALF;
                 low -= HALF;
@@ -49,12 +58,10 @@ public class ACDecoder extends General implements Decoder {
             } else {
                 break;
             }
-            int input = inputBit(in);
-            if (input == -1) {
-                return -1;
-            }
             low = 2 * low;
             high = 2 * high + 1;
+            int input = inputBit(in);
+            if (input == -1) flag = true;
             value = 2 * value + input;
         }
         return symbol;

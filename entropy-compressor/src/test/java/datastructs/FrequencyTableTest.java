@@ -3,6 +3,7 @@ package datastructs;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -112,12 +113,15 @@ public class FrequencyTableTest {
         }
         f.calcCumFreq();
         assertThat(f.findCumFreq(7), is(equalTo(2)));
+        assertThat(f.findCumFreq(8), is(equalTo(2)));
+        assertThat(f.findCumFreq(11), is(equalTo(1)));
+        assertThat(f.findCumFreq(15), is(equalTo(1)));
     }
 
     @Test
     public void findCumFreqCorrect2() {
         f.calcCumFreq();
-        assertThat((f).findCumFreq(5), is(equalTo(0)));
+        assertThat((f).findCumFreq(5), is(equalTo(1))); // Index 0 is reserved for total frequency
         assertThat((f).findCumFreq(4), is(equalTo(1)));
         assertThat((f).findCumFreq(3), is(equalTo(2)));
         assertThat((f).findCumFreq(2), is(equalTo(3)));

@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import main.Main;
+import static main.Main.SYMBOLLIMIT;
 
 public class ACDecompressor extends Decompressor {
 
@@ -18,7 +18,7 @@ public class ACDecompressor extends Decompressor {
         filenameInCompression = fnameInCompression;
         filenameInFrequencies = fnameInFrequencies;
         filenameOut = fnameOut;
-        freqs = new FreqTableCumulative(Main.SYMBOLLIMIT);
+        freqs = new FreqTableCumulative(SYMBOLLIMIT);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ACDecompressor extends Decompressor {
     }
 
     private void readFreqsCreateTable(BitsReader in) throws IOException {
-        for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
+        for (int i = 1; i <= SYMBOLLIMIT; i++) {
             freqs.setFreq(i, in.readByte());
         }
         ((FreqTableCumulative) freqs).calcCumFreq();
