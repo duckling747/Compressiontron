@@ -26,15 +26,26 @@ public class FreqTableCumulative extends FreqTable {
     }
 
     /**
-     * Returns the cumulative frequency for given character (represented as
-     * integer)
+     * Returns the cumulative frequency for all less than given character 
+     * (represented as integer).
      *
      * @param c
      * @return Cumulative frequency
      */
-    public int getCumFreq(int c) {
+    public int getCumFreqLow(int c) {
         cumFreqRangeCheck(c);
         return cumFreqs[c];
+    }
+    
+    /**
+     * Returns the cumulative frequency for for all less than or equal to
+     * the given character.
+     * @param c
+     * @return 
+     */
+    public int getCumFreqHigh(int c) {
+        cumFreqRangeCheck(c + 1);
+        return cumFreqs[c + 1];
     }
 
     /**

@@ -41,8 +41,8 @@ public class ACDecoder extends General implements Decoder {
             throw new AssertionError("Leq cumulative freq not found! Cum: " + cum);
         }
         long total = freqs.getTotalSumFreq();
-        long symbolLow = freqs.getCumFreq(symbol);
-        long symbolHigh = freqs.getCumFreq(symbol - 1);
+        long symbolLow = freqs.getCumFreqLow(symbol);
+        long symbolHigh = freqs.getCumFreqHigh(symbol);
         high = low + symbolHigh * range / total - 1;
         low = low + symbolLow * range / total;
 

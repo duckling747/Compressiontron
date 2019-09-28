@@ -7,7 +7,6 @@ import java.io.IOException;
 import static main.Main.SYMBOLLIMIT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import org.hamcrest.core.IsNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -49,7 +48,7 @@ public class ACCompDecompTest {
         decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
                 fDecompressed.getPath());
         decom.decompress();
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
+        for (int i = 0; i <= SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().getFreq(i),
                     is(equalTo(decom.getFreqTable().getFreq(i))));
         }
@@ -70,9 +69,9 @@ public class ACCompDecompTest {
         decom.decompress();
         compr.getFreqs().calcCumFreq();
         decom.getFreqTable().calcCumFreq();
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
-            assertThat(compr.getFreqs().getCumFreq(i),
-                    is(equalTo(decom.getFreqTable().getCumFreq(i))));
+        for (int i = 0; i <= SYMBOLLIMIT; i++) {
+            assertThat(compr.getFreqs().getCumFreqLow(i),
+                    is(equalTo(decom.getFreqTable().getCumFreqLow(i))));
         }
     }
 
@@ -90,7 +89,7 @@ public class ACCompDecompTest {
         decom.decompress();
         compr.getFreqs().calcCumFreq();
         decom.getFreqTable().calcCumFreq();
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
+        for (int i = 0; i <= SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().findCumFreq(i),
                     is(equalTo(decom.getFreqTable().findCumFreq(i))));
         }

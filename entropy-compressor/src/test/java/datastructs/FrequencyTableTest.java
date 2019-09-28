@@ -35,17 +35,17 @@ public class FrequencyTableTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void outOfRangeCumFreqUp() {
-        f.getCumFreq(symbolLimit + 2);
+        f.getCumFreqLow(symbolLimit + 2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void outOfRangeCumFreqDown() {
-        f.getCumFreq(-1);
+        f.getCumFreqLow(-1);
     }
 
     @Test(expected = Test.None.class)
     public void zeroCumNotOutOfRange() {
-        f.getCumFreq(0);
+        f.getCumFreqLow(0);
     }
 
     @Test
@@ -65,20 +65,20 @@ public class FrequencyTableTest {
 
     @Test
     public void calcCumFreqCorrect1() {
-        assertThat(f.getCumFreq(1), is(equalTo(0)));
+        assertThat(f.getCumFreqLow(1), is(equalTo(0)));
     }
 
     @Test
     public void calcCumFreqCorrect2() {
         f.addFreq(1);
-        assertThat(f.getCumFreq(1), is(equalTo(0)));
+        assertThat(f.getCumFreqLow(1), is(equalTo(0)));
     }
 
     @Test
     public void calcCumFreqCorrect3() {
         f.addFreq(1);
         f.calcCumFreq();
-        assertThat(f.getCumFreq(2), is(equalTo(1)));
+        assertThat(f.getCumFreqLow(2), is(equalTo(1)));
     }
 
     @Test
@@ -92,13 +92,13 @@ public class FrequencyTableTest {
         assertThat(f.getFreq(1), is(equalTo(2)));
         assertThat(f.getFreq(2), is(equalTo(3)));
         f.calcCumFreq();
-        assertThat(f.getCumFreq(0), is(equalTo(0)));
-        assertThat(f.getCumFreq(1), is(equalTo(0)));
-        assertThat(f.getCumFreq(2), is(equalTo(2)));
-        assertThat(f.getCumFreq(3), is(equalTo(5)));
-        assertThat(f.getCumFreq(4), is(equalTo(7)));
-        assertThat(f.getCumFreq(5), is(equalTo(7)));
-        assertThat(f.getCumFreq(6), is(equalTo(9)));
+        assertThat(f.getCumFreqLow(0), is(equalTo(0)));
+        assertThat(f.getCumFreqLow(1), is(equalTo(0)));
+        assertThat(f.getCumFreqLow(2), is(equalTo(2)));
+        assertThat(f.getCumFreqLow(3), is(equalTo(5)));
+        assertThat(f.getCumFreqLow(4), is(equalTo(7)));
+        assertThat(f.getCumFreqLow(5), is(equalTo(7)));
+        assertThat(f.getCumFreqLow(6), is(equalTo(9)));
     }
 
     @Test
