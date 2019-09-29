@@ -14,9 +14,7 @@ public class HeapTest {
             q.push(new HuffmanLeaf('a', i));
         }
         for (int i = 0; i < 20; i++) {
-            HuffmanTree tree = q.pop();
-            System.out.println(tree.getFrequency());
-            assertThat(tree.getFrequency(), is(i));
+            assertThat(q.pop().getFrequency(), is(i));
         }
     }
 
@@ -70,10 +68,10 @@ public class HeapTest {
             q.push(new HuffmanLeaf('b', 123));
         }
         assertThat(q.size(), is(50));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 1; i <= 20; i++) {
             q.pop();
+            assertThat(q.size(), is(50 - i));
         }
-        assertThat(q.size(), is(30));
     }
 
     @Test(expected = IllegalStateException.class)

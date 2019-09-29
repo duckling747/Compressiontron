@@ -10,13 +10,14 @@ public class MinHeap implements MyQueue {
     /**
      * Minimal implementation of a minimum heap. There is no resize feature
      * currently implemented so the total amount of inserts must be known in
-     * advance. 
-     * @param maximumCapacity 
+     * advance.
+     *
+     * @param maximumCapacity
      */
     public MinHeap(int maximumCapacity) {
         max = maximumCapacity;
         size = 0;
-        heap = new HuffmanTree[max + 1];
+        heap = new HuffmanTree[max];
     }
 
     private void swap(int a, int b) {
@@ -25,40 +26,41 @@ public class MinHeap implements MyQueue {
         heap[b] = temp;
     }
 
+    private int parent(int i) {
+        return (i - 1) / 2;
+    }
+
+    private int left(int i) {
+        return 2 * i + 1;
+    }
+
+    private int right(int i) {
+        return 2 * i + 2;
+    }
+
     /**
      * Add an item to the heap.
      *
      * @param tree
      */
     @Override
-    @SuppressWarnings("empty-statement")
     public void push(HuffmanTree tree) {
         if (size == max) {
             throw new IllegalStateException("Heap already full");
         }
-        /*
-        Find the first empty space, fill from start to end
-         */
-        int i;
-        for (i = 0; i < heap.length && heap[i] != null; i++);
+        heap[size++] = tree;
 
-        heap[i] = tree;
-        size++;
-        for (int parent = (i - 1) / 2; i > 0; i = parent, parent = (i - 1) / 2) {
-            /*
-            Every item in array has two possible children, as every 
-            item has one parent: one for every other number of i
-            as in a binary tree
-             */
-            if (heap[parent].compareTo(heap[i]) > 0) {
-                swap(i, parent);
-            }
+        for (int i = size - 1, parent = parent(i);
+                i > 0 && heap[parent].compareTo(heap[i]) > 0;
+                i = parent) {
+            swap(i, parent);
         }
     }
 
     /**
-     * Removes and returns the minimum. Returns the first item in
-     * the heap-array, which is the minimum. 
+     * Removes and returns the minimum. Returns the first item in the
+     * heap-array, which is the minimum. Warning: if size of heap is 2n + 1, and
+     * the heap gets very full, the loop might break before last child is fuond.
      *
      * @return
      */
@@ -66,28 +68,33 @@ public class MinHeap implements MyQueue {
     public HuffmanTree pop() {
         if (size == 0) {
             return null;
+        } else if (size == 1) {
+            return heap[--size];
         }
-        HuffmanTree tree = heap[0];
-        for (int parent = 0, child = 2 * parent + 1;
-                heap[parent] != null;
-                parent = child) {
-            if (heap[child] != null && heap[child + 1] == null) {
-                heap[parent] = heap[child];
-            } else if (heap[child] == null && heap[child + 1] != null) {
-                heap[parent] = heap[child + 1];
-                child++;
-            } else if (heap[child] != null && heap[child + 1] != null) {
-                int compare = heap[child].compareTo(heap[child + 1]);
-                if (compare <= 0) {
-                    heap[parent] = heap[child];
-                } else {
-                    heap[parent] = heap[child + 1];
-                    child++;
-                }
-            }
+        HuffmanTree ret = heap[0];
+        heap[0] = heap[--size];
+        orderHeap(0);
+        return ret;
+    }
+    
+    /**
+     * Keep the order so that the smallest is in index 0. Recursively push index i
+     * down the tree using swapping, as long as it is larger than the children.
+     */
+    private void orderHeap(int i) {
+        int minimum = i;
+        int left = left(i), right = right(i);
+        if (left < size && heap[left].compareTo(heap[i]) < 0) {
+            minimum = left;
         }
-        size--;
-        return tree;
+        if (right < size && heap[right].compareTo(heap[i]) < 0) {
+            minimum = right;
+        }
+        if (minimum != i) {
+            swap(i, minimum);
+            orderHeap(minimum);
+        }
+        
     }
 
     /**
