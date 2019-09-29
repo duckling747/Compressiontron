@@ -48,9 +48,10 @@ public class MinHeap implements MyQueue {
         if (size == max) {
             throw new IllegalStateException("Heap already full");
         }
-        heap[size++] = tree;
+        int i = size++;
+        heap[i] = tree;
 
-        for (int i = size - 1, parent = parent(i);
+        for (int parent = parent(i);
                 i > 0 && heap[parent].compareTo(heap[i]) > 0;
                 i = parent) {
             swap(i, parent);
@@ -76,10 +77,11 @@ public class MinHeap implements MyQueue {
         orderHeap(0);
         return ret;
     }
-    
+
     /**
-     * Keep the order so that the smallest is in index 0. Recursively push index i
-     * down the tree using swapping, as long as it is larger than the children.
+     * Keep the order so that the smallest is in index 0. Recursively push index
+     * i down the tree using swapping, as long as it is larger than the
+     * children.
      */
     private void orderHeap(int i) {
         int minimum = i;
@@ -94,7 +96,6 @@ public class MinHeap implements MyQueue {
             swap(i, minimum);
             orderHeap(minimum);
         }
-        
     }
 
     /**
