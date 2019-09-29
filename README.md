@@ -4,7 +4,9 @@ Simple program to compress text files using different [entropy-based compression
 ## Some links to documentation
 
 [Design document](https://github.com/duckling747/Compressiontron/blob/master/documentation/design_doc.md)
+
 [Project definition](https://github.com/duckling747/Compressiontron/blob/master/documentation/definition.md)
+
 [Testing document](https://github.com/duckling747/Compressiontron/blob/master/documentation/testing_doc.md)
 
 ### Weekly reporting
