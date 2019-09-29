@@ -3,17 +3,11 @@ package datastructs;
 public abstract class FreqTable {
 
     protected int[] freqs;
-    protected int symbolLimit;
 
     private static final int MAXFREQ = 255;
 
-    public FreqTable(int symbolLimit) {
-        if (symbolLimit < 2) {
-            throw new IllegalArgumentException("Symbol limit cannot "
-                    + "be less than 2");
-        }
-        freqs = new int[symbolLimit + 1];
-        this.symbolLimit = symbolLimit;
+    public FreqTable(int[] freqs) {
+        this.freqs = freqs;
     }
 
     /**
@@ -23,7 +17,9 @@ public abstract class FreqTable {
      * @return Frequency in table for char c
      */
     public int getFreq(int c) {
-        freqRangeCheck(c);
+        if (c < 0 || c > freqs.length - 1) {
+            return -1;
+        }
         return freqs[c];
     }
 
@@ -34,7 +30,7 @@ public abstract class FreqTable {
      */
     public int getTotalSumFreq() {
         int sum = 0;
-        for (int i = 0; i <= symbolLimit; i++) {
+        for (int i = 0; i < freqs.length; i++) {
             sum += freqs[i];
         }
         return sum;
@@ -45,31 +41,31 @@ public abstract class FreqTable {
      *
      * @param c
      */
-    public void addFreq(int c) {
-        freqRangeCheck(c);
+    public boolean addFreq(int c) {
+        if (c < 0 || c > freqs.length - 1) {
+            return false;
+        }
         freqs[c]++;
         maxFreqCheck(c);
+        return true;
     }
 
     /**
-     * Return the symbol limit (maximum integer possible).
+     * Return the symbol limit (maximum integer/char possible).
      *
      * @return Sum of different characters in table
      */
     public int getSymbolLimit() {
-        return symbolLimit;
+        return freqs.length - 1;
     }
 
-    public final void setFreq(int c, int freq) {
-        freqRangeCheck(c);
+    public final boolean setFreq(int c, int freq) {
+        if (c < 0 || c > freqs.length - 1) {
+            return false;
+        }
         freqs[c] = freq;
         maxFreqCheck(c);
-    }
-
-    private void freqRangeCheck(int c) {
-        if (c < 0 || c > symbolLimit) {
-            throw new IllegalArgumentException("Out of symbol range: " + c);
-        }
+        return true;
     }
 
     /**
@@ -81,7 +77,7 @@ public abstract class FreqTable {
      */
     private void maxFreqCheck(int c) {
         if (freqs[c] >= MAXFREQ) {
-            for (int i = 0; i <= symbolLimit; i++) {
+            for (int i = 0; i < freqs.length; i++) {
                 freqs[i] = (freqs[i] + 1) / 2;
             }
         }

@@ -1,14 +1,14 @@
 package algo;
 
 import datastructs.FreqTable;
+import io.BitsReader;
 
-public abstract class Decompressor extends General {
+public interface Decompressor {
 
-    protected String filenameInCompression;
-    protected String filenameInFrequencies;
-    protected String filenameOut;
-    protected FreqTable freqs;
+    public void readFrequencies();
 
-    public abstract void decompress();
+    public void readEncodedText();
+
+    public FreqTable getFrequencyTable();
 
 }

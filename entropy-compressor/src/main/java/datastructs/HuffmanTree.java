@@ -41,6 +41,10 @@ public class HuffmanTree implements Comparable<HuffmanTree> {
     public HuffmanTree getRightChild() {
         return rightChild;
     }
+    
+    public int getFrequency() {
+        return this.frequency;
+    }
 
     @Override
     public int compareTo(HuffmanTree o) {

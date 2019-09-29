@@ -3,63 +3,63 @@ package algo;
 import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import io.BitsReader;
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
+import io.BitsWriter;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import main.Main;
 
-public class HuffmanDecompressor extends Decompressor {
+public class HuffmanDecompressor implements Decompressor {
 
-    private HuffmanDecoder decoder;
+    private String filenameInCompression;
+    private String filenameInFrequencies;
+    private String filenameOut;
+    private FreqTable freqs;
 
     public HuffmanDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut) {
-        filenameInCompression = fnameInCompression;
-        filenameInFrequencies = fnameInFrequencies;
-        filenameOut = fnameOut;
-        freqs = new FreqTableSimple(Main.SYMBOLLIMIT);
+        this.filenameInCompression = fnameInCompression;
+        this.filenameInFrequencies = fnameInFrequencies;
+        this.filenameOut = fnameOut;
+    }
 
+    public HuffmanDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut, FreqTable freqs) {
+        this.filenameInCompression = fnameInCompression;
+        this.filenameInFrequencies = fnameInFrequencies;
+        this.filenameOut = fnameOut;
+        this.freqs = freqs;
     }
 
     @Override
-    public void decompress() {
-        try (BitsReader in = new BitsReader(
-                new DataInputStream(new FileInputStream(filenameInFrequencies)))) {
-            readFileCreateFreqTable(in);
-            decoder = new HuffmanDecoder(freqs);
+    public void readFrequencies() {
+        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameInFrequencies)))) {
+            freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
+            for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
+                freqs.setFreq(i, in.readByte());
+            }
         } catch (IOException e) {
-            e.printStackTrace();
         }
-        if (decoder == null) {
-            throw new IllegalStateException("decoder is null");
+        if (freqs == null) {
+            throw new AssertionError("Frequency table not initialized ");
         }
-        try (BitsReader in = new BitsReader(
-                new DataInputStream(new BufferedInputStream(
-                        new FileInputStream(filenameInCompression))));
-                BufferedWriter out = new BufferedWriter(
-                        new FileWriter(filenameOut))) {
-            writeDecodedText(in, out);
+    }
+
+    @Override
+    public void readEncodedText() {
+        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameInCompression)));
+                BitsWriter out = new BitsWriter((new DataOutputStream(new FileOutputStream(filenameOut))))) {
+            HuffmanDecoder decoder = new HuffmanDecoder(freqs);
+            int symbol;
+            while ((symbol = decoder.decodeSymbol(in)) != -1) {
+                out.writeByte(symbol);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    private void readFileCreateFreqTable(BitsReader in) throws IOException {
-        for (int i = 1; i <= Main.SYMBOLLIMIT; i++) {
-            freqs.setFreq(i, in.readByte());
-        }
-    }
-
-    private void writeDecodedText(BitsReader in, BufferedWriter out) throws IOException {
-        int symbol;
-        while ((symbol = decoder.decodeSymbol(in)) != -1) {
-            out.write(symbol);
-        }
-    }
-
-    public FreqTable getTable() {
+    @Override
+    public FreqTable getFrequencyTable() {
         return this.freqs;
     }
 

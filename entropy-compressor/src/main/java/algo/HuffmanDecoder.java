@@ -6,13 +6,13 @@ import datastructs.HuffmanTree;
 import io.BitsReader;
 import java.io.IOException;
 
-public class HuffmanDecoder extends General implements Decoder {
+public class HuffmanDecoder implements Decoder {
 
     private final HuffmanTree root;
     private HuffmanTree current;
 
     public HuffmanDecoder(FreqTable f) {
-        root = genTree(f);
+        root = General.genTree(f);
     }
 
     private int decode(int bit) {

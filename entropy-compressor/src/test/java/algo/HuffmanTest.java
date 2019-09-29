@@ -53,15 +53,15 @@ public class HuffmanTest {
         try (BitsReader reader = new BitsReader(new DataInputStream(new FileInputStream(f.getPath())))) {
             int c;
             while ((c = reader.readByte()) != -1) {
-                fre.addFreq(c - 'a' + 1);
+                fre.addFreq(c - 'a');
             }
             HuffmanEncoder en = new HuffmanEncoder(fre);
             LookupTable l = en.getLookupTable();
-            assertThat(l.getCode('a' - 'a' + 1), is("111"));
-            assertThat(l.getCode('b' - 'a' + 1), is("1101"));
-            assertThat(l.getCode('c' - 'a' + 1), is("10"));
-            assertThat(l.getCode('d' - 'a' + 1), is("1100"));
-            assertThat(l.getCode('e' - 'a' + 1), is("0"));
+            assertThat(l.getCode('a' - 'a'), is("111"));
+            assertThat(l.getCode('b' - 'a'), is("1101"));
+            assertThat(l.getCode('c' - 'a'), is("10"));
+            assertThat(l.getCode('d' - 'a'), is("1100"));
+            assertThat(l.getCode('e' - 'a'), is("0"));
         } catch (IOException e) {
         }
     }

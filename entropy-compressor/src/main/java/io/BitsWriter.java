@@ -57,7 +57,6 @@ public final class BitsWriter implements AutoCloseable {
         while (bitsReady > 0) {
             writeBit(0);
         }
-        os.flush();
         os.close();
     }
 

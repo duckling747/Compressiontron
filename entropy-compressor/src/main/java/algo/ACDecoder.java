@@ -4,7 +4,7 @@ import io.BitsReader;
 import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
-public class ACDecoder extends General implements Decoder {
+public class ACDecoder implements Decoder {
 
     private FreqTableCumulative freqs;
     private long low, high;
@@ -14,12 +14,12 @@ public class ACDecoder extends General implements Decoder {
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
-        for (int i = 1; i <= CODEVALUEBITS; i++) {
+        for (int i = 1; i <= General.CODEVALUEBITS; i++) {
             value = 2 * value + inputBit(in);
         }
         freqs = f;
         low = 0;
-        high = TOPVALUE;
+        high = General.TOPVALUE;
     }
 
     /**
@@ -47,16 +47,16 @@ public class ACDecoder extends General implements Decoder {
         low = low + symbolLow * range / total;
 
         while (true) {
-            if (high < HALF) {
+            if (high < General.HALF) {
                 // do nothing
-            } else if (low >= HALF) {
-                value -= HALF;
-                low -= HALF;
-                high -= HALF;
-            } else if (low >= FIRSTQUARTER && high < THIRDQUARTER) {
-                value -= FIRSTQUARTER;
-                low -= FIRSTQUARTER;
-                high -= FIRSTQUARTER;
+            } else if (low >= General.HALF) {
+                value -= General.HALF;
+                low -= General.HALF;
+                high -= General.HALF;
+            } else if (low >= General.FIRSTQUARTER && high < General.THIRDQUARTER) {
+                value -= General.FIRSTQUARTER;
+                low -= General.FIRSTQUARTER;
+                high -= General.FIRSTQUARTER;
             } else {
                 break;
             }

@@ -1,6 +1,7 @@
 package io;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -45,7 +46,11 @@ public final class BitsReader implements AutoCloseable {
     public int readByte() throws IOException {
         int value = 0;
         for (int i = 7; i >= 0; i--) {
-            value = value | (readBit() << i);
+            int bit = readBit();
+            if (bit == -1) {
+                return -1;
+            }
+            value = value | (bit << i);
         }
         return value;
     }

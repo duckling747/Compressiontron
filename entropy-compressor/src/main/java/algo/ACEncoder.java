@@ -4,17 +4,17 @@ import io.BitsWriter;
 import datastructs.FreqTableCumulative;
 import java.io.IOException;
 
-public class ACEncoder extends General implements Encoder {
+public class ACEncoder implements Encoder {
 
     private FreqTableCumulative freqs;
     private long low, high;
-    
+
     private long bitsToFollow;
 
     public ACEncoder(FreqTableCumulative f) {
         freqs = f;
         low = 0;
-        high = TOPVALUE;
+        high = General.TOPVALUE;
         bitsToFollow = 0;
     }
 
@@ -34,16 +34,16 @@ public class ACEncoder extends General implements Encoder {
         high = low + symbolHigh * range / total - 1;
         low = low + symbolLow * range / total;
         while (true) {
-            if (high < HALF) {
+            if (high < General.HALF) {
                 bitPlusFollow(0, out);
-            } else if (low >= HALF) {
+            } else if (low >= General.HALF) {
                 bitPlusFollow(1, out);
-                low -= HALF;
-                high -= HALF;
-            } else if (low >= FIRSTQUARTER && high < THIRDQUARTER) {
+                low -= General.HALF;
+                high -= General.HALF;
+            } else if (low >= General.FIRSTQUARTER && high < General.THIRDQUARTER) {
                 bitsToFollow++;
-                low -= FIRSTQUARTER;
-                high -= FIRSTQUARTER;
+                low -= General.FIRSTQUARTER;
+                high -= General.FIRSTQUARTER;
             } else {
                 break;
             }
@@ -60,7 +60,7 @@ public class ACEncoder extends General implements Encoder {
      */
     public void finalize(BitsWriter out) throws IOException {
         bitsToFollow++;
-        if (low < FIRSTQUARTER) {
+        if (low < General.FIRSTQUARTER) {
             bitPlusFollow(0, out);
         } else {
             bitPlusFollow(1, out);

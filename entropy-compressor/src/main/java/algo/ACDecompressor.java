@@ -1,71 +1,66 @@
 package algo;
 
-import io.BitsReader;
+import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
-import java.io.BufferedInputStream;
+import io.BitsReader;
+import io.BitsWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import static main.Main.SYMBOLLIMIT;
+import main.Main;
 
-public class ACDecompressor extends Decompressor {
+public class ACDecompressor implements Decompressor {
 
-    private ACDecoder decoder;
+    private String fnInCompression;
+    private String fnInFrequencies;
+    private String fnOut;
+    private FreqTableCumulative freqs;
 
     public ACDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut) {
-        filenameInCompression = fnameInCompression;
-        filenameInFrequencies = fnameInFrequencies;
-        filenameOut = fnameOut;
-        freqs = new FreqTableCumulative(SYMBOLLIMIT);
+        this.fnInCompression = fnameInCompression;
+        this.fnInFrequencies = fnameInFrequencies;
+        this.fnOut = fnameOut;
+    }
+
+    public ACDecompressor(String fnameInCompression, String fnameInFrequencies, String fnameOut, FreqTableCumulative freqs) {
+        this.fnInCompression = fnameInCompression;
+        this.fnInFrequencies = fnameInFrequencies;
+        this.fnOut = fnameOut;
+        this.freqs = freqs;
     }
 
     @Override
-    public void decompress() {
-        try (BitsReader in = new BitsReader(
-                new DataInputStream(new BufferedInputStream(
-                        new FileInputStream(filenameInFrequencies))))) {
-            readFreqsCreateTable(in);
-            decoder = new ACDecoder((FreqTableCumulative) freqs, in);
+    public void readFrequencies() {
+        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(fnInFrequencies)))) {
+            freqs = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
+            for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
+                freqs.setFreq(i, in.readByte());
+            }
         } catch (IOException e) {
-            e.printStackTrace();
         }
-        if (decoder == null) {
-            throw new IllegalStateException("the decoder is null");
+        if (freqs == null) {
+            throw new AssertionError("Frequency table not initialized ");
         }
-        try (BitsReader in = new BitsReader(
-                new DataInputStream(new BufferedInputStream(
-                        new FileInputStream(filenameInCompression))));
-                DataOutputStream out = new DataOutputStream(
-                        new FileOutputStream(filenameOut))) {
-            writeDecodedText(in, out);
+    }
+
+    @Override
+    public void readEncodedText() {
+        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(fnInCompression)));
+                BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(fnOut)))) {
+            ACDecoder decoder = new ACDecoder(freqs, in);
+            int symbol;
+            while ((symbol = decoder.decodeSymbol(in)) != -1) {
+                out.writeByte(symbol);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    private void readFreqsCreateTable(BitsReader in) throws IOException {
-        for (int i = 1; i <= SYMBOLLIMIT; i++) {
-            freqs.setFreq(i, in.readByte());
-        }
-        ((FreqTableCumulative) freqs).calcCumFreq();
+    @Override
+    public FreqTable getFrequencyTable() {
+        return this.freqs;
     }
 
-    private void writeDecodedText(BitsReader in, DataOutputStream out) throws IOException {
-        int symbol;
-        while ((symbol = decoder.decodeSymbol(in)) != -1) {
-            out.write(symbol);
-        }
-    }
-
-    /**
-     * Return this decompressor's frequency table. Mostly for unit testing
-     * purposes.
-     *
-     * @return
-     */
-    public FreqTableCumulative getFreqTable() {
-        return (FreqTableCumulative) freqs;
-    }
 }

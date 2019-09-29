@@ -4,6 +4,13 @@ public class LookupTable {
 
     private String[] codes;
 
+    /**
+     * Construct a Lookup table for the Huffman codes. The table's main function
+     * is to traverse the Huffman tree for the codes.
+     *
+     * @param tree
+     * @param size
+     */
     public LookupTable(HuffmanTree tree, int size) {
         codes = new String[size];
         getCodes(tree, new StringBuilder());

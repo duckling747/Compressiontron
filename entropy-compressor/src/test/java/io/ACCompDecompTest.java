@@ -2,6 +2,7 @@ package io;
 
 import algo.ACCompressor;
 import algo.ACDecompressor;
+import algo.General;
 import java.io.File;
 import java.io.IOException;
 import static main.Main.SYMBOLLIMIT;
@@ -48,7 +49,7 @@ public class ACCompDecompTest {
         decom = new ACDecompressor(fCompressed.getPath(), fFreqs.getPath(),
                 fDecompressed.getPath());
         decom.decompress();
-        for (int i = 0; i <= SYMBOLLIMIT; i++) {
+        for (int i = 0; i <= General.SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().getFreq(i),
                     is(equalTo(decom.getFreqTable().getFreq(i))));
         }
@@ -69,7 +70,7 @@ public class ACCompDecompTest {
         decom.decompress();
         compr.getFreqs().calcCumFreq();
         decom.getFreqTable().calcCumFreq();
-        for (int i = 0; i <= SYMBOLLIMIT; i++) {
+        for (int i = 0; i <= General.SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().getCumFreqLow(i),
                     is(equalTo(decom.getFreqTable().getCumFreqLow(i))));
         }
@@ -89,7 +90,7 @@ public class ACCompDecompTest {
         decom.decompress();
         compr.getFreqs().calcCumFreq();
         decom.getFreqTable().calcCumFreq();
-        for (int i = 0; i <= SYMBOLLIMIT; i++) {
+        for (int i = 0; i <= General.SYMBOLLIMIT; i++) {
             assertThat(compr.getFreqs().findCumFreq(i),
                     is(equalTo(decom.getFreqTable().findCumFreq(i))));
         }

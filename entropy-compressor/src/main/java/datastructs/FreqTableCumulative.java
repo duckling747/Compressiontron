@@ -2,11 +2,11 @@ package datastructs;
 
 public class FreqTableCumulative extends FreqTable {
 
-    private int[] cumFreqs;
+    private int[] cum;
 
-    public FreqTableCumulative(int symbolLimit) {
-        super(symbolLimit);
-        cumFreqs = new int[freqs.length + 1];
+    public FreqTableCumulative(int[] freqs) {
+        super(freqs);
+        cum = new int[freqs.length + 1];
     }
 
     /**
@@ -16,36 +16,41 @@ public class FreqTableCumulative extends FreqTable {
         int sum = 0;
         for (int i = 0; i < freqs.length; i++) {
             sum += freqs[i];
-            cumFreqs[i + 1] = sum;
+            cum[i + 1] = sum;
         }
     }
 
     @Override
     public int getTotalSumFreq() {
-        return cumFreqs[cumFreqs.length - 1];
+        return cum[cum.length - 1];
     }
 
     /**
-     * Returns the cumulative frequency for all less than given character 
-     * (represented as integer).
+     * Returns the cumulative frequency for all less than given character
+     * (represented as integer). Returns -1 instead if not found.
      *
      * @param c
      * @return Cumulative frequency
      */
     public int getCumFreqLow(int c) {
-        cumFreqRangeCheck(c);
-        return cumFreqs[c];
+        if (c < 0 || c > cum.length - 1) {
+            return -1;
+        }
+        return cum[c];
     }
-    
+
     /**
-     * Returns the cumulative frequency for for all less than or equal to
-     * the given character.
+     * Returns the cumulative frequency for for all less than or equal to the
+     * given character. Returns -1 instead if not found.
+     *
      * @param c
-     * @return 
+     * @return
      */
     public int getCumFreqHigh(int c) {
-        cumFreqRangeCheck(c + 1);
-        return cumFreqs[c + 1];
+        if (c < 0 || c > cum.length - 1) {
+            return -1;
+        }
+        return cum[c + 1];
     }
 
     /**
@@ -56,12 +61,12 @@ public class FreqTableCumulative extends FreqTable {
      * @return index
      */
     public int findCumFreq(long value) {
-        int a = 0, b = cumFreqs.length - 1, z = -1;
+        int a = 0, b = cum.length - 1, z = -1;
         while (a <= b) {
-            int k = (a + b) >>> 1;
-            if (cumFreqs[k] == value) {
+            int k = (a + b) / 2;
+            if (cum[k] == value) {
                 return k;
-            } else if (cumFreqs[k] > value) {
+            } else if (cum[k] > value) {
                 b = k - 1;
             } else {
                 a = k + 1;
@@ -69,12 +74,6 @@ public class FreqTableCumulative extends FreqTable {
             }
         }
         return z;
-    }
-
-    private void cumFreqRangeCheck(int c) {
-        if (c < 0 || c > cumFreqs.length - 1) {
-            throw new IllegalArgumentException("Out of symbol range " + c);
-        }
     }
 
 }

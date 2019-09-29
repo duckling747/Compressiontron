@@ -6,7 +6,7 @@ import datastructs.LookupTable;
 import io.BitsWriter;
 import java.io.IOException;
 
-public class HuffmanEncoder extends General implements Encoder {
+public class HuffmanEncoder implements Encoder {
 
     private LookupTable table;
 
@@ -19,7 +19,7 @@ public class HuffmanEncoder extends General implements Encoder {
      * @param frequencyTable
      */
     public HuffmanEncoder(FreqTable frequencyTable) {
-        HuffmanTree root = genTree(frequencyTable);
+        HuffmanTree root = General.genTree(frequencyTable);
         table = new LookupTable(root, frequencyTable.getSymbolLimit() + 1);
         root = null;
     }
