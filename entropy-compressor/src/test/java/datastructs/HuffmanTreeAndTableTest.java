@@ -8,19 +8,13 @@ import org.junit.Test;
 
 public class HuffmanTreeAndTableTest {
 
-    @Before
-    public void initMe() {
-    }
+    private int[] f;
 
     @Test
     public void testCode1() {
-        FreqTable f = new FreqTableSimple(5);
-        f.setFreq('a' - 'a', 40);
-        f.setFreq('b' - 'a', 30);
-        f.setFreq('c' - 'a', 50);
-        f.setFreq('d' - 'a', 2);
-        f.setFreq('e' - 'a', 100);
-        HuffmanEncoder enc1 = new HuffmanEncoder(f);
+        f = new int[]{40, 30, 50, 2, 100};
+        FreqTable t = new FreqTableSimple(f);
+        HuffmanEncoder enc1 = new HuffmanEncoder(t);
         LookupTable l = enc1.getLookupTable();
         assertThat(l.getCode('a' - 'a'), is("111"));
         assertThat(l.getCode('b' - 'a'), is("1101"));
@@ -31,13 +25,9 @@ public class HuffmanTreeAndTableTest {
 
     @Test
     public void testCode2() {
-        FreqTable f = new FreqTableSimple(7);
-        f.setFreq('a' - 'a', 2);
-        f.setFreq('b' - 'a', 100);
-        f.setFreq('c' - 'a', 3);
-        f.setFreq('d' - 'a', 5);
-        f.setFreq('g' - 'a', 8);
-        HuffmanEncoder enc1 = new HuffmanEncoder(f);
+        f = new int[] {2, 100, 3, 5, 0, 0, 8};
+        FreqTable t = new FreqTableSimple(f);
+        HuffmanEncoder enc1 = new HuffmanEncoder(t);
         LookupTable l = enc1.getLookupTable();
         assertThat(l.getCode('g' - 'a'), is("00"));
         assertThat(l.getCode('d' - 'a'), is("010"));

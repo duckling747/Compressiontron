@@ -49,13 +49,13 @@ public class HuffmanTest {
             }
         } catch (IOException e) {
         }
-        FreqTable fre = new FreqTableSimple(5);
+        FreqTable t = new FreqTableSimple(new int[]{0,0,0,0,0});
         try (BitsReader reader = new BitsReader(new DataInputStream(new FileInputStream(f.getPath())))) {
             int c;
             while ((c = reader.readByte()) != -1) {
-                fre.addFreq(c - 'a');
+                t.addFreq(c - 'a');
             }
-            HuffmanEncoder en = new HuffmanEncoder(fre);
+            HuffmanEncoder en = new HuffmanEncoder(t);
             LookupTable l = en.getLookupTable();
             assertThat(l.getCode('a' - 'a'), is("111"));
             assertThat(l.getCode('b' - 'a'), is("1101"));

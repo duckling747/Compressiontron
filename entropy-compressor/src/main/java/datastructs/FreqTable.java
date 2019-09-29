@@ -7,6 +7,11 @@ public abstract class FreqTable {
     private static final int MAXFREQ = 255;
 
     public FreqTable(int[] freqs) {
+        for (int freq : freqs) {
+            if (freq < 0) {
+                throw new IllegalArgumentException("Freqs cannot be negative");
+            }
+        }
         this.freqs = freqs;
     }
 
@@ -40,6 +45,7 @@ public abstract class FreqTable {
      * Increment frequency by one for specified symbol.
      *
      * @param c
+     * @return wasSuccessful
      */
     public boolean addFreq(int c) {
         if (c < 0 || c > freqs.length - 1) {
@@ -59,9 +65,18 @@ public abstract class FreqTable {
         return freqs.length - 1;
     }
 
+    /**
+     * Set specified frequency.
+     * @param c
+     * @param freq
+     * @return wasSuccesful
+     */
     public final boolean setFreq(int c, int freq) {
         if (c < 0 || c > freqs.length - 1) {
             return false;
+        }
+        if (freq < 0) {
+            throw new IllegalArgumentException("Freq cannot be negative");
         }
         freqs[c] = freq;
         maxFreqCheck(c);
