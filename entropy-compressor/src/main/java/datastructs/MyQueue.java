@@ -12,14 +12,14 @@ public interface MyQueue {
     /**
      * Removes and returns the head of this queue.
      *
-     * @return
+     * @return item
      */
     public HuffmanTree pop();
 
     /**
      * Returns the size of this queue.
      *
-     * @return
+     * @return size
      */
     public int size();
 

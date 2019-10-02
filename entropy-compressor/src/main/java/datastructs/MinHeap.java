@@ -53,15 +53,14 @@ public class MinHeap implements MyQueue {
 
         for (int parent = parent(i);
                 i > 0 && heap[parent].compareTo(heap[i]) > 0;
-                i = parent) {
+                i = parent, parent = parent(i)) {
             swap(i, parent);
         }
     }
 
     /**
      * Removes and returns the minimum. Returns the first item in the
-     * heap-array, which is the minimum. Warning: if size of heap is 2n + 1, and
-     * the heap gets very full, the loop might break before last child is fuond.
+     * heap-array, which is the minimum.
      *
      * @return
      */
@@ -86,10 +85,10 @@ public class MinHeap implements MyQueue {
     private void orderHeap(int i) {
         int minimum = i;
         int left = left(i), right = right(i);
-        if (left < size && heap[left].compareTo(heap[i]) < 0) {
+        if (left < size && heap[left].compareTo(heap[minimum]) < 0) {
             minimum = left;
         }
-        if (right < size && heap[right].compareTo(heap[i]) < 0) {
+        if (right < size && heap[right].compareTo(heap[minimum]) < 0) {
             minimum = right;
         }
         if (minimum != i) {
