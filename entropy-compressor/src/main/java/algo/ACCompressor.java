@@ -32,6 +32,7 @@ public class ACCompressor implements Compressor {
         this.freqs = freqs;
     }
     
+    @Override
     public void readFrequencies() {
         freqs = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
         try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {

@@ -76,7 +76,7 @@ public abstract class FreqTable {
             return false;
         }
         if (freq < 0) {
-            throw new IllegalArgumentException("Freq cannot be negative");
+            throw new IllegalArgumentException("Freq cannot be negative: " + freq);
         }
         freqs[c] = freq;
         maxFreqCheck(c);

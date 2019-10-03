@@ -9,5 +9,7 @@ public interface Compressor {
     public void writeEncodedText();
 
     public FreqTable getFrequencyTable();
+    
+    public void readFrequencies();
 
 }

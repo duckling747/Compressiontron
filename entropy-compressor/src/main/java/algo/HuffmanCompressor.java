@@ -1,6 +1,7 @@
 package algo;
 
 import datastructs.FreqTable;
+import datastructs.FreqTableSimple;
 import io.BitsReader;
 import io.BitsWriter;
 import java.io.DataInputStream;
@@ -27,6 +28,18 @@ public class HuffmanCompressor implements Compressor {
         this.filenameOutCompressed = fileOutCompression;
         this.filenameOutFreqs = fileOutFrequencies;
         this.freqs = freqs;
+    }
+
+    @Override
+    public void readFrequencies() {
+        freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
+        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {
+            int readByte;
+            while ((readByte = in.readByte()) != -1) {
+                freqs.addFreq(readByte);
+            }
+        } catch (IOException e) {
+        }
     }
 
     @Override
