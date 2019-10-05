@@ -8,11 +8,12 @@ import datastructs.MyQueue;
 
 public final class General {
 
-    public static final int CODEVALUEBITS = 16;
-    public static final long TOPVALUE = (1L << CODEVALUEBITS) - 1;
-    public static final long FIRSTQUARTER = (TOPVALUE / 4 + 1);
-    public static final long HALF = (2 * FIRSTQUARTER);
-    public static final long THIRDQUARTER = (3 * FIRSTQUARTER);
+    public static final int CODEVALUEBITS = 32;
+    public static final long TOPVALUE = (1L << CODEVALUEBITS);
+    public static final long HALF = TOPVALUE >>> 1;
+    public static final long FIRSTQUARTER = HALF >>> 1;
+    public static final long THIRDQUARTER = FIRSTQUARTER * 3;
+    public static final long MASK = TOPVALUE - 1;
     /**
      * Global maximum amount of symbols supported. Most datastructs are inteded
      * to work with characters as ints, so this effectively translates to the
@@ -41,5 +42,4 @@ public final class General {
         }
         return q.pop();
     }
-
 }

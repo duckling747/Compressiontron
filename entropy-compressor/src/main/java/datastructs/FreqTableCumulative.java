@@ -33,8 +33,8 @@ public class FreqTableCumulative extends FreqTable {
      * @return Cumulative frequency
      */
     public int getCumFreqLow(int c) {
-        if (c < 0 || c > cum.length - 1) {
-            return -1;
+        if (c < 0 || c > super.getSymbolLimit()) {
+            throw new IllegalArgumentException("Out of symbol range: " + c);
         }
         return cum[c];
     }
@@ -47,8 +47,8 @@ public class FreqTableCumulative extends FreqTable {
      * @return
      */
     public int getCumFreqHigh(int c) {
-        if (c < 0 || c > cum.length - 1) {
-            return -1;
+        if (c < 0 || c > super.getSymbolLimit()) {
+            throw new IllegalArgumentException("Out of symbol range: " + c);
         }
         return cum[c + 1];
     }

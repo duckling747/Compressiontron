@@ -10,16 +10,20 @@ public class ACDecoder implements Decoder {
     private long low, high;
     private long value;
 
-    private boolean flag = false;
+    private boolean flag;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
-        for (int i = 1; i <= General.CODEVALUEBITS; i++) {
-            value = 2 * value + inputBit(in);
+        for (int i = 0; i < General.CODEVALUEBITS; i++) {
+            value = ((value << 1) | inputBit(in));
         }
         freqs = f;
+        if (f.getTotalSumFreq() == 0) {
+            throw new IllegalStateException("Cumulative frequencies not calculated");
+        }
         low = 0;
-        high = General.TOPVALUE;
+        high = General.MASK;
+        flag = false;
     }
 
     /**
@@ -34,39 +38,36 @@ public class ACDecoder implements Decoder {
         if (flag) {
             return -1;
         }
-        long range = high - low + 1;
-        long cum = (((value - low) + 1) * freqs.getTotalSumFreq() - 1) / range;
-        int symbol = freqs.findCumFreq(cum);
-        if (symbol == -1) {
-            throw new AssertionError("Leq cumulative freq not found! Cum: " + cum);
-        }
-        long total = freqs.getTotalSumFreq();
-        long symbolLow = freqs.getCumFreqLow(symbol);
-        long symbolHigh = freqs.getCumFreqHigh(symbol);
-        high = low + symbolHigh * range / total - 1;
-        low = low + symbolLow * range / total;
 
+        long total = freqs.getTotalSumFreq();
+        long range = high - low + 1;
+        long cum = ((value - low + 1) * total - 1) / range;
+        int symbol = freqs.findCumFreq(cum);
+        high = low + (range * freqs.getCumFreqHigh(symbol)) / freqs.getTotalSumFreq() - 1;
+        low = low + (range * freqs.getCumFreqLow(symbol)) / freqs.getTotalSumFreq();
+        
         while (true) {
             if (high < General.HALF) {
-                // do nothing
+                // nothing, bit is zero
             } else if (low >= General.HALF) {
                 value -= General.HALF;
                 low -= General.HALF;
                 high -= General.HALF;
-            } else if (low >= General.FIRSTQUARTER && high < General.THIRDQUARTER) {
+            } else if (low >= General.FIRSTQUARTER
+                    && high < General.THIRDQUARTER) {
                 value -= General.FIRSTQUARTER;
                 low -= General.FIRSTQUARTER;
                 high -= General.FIRSTQUARTER;
             } else {
                 break;
             }
-            low = 2 * low;
-            high = 2 * high + 1;
-            int input = inputBit(in);
-            if (input == -1) {
+            int bit = inputBit(in);
+            if (bit == -1) {
                 flag = true;
             }
-            value = 2 * value + input;
+            low <<= 1;
+            high = (high << 1) | 1;
+            value = (value << 1) | bit;
         }
         return symbol;
     }

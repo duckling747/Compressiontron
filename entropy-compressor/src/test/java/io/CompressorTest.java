@@ -12,6 +12,8 @@ import datastructs.FreqTableCumulative;
 import datastructs.FreqTableSimple;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -30,7 +32,7 @@ public class CompressorTest {
     public TemporaryFolder temp = new TemporaryFolder();
 
     @Test
-    public void ACcompressorStoreFile() throws IOException {
+    public void ACcompressorStoreFile() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
@@ -43,7 +45,7 @@ public class CompressorTest {
     }
 
     @Test
-    public void HuffcompressorStoreFile() throws IOException {
+    public void HuffcompressorStoreFile() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
@@ -60,6 +62,27 @@ public class CompressorTest {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
+        FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
+        for (int i = 0; i <= ft.getSymbolLimit(); i++) {
+            ft.setFreq(i, i);
+        }
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath(), ft);
+        com.writeFrequencies();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+
+        for (int i = 0; i <= ft.getSymbolLimit(); i++) {
+            assertThat(com.getFrequencyTable().getFreq(i), is(decom.getFrequencyTable().getFreq(i)));
+        }
+    }
+
+    @Test
+    public void ACRetrievesCorrectFreqs2() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/Lorem_ipsum.txt").getFile());
         File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
         FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
         for (int i = 0; i <= ft.getSymbolLimit(); i++) {
@@ -98,12 +121,32 @@ public class CompressorTest {
     }
 
     @Test
-    public void ACCompressesCorrectOneLetter() {
+    public void ACCResultantFilesSame() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/a.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
 
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
+        com.readFrequencies();
+        com.writeFrequencies();
+        com.writeEncodedText();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+        decom.readEncodedText();
+
+        String a, b;
+        try {
+            a = Files.readString(Paths.get(fLetterA.getPath()));
+            b = Files.readString(Paths.get(fDecompression.getPath()));
+            assertThat(b, is(a));
+        } catch (IOException e) {
+        }
     }
 
     @Test
-    public void ACDecompressesCorrectOneLetter() {
+    public void HuffmanResultantFilesSame() {
 
     }
 }

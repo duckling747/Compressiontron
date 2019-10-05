@@ -74,7 +74,7 @@ public class FrequencyTableTest {
         assertThat(t.getCumFreqLow(3), is(equalTo(4)));
         assertThat(t.getCumFreqLow(4), is(equalTo(6)));
         assertThat(t.getCumFreqLow(5), is(equalTo(9)));
-        assertThat(t.getCumFreqLow(6), is(equalTo(9)));
+        assertThat(t.getCumFreqHigh(5), is(equalTo(9)));
     }
 
     @Test

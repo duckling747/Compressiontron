@@ -67,6 +67,7 @@ public class ACCompressor implements Compressor {
             while ((readByte = in.readByte()) != -1) {
                 encoder.encodeSymbol(readByte, out);
             }
+            encoder.done(out);
         } catch (IOException e) {
         }
         
