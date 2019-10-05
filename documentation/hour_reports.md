@@ -18,4 +18,4 @@ Date     | time | synopsis |
 2019/09/29 | 11h | More writing and rewriting, minimal implementation of a minimum heap. Doesn't pass all tests. Write weekly reports and docs. |
 2019/10/03 | 2h | Read code, found typo in min heap |
 2019/10/04 | 2h | Experimented with different ways to calculate the range in arithmetic coding. Output still not quite right. |
-2019/10/05 | asdf | asdf |
+2019/10/05 | 6h | Got AC coding to work, and Huffman followed immediately after that. JUnit tests say that decompressed and original file are equal, but text editor gives garble still |
