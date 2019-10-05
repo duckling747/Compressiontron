@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         TextUISimple ui = new TextUISimple();
-        ui.work(args);
+        ui.parseInput(args);
     }
 
 }

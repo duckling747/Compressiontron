@@ -1,7 +1,6 @@
 package algo;
 
 import datastructs.FreqTable;
-import io.BitsReader;
 
 public interface Decompressor {
 

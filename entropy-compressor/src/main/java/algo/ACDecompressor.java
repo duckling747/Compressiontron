@@ -3,13 +3,13 @@ package algo;
 import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
 import io.BitsReader;
-import io.BitsWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import main.Main;
+import java.io.OutputStream;
 
 public class ACDecompressor implements Decompressor {
 
@@ -48,12 +48,12 @@ public class ACDecompressor implements Decompressor {
 
     @Override
     public void readEncodedText() {
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(fnInCompression)));
-                BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(fnOut)))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(fnInCompression)));
+                OutputStream out = new BufferedOutputStream(new FileOutputStream(fnOut))) {
             ACDecoder decoder = new ACDecoder(freqs, in);
             int symbol;
             while ((symbol = decoder.decodeSymbol(in)) != -1) {
-                out.writeByte(symbol);
+                out.write(symbol);
             }
         } catch (IOException e) {
         }

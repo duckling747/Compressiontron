@@ -1,15 +1,15 @@
 package io;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public final class BitsWriter implements AutoCloseable {
 
     private int buffer;
     private int bitsReady;
-    private DataOutputStream os;
+    private OutputStream os;
 
-    public BitsWriter(DataOutputStream os) {
+    public BitsWriter(OutputStream os) {
         this.buffer = 0;
         this.bitsReady = 0;
         this.os = os;
@@ -41,9 +41,7 @@ public final class BitsWriter implements AutoCloseable {
      * @throws IOException
      */
     public void writeByte(int value) throws IOException {
-        for (int j = 7; j >= 0; j--) {
-            writeBit((value >>> j) & 1);
-        }
+        os.write(value);
     }
 
     /**

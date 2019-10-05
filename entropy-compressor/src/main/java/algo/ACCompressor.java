@@ -4,12 +4,14 @@ import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
 import io.BitsReader;
 import io.BitsWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import main.Main;
+import java.io.InputStream;
 
 public class ACCompressor implements Compressor {
     
@@ -60,11 +62,11 @@ public class ACCompressor implements Compressor {
     @Override
     public void writeEncodedText() {
         freqs.calcCumFreq();
-        try (BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(filenameOutCompressed)));
-                BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {
+        try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutCompressed)));
+                InputStream in = new BufferedInputStream(new FileInputStream(filenameIn))) {
             ACEncoder encoder = new ACEncoder(freqs);
             int readByte;
-            while ((readByte = in.readByte()) != -1) {
+            while ((readByte = in.read()) != -1) {
                 encoder.encodeSymbol(readByte, out);
             }
             encoder.done(out);

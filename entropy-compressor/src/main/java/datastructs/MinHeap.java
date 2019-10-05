@@ -62,7 +62,7 @@ public class MinHeap implements MyQueue {
      * Removes and returns the minimum. Returns the first item in the
      * heap-array, which is the minimum.
      *
-     * @return
+     * @return minimum
      */
     @Override
     public HuffmanTree pop() {

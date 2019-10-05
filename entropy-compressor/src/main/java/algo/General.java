@@ -16,7 +16,7 @@ public final class General {
     /**
      * Global maximum amount of symbols supported. Most datastructs are inteded
      * to work with characters as ints, so this effectively translates to the
-     * character range 0-SYMBOLLIMIT (inclusive).
+     * character range 0-{@code SYMBOLLIMIT} (inclusive).
      */
     public static final int SYMBOLLIMIT = 255;
 

@@ -6,7 +6,7 @@ public class LookupTable {
 
     /**
      * Construct a Lookup table for the Huffman codes. The table's main function
-     * is to traverse the Huffman tree for the codes.
+     * is to traverse the Huffman tree for its codes.
      *
      * @param tree
      * @param size
