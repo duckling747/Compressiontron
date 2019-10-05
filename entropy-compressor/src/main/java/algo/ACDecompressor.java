@@ -5,7 +5,6 @@ import datastructs.FreqTableCumulative;
 import io.BitsReader;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class ACDecompressor implements Decompressor {
 
     @Override
     public void readFrequencies() {
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(fnInFrequencies)))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(fnInFrequencies)))) {
             freqs = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
                 freqs.setFreq(i, in.readByte());

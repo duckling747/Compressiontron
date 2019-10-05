@@ -4,8 +4,8 @@ import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import io.BitsReader;
 import io.BitsWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class HuffmanCompressor implements Compressor {
     @Override
     public void readFrequencies() {
         freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameIn)))) {
             int readByte;
             while ((readByte = in.readByte()) != -1) {
                 freqs.addFreq(readByte);
@@ -47,7 +47,7 @@ public class HuffmanCompressor implements Compressor {
         if (freqs == null) {
             throw new AssertionError("Frequencies not initialized ");
         }
-        try (BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(filenameOutFreqs)))) {
+        try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutFreqs)))) {
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
                 out.writeByte(i);
             }
@@ -60,8 +60,8 @@ public class HuffmanCompressor implements Compressor {
         if (freqs == null) {
             throw new AssertionError("Frequencies not initialized ");
         }
-        try (BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(filenameOutCompressed)));
-                BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {
+        try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutCompressed)));
+                BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameIn)))) {
             HuffmanEncoder encoder = new HuffmanEncoder(freqs);
             int symbol;
             while ((symbol = in.readByte()) != -1) {

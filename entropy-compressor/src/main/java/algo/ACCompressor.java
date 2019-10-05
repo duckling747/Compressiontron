@@ -6,8 +6,6 @@ import io.BitsReader;
 import io.BitsWriter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,7 +35,7 @@ public class ACCompressor implements Compressor {
     @Override
     public void readFrequencies() {
         freqs = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameIn)))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameIn)))) {
             int readByte;
             while ((readByte = in.readByte()) != -1) {
                 freqs.addFreq(readByte);
@@ -51,7 +49,7 @@ public class ACCompressor implements Compressor {
         if (freqs == null) {
             throw new AssertionError("Frequencies not initialized ");
         }
-        try (BitsWriter out = new BitsWriter(new DataOutputStream(new FileOutputStream(filenameOutFreqs)))) {
+        try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutFreqs)))) {
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
                 out.writeByte(i);
             }

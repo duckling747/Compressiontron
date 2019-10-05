@@ -4,8 +4,8 @@ import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import io.BitsReader;
 import io.BitsWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class HuffmanDecompressor implements Decompressor {
 
     @Override
     public void readFrequencies() {
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameInFrequencies)))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameInFrequencies)))) {
             freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
                 freqs.setFreq(i, in.readByte());
@@ -46,8 +46,8 @@ public class HuffmanDecompressor implements Decompressor {
 
     @Override
     public void readEncodedText() {
-        try (BitsReader in = new BitsReader(new DataInputStream(new FileInputStream(filenameInCompression)));
-                BitsWriter out = new BitsWriter((new DataOutputStream(new FileOutputStream(filenameOut))))) {
+        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameInCompression)));
+                BitsWriter out = new BitsWriter((new BufferedOutputStream(new FileOutputStream(filenameOut))))) {
             HuffmanDecoder decoder = new HuffmanDecoder(freqs);
             int symbol;
             while ((symbol = decoder.decodeSymbol(in)) != -1) {
