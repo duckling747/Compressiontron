@@ -14,7 +14,7 @@ public class ACEncoder implements Encoder {
     public ACEncoder(FreqTableCumulative f) {
         freqs = f;
         low = 0;
-        high = General.MASK;
+        high = General.TOPVALUE;
         bitsToFollow = 0;
     }
 
@@ -36,8 +36,8 @@ public class ACEncoder implements Encoder {
                 bitPlusFollow(0, out);
             } else if (low >= General.HALF) {
                 bitPlusFollow(1, out);
-                //low -= General.HALF;
-                //high -= General.HALF;
+                low -= General.HALF;
+                high -= General.HALF;
             } else if (low >= General.FIRSTQUARTER
                     && high < General.THIRDQUARTER) {
                 bitsToFollow++;
@@ -48,8 +48,8 @@ public class ACEncoder implements Encoder {
             }
             low <<= 1;
             high = (high << 1) | 1;
-            high &= General.MASK;
-            low &= General.MASK;
+            //high &= General.TOPVALUE;
+            //low &= General.TOPVALUE;
         }
     }
 

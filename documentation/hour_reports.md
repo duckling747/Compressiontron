@@ -16,3 +16,6 @@ Date     | time | synopsis |
 2019/09/27 | 8h | Hours of staring at the code, wondering why it doesn't work. Marginal changes here and there, more tests. |
 2019/09/28 | 12h | Spent most of the day staring at the code, reading and rewriting everything several times, trying to find what's wrong with it. No luck. |
 2019/09/29 | 11h | More writing and rewriting, minimal implementation of a minimum heap. Doesn't pass all tests. Write weekly reports and docs. |
+2019/10/03 | 2h | Read code, found typo in min heap |
+2019/10/04 | 2h | Experimented with different ways to calculate the range in arithmetic coding. Output still not quite right. |
+2019/10/05 | asdf | asdf |

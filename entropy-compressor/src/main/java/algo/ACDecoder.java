@@ -15,14 +15,14 @@ public class ACDecoder implements Decoder {
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
         for (int i = 0; i < General.CODEVALUEBITS; i++) {
-            value = ((value << 1) | inputBit(in));
+            value = ((value * 2) + inputBit(in));
         }
         freqs = f;
         if (f.getTotalSumFreq() == 0) {
             throw new IllegalStateException("Cumulative frequencies not calculated");
         }
         low = 0;
-        high = General.MASK;
+        high = General.TOPVALUE;
         flag = false;
     }
 
