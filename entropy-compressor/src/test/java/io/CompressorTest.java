@@ -121,10 +121,110 @@ public class CompressorTest {
     }
 
     @Test
-    public void ACCResultantFilesSame() {
+    public void ACCResultantFilesSame1() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
+
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
+        com.readFrequencies();
+        com.writeFrequencies();
+        com.writeEncodedText();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+        decom.readEncodedText();
+
+        String a, b;
+        try {
+            a = Files.readString(Paths.get(fLetterA.getPath()));
+            b = Files.readString(Paths.get(fDecompression.getPath()));
+            assertThat(b, is(a));
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void ACCResultantFilesSame2() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/b.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
+
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
+        com.readFrequencies();
+        com.writeFrequencies();
+        com.writeEncodedText();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+        decom.readEncodedText();
+
+        String a, b;
+        try {
+            a = Files.readString(Paths.get(fLetterA.getPath()));
+            b = Files.readString(Paths.get(fDecompression.getPath()));
+            assertThat(b, is(a));
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void ACCResultantFilesSame3() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/lorem_short.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
+
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
+        com.readFrequencies();
+        com.writeFrequencies();
+        com.writeEncodedText();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+        decom.readEncodedText();
+
+        String a, b;
+        try {
+            a = Files.readString(Paths.get(fLetterA.getPath()));
+            b = Files.readString(Paths.get(fDecompression.getPath()));
+            assertThat(b, is(a));
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void ACCResultantFilesSame4() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/Lorem_ipsum.txt").getFile());
+        File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
+
+        Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
+        com.readFrequencies();
+        com.writeFrequencies();
+        com.writeEncodedText();
+
+        Decompressor decom = new ACDecompressor(fCompression.getPath(), fFreqs.getPath(), fDecompression.getPath());
+        decom.readFrequencies();
+        decom.readEncodedText();
+
+        String a, b;
+        try {
+            a = Files.readString(Paths.get(fLetterA.getPath()));
+            b = Files.readString(Paths.get(fDecompression.getPath()));
+            assertThat(b, is(a));
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void ACCResultantFilesSame5() {
+        File fCompression = new File(temp.getRoot(), "testCompression");
+        File fFreqs = new File(temp.getRoot(), "testFreqs");
+        File fLetterA = new File(getClass().getResource("/satunnaisteksti.txt").getFile());
         File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
 
         Compressor com = new ACCompressor(fLetterA.getPath(), fCompression.getPath(), fFreqs.getPath());
