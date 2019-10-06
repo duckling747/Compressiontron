@@ -14,6 +14,7 @@ Program to compress text files using two different [entropy-based compression](h
 * [Week 2](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_2.md)
 * [Week 3](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_3.md)
 * [Week 4](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_4.md)
+* [Week 5](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_5.md)
 
 [Hour reporting](https://github.com/duckling747/Compressiontron/blob/master/documentation/hour_reports.md)
 
