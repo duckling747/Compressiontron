@@ -17,7 +17,9 @@ public class LookupTable {
     }
 
     /**
-     * Get codes from the tree and initialize the table using recursion.
+     * Get codes from the tree and initialize the table using recursion. Each
+     * node's left child equates to an appended '0' in the code, and right child
+     * to a '1', respectively, as formed beginning from the root of the tree.
      */
     private void getCodes(HuffmanTree current, StringBuilder b) {
         if (current.isLeaf()) {

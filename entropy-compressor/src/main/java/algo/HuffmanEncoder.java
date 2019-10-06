@@ -25,7 +25,7 @@ public class HuffmanEncoder implements Encoder {
     }
 
     /**
-     * Encode a given symbol and write it to stream one bit at a time.
+     * Encode a given symbol and write it to a stream one bit at a time.
      *
      * @param symbol
      * @param out

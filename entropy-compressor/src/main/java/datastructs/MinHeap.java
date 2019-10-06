@@ -39,7 +39,8 @@ public class MinHeap implements MyQueue {
     }
 
     /**
-     * Add an item to the heap.
+     * Add an item to the heap. Maintains heap order on every insert by
+     * iteratively swapping items.
      *
      * @param tree
      */

@@ -2,7 +2,6 @@ package algo;
 
 import datastructs.FreqTable;
 import datastructs.FreqTableCumulative;
-import io.BitsReader;
 import io.BitsWriter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

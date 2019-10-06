@@ -26,8 +26,8 @@ public class FreqTableCumulative extends FreqTable {
     }
 
     /**
-     * Returns the cumulative frequency for all less than given character
-     * (represented as integer). Returns -1 instead if not found.
+     * Returns the cumulative frequency for all less than given character.
+     * Returns -1 instead if not found.
      *
      * @param c
      * @return Cumulative frequency
@@ -44,7 +44,7 @@ public class FreqTableCumulative extends FreqTable {
      * given character. Returns -1 instead if not found.
      *
      * @param c
-     * @return
+     * @return Cumulative frequency
      */
     public int getCumFreqHigh(int c) {
         if (c < 0 || c > super.getSymbolLimit()) {
@@ -54,7 +54,8 @@ public class FreqTableCumulative extends FreqTable {
     }
 
     /**
-     * Implements a binary search for the index of the highest cumulative
+     * Find the symbols such that its index is less than or equal to the given
+     * value. Implements a binary search for the index of the highest cumulative
      * frequency such that it is less than or equal to the inputted symbol.
      *
      * @param value
