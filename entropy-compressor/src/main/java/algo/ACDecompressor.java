@@ -42,7 +42,6 @@ public class ACDecompressor implements Decompressor {
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
                 freqs.setFreq(i, in.read());
             }
-            freqs.setFreq(freqs.getSymbolLimit(), 1);
         } catch (IOException e) {
         }
         if (freqs == null) {

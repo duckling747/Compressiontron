@@ -66,7 +66,7 @@ public class CompressorTest {
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
         File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
-        FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 2]);
+        FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
         for (int i = 0; i < ft.getSymbolLimit(); i++) {
             ft.setFreq(i, i);
         }
@@ -88,7 +88,7 @@ public class CompressorTest {
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/Lorem_ipsum.txt").getFile());
         File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
-        FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 2]);
+        FreqTableCumulative ft = new FreqTableCumulative(new int[General.SYMBOLLIMIT + 1]);
         for (int i = 0; i < ft.getSymbolLimit(); i++) {
             ft.setFreq(i, i);
         }
@@ -110,7 +110,7 @@ public class CompressorTest {
         File fFreqs = new File(temp.getRoot(), "testFreqs");
         File fLetterA = new File(getClass().getResource("/a.txt").getFile());
         File fDecompression = new File(temp.getRoot(), "testDecompression.txt");
-        FreqTable ft = new FreqTableSimple(new int[General.SYMBOLLIMIT + 2]);
+        FreqTable ft = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
         for (int i = 0; i < ft.getSymbolLimit(); i++) {
             ft.setFreq(i, i);
         }
@@ -126,7 +126,7 @@ public class CompressorTest {
             assertThat(com.getFrequencyTable().getFreq(i), is(decom.getFrequencyTable().getFreq(i)));
         }
     }
-/*
+
     @Test
     public void ACCResultantFilesSame1() {
         File fCompression = new File(temp.getRoot(), "testCompression");
@@ -392,5 +392,5 @@ public class CompressorTest {
         }
         assertThat(b, is(a));
     }
-*/
+
 }
