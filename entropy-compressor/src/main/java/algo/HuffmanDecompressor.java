@@ -3,12 +3,14 @@ package algo;
 import datastructs.FreqTable;
 import datastructs.FreqTableSimple;
 import io.BitsReader;
-import io.BitsWriter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class HuffmanDecompressor implements Decompressor {
 
@@ -28,14 +30,17 @@ public class HuffmanDecompressor implements Decompressor {
         this.filenameInFrequencies = fnameInFrequencies;
         this.filenameOut = fnameOut;
         this.freqs = freqs;
+        if (freqs.getFreq(freqs.getSymbolLimit()) != 1) {
+            throw new IllegalStateException("EOF frequency must be 1");
+        }
     }
 
     @Override
     public void readFrequencies() {
-        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameInFrequencies)))) {
+        try (InputStream in = new BufferedInputStream(new FileInputStream(filenameInFrequencies))) {
             freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
-                freqs.setFreq(i, in.readByte());
+                freqs.setFreq(i, in.read());
             }
         } catch (IOException e) {
         }
@@ -47,11 +52,14 @@ public class HuffmanDecompressor implements Decompressor {
     @Override
     public void readEncodedText() {
         try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameInCompression)));
-                BitsWriter out = new BitsWriter((new BufferedOutputStream(new FileOutputStream(filenameOut))))) {
+                OutputStream out = new BufferedOutputStream(new FileOutputStream(filenameOut))) {
             HuffmanDecoder decoder = new HuffmanDecoder(freqs);
             int symbol;
-            while ((symbol = decoder.decodeSymbol(in)) != -1) {
-                out.writeByte(symbol);
+            while ((symbol = decoder.decodeSymbol(in)) != freqs.getSymbolLimit()) { // table's symbol limit = EOF
+                if (symbol == -1) {
+                    throw new EOFException();
+                }
+                out.write(symbol);
             }
         } catch (IOException e) {
         }

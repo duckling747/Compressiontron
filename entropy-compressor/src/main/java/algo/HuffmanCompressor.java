@@ -9,6 +9,8 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class HuffmanCompressor implements Compressor {
 
@@ -28,16 +30,20 @@ public class HuffmanCompressor implements Compressor {
         this.filenameOutCompressed = fileOutCompression;
         this.filenameOutFreqs = fileOutFrequencies;
         this.freqs = freqs;
+        if (freqs.getFreq(freqs.getSymbolLimit()) != 1) {
+            throw new IllegalStateException("EOF frequency must be 1");
+        }
     }
 
     @Override
     public void readFrequencies() {
         freqs = new FreqTableSimple(new int[General.SYMBOLLIMIT + 1]);
-        try (BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameIn)))) {
+        try (InputStream in = new BufferedInputStream(new FileInputStream(filenameIn))) {
             int readByte;
-            while ((readByte = in.readByte()) != -1) {
+            while ((readByte = in.read()) != -1) {
                 freqs.addFreq(readByte);
             }
+            freqs.setFreq(freqs.getSymbolLimit(), 1); // SET EOF
         } catch (IOException e) {
         }
     }
@@ -47,9 +53,9 @@ public class HuffmanCompressor implements Compressor {
         if (freqs == null) {
             throw new AssertionError("Frequencies not initialized ");
         }
-        try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutFreqs)))) {
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(filenameOutFreqs))) {
             for (int i = 0; i <= freqs.getSymbolLimit(); i++) {
-                out.writeByte(i);
+                out.write(freqs.getFreq(i));
             }
         } catch (IOException e) {
         }
@@ -61,12 +67,13 @@ public class HuffmanCompressor implements Compressor {
             throw new AssertionError("Frequencies not initialized ");
         }
         try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutCompressed)));
-                BitsReader in = new BitsReader(new BufferedInputStream(new FileInputStream(filenameIn)))) {
+                InputStream in = new BufferedInputStream(new FileInputStream(filenameIn))) {
             HuffmanEncoder encoder = new HuffmanEncoder(freqs);
             int symbol;
-            while ((symbol = in.readByte()) != -1) {
+            while ((symbol = in.read()) != -1) {
                 encoder.encodeSymbol(symbol, out);
             }
+            encoder.encodeSymbol(freqs.getSymbolLimit(), out); // EOF
         } catch (IOException e) {
 
         }
