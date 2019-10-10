@@ -2,6 +2,7 @@ package algo;
 
 import io.BitsReader;
 import datastructs.FreqTableCumulative;
+import java.io.EOFException;
 import java.io.IOException;
 
 public class ACDecoder implements Decoder {
@@ -9,8 +10,6 @@ public class ACDecoder implements Decoder {
     private FreqTableCumulative freqs;
     private long low, high;
     private long value;
-
-    private boolean flag;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
@@ -23,7 +22,6 @@ public class ACDecoder implements Decoder {
         }
         low = 0;
         high = General.TOPVALUE;
-        flag = false;
     }
 
     /**
@@ -35,17 +33,12 @@ public class ACDecoder implements Decoder {
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
-        /*if (flag) {
-            return -1;
-        }*/
-
         long total = freqs.getTotalSumFreq();
         long range = high - low + 1;
         long cum = ((value - low + 1) * total - 1) / range;
         int symbol = freqs.findCumFreq(cum);
         high = low + (range * freqs.getCumFreqHigh(symbol)) / total - 1;
         low = low + (range * freqs.getCumFreqLow(symbol)) / total;
-        
         while (true) {
             if (high < General.HALF) {
                 // nothing, bit is zero
@@ -61,10 +54,6 @@ public class ACDecoder implements Decoder {
             } else {
                 break;
             }
-            /*int bit = inputBit(in);
-            if (bit == -1) {
-                flag = true;
-            }*/
             low *= 2;
             high = 2 * high + 1;
             value = 2 * value + inputBit(in);
@@ -73,6 +62,10 @@ public class ACDecoder implements Decoder {
     }
 
     private int inputBit(BitsReader in) throws IOException {
-        return in.readBit();
+        int bit = in.readBit();
+        if (bit == -1) {
+            throw new EOFException();
+        }
+        return bit;
     }
 }
