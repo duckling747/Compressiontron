@@ -15,7 +15,7 @@ public class ACDecoder implements Decoder {
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
         for (int i = 0; i < General.CODEVALUEBITS; i++) {
-            value = ((value * 2) + inputBit(in));
+            value = 2 * value + inputBit(in);
         }
         freqs = f;
         if (f.getTotalSumFreq() == 0) {
@@ -35,16 +35,16 @@ public class ACDecoder implements Decoder {
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
-        if (flag) {
+        /*if (flag) {
             return -1;
-        }
+        }*/
 
         long total = freqs.getTotalSumFreq();
         long range = high - low + 1;
         long cum = ((value - low + 1) * total - 1) / range;
         int symbol = freqs.findCumFreq(cum);
-        high = low + (range * freqs.getCumFreqHigh(symbol)) / freqs.getTotalSumFreq() - 1;
-        low = low + (range * freqs.getCumFreqLow(symbol)) / freqs.getTotalSumFreq();
+        high = low + (range * freqs.getCumFreqHigh(symbol)) / total - 1;
+        low = low + (range * freqs.getCumFreqLow(symbol)) / total;
         
         while (true) {
             if (high < General.HALF) {
@@ -61,13 +61,13 @@ public class ACDecoder implements Decoder {
             } else {
                 break;
             }
-            int bit = inputBit(in);
+            /*int bit = inputBit(in);
             if (bit == -1) {
                 flag = true;
-            }
-            low <<= 1;
-            high = (high << 1) | 1;
-            value = (value << 1) | bit;
+            }*/
+            low *= 2;
+            high = 2 * high + 1;
+            value = 2 * value + inputBit(in);
         }
         return symbol;
     }

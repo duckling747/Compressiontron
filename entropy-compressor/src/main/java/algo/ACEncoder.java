@@ -36,8 +36,8 @@ public class ACEncoder implements Encoder {
                 bitPlusFollow(0, out);
             } else if (low >= General.HALF) {
                 bitPlusFollow(1, out);
-                //low -= General.HALF;
-                //high -= General.HALF;
+                low -= General.HALF;
+                high -= General.HALF;
             } else if (low >= General.FIRSTQUARTER
                     && high < General.THIRDQUARTER) {
                 bitsToFollow++;
@@ -46,10 +46,8 @@ public class ACEncoder implements Encoder {
             } else {
                 break;
             }
-            low <<= 1;
-            high = (high << 1) | 1;
-            high &= General.TOPVALUE;
-            low &= General.TOPVALUE;
+            low *= 2;
+            high = 2 * high + 1;
         }
     }
 

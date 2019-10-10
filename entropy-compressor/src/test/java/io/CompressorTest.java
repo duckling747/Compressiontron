@@ -126,7 +126,7 @@ public class CompressorTest {
         }
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void ACCResultantFilesSame1() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -149,10 +149,12 @@ public class CompressorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assertTrue(a != null);
+        assertTrue(b != null);
         assertThat(b, is(a));
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void ACCResultantFilesSame2() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -179,7 +181,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void ACCResultantFilesSame3() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -206,7 +208,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void ACCResultantFilesSame4() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -233,7 +235,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void ACCResultantFilesSame5() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -260,7 +262,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void HuffmanResultantFilesSame1() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -283,11 +285,13 @@ public class CompressorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assertTrue(a != null);
+        assertTrue(b != null);
         assertThat(b, is(a));
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void HuffmanResultantFilesSame2() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -314,7 +318,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void HuffmanResultantFilesSame3() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -339,7 +343,7 @@ public class CompressorTest {
         assertThat(b, is(a));
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void HuffmanResultantFilesSame4() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
@@ -366,7 +370,7 @@ public class CompressorTest {
 
     }
 
-    @Test(timeout=500)
+    @Test(timeout = 500)
     public void HuffmanResultantFilesSame5() {
         File fCompression = new File(temp.getRoot(), "testCompression");
         File fFreqs = new File(temp.getRoot(), "testFreqs");
