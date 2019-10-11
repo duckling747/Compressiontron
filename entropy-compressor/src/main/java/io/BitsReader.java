@@ -20,7 +20,7 @@ public final class BitsReader implements AutoCloseable {
      * the stream and returns the next bit from the byte on call. Returns -1 if
      * end of stream is reached.
      *
-     * @return
+     * @return bit
      * @throws IOException
      */
     public int readBit() throws IOException {

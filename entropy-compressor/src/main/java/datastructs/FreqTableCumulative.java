@@ -6,6 +6,9 @@ public class FreqTableCumulative extends FreqTable {
 
     public FreqTableCumulative(int[] freqs) {
         super(freqs);
+        for (int i = 0; i < freqs.length; i++) {
+            freqs[i]++; // "Initialize" all frequencies to 1
+        }
         cum = new int[freqs.length + 1];
     }
 

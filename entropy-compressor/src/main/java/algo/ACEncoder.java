@@ -27,27 +27,28 @@ public class ACEncoder implements Encoder {
      */
     @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
-        long range = high - low + 1;
         long total = freqs.getTotalSumFreq();
-        high = low + (range * freqs.getCumFreqHigh(symbol)) / total - 1;
-        low = low + (range * freqs.getCumFreqLow(symbol)) / total;
+        long range = high - low + 1;
+        high = low + (range * Long.divideUnsigned(freqs.getCumFreqHigh(symbol), total)) - 1;
+        low = low + (range * Long.divideUnsigned(freqs.getCumFreqLow(symbol), total));
         while (true) {
-            if (high < General.HALF) {
+            if (Long.compareUnsigned(high, General.HALF) < 0) {
                 bitPlusFollow(0, out);
-            } else if (low >= General.HALF) {
+            } else if (Long.compareUnsigned(low, General.HALF) >= 0) {
                 bitPlusFollow(1, out);
-                low -= General.HALF;
-                high -= General.HALF;
-            } else if (low >= General.FIRSTQUARTER
-                    && high < General.THIRDQUARTER) {
+            } else if (Long.compareUnsigned(low, General.FIRSTQUARTER) >= 0
+                    && Long.compareUnsigned(high, General.THIRDQUARTER) < 0) {
                 bitsToFollow++;
                 low -= General.FIRSTQUARTER;
                 high -= General.FIRSTQUARTER;
             } else {
                 break;
             }
-            low *= 2;
-            high = 2 * high + 1;
+            high <<= 1;
+            high++;
+            low <<= 1;
+            high &= General.TOPVALUE;
+            low &= General.TOPVALUE;
         }
     }
 
@@ -59,7 +60,7 @@ public class ACEncoder implements Encoder {
      */
     public void done(BitsWriter out) throws IOException {
         bitsToFollow++;
-        if (low < General.FIRSTQUARTER) {
+        if (Long.compareUnsigned(low, General.FIRSTQUARTER) < 0) {
             bitPlusFollow(0, out);
         } else {
             bitPlusFollow(1, out);
@@ -75,9 +76,10 @@ public class ACEncoder implements Encoder {
      */
     private void bitPlusFollow(int bit, BitsWriter out) throws IOException {
         out.writeBit(bit);
-        while (bitsToFollow-- > 0) {
+        for (int i = 0; i < bitsToFollow; i++) {
             out.writeBit(bit ^ 1);
         }
+        bitsToFollow = 0;
     }
 
 }

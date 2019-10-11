@@ -101,7 +101,7 @@ public class MinHeap implements MyQueue {
     /**
      * Returns the size of this min heap.
      *
-     * @return
+     * @return size
      */
     @Override
     public int size() {
