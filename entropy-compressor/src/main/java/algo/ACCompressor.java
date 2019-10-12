@@ -44,6 +44,7 @@ public class ACCompressor implements Compressor {
                 freqs.addFreq(readByte);
             }
             freqs.setFreq(freqs.getSymbolLimit(), 1); // SET EOF
+            freqs.calcCumFreq();
         } catch (IOException e) {
         }
     }
@@ -63,7 +64,6 @@ public class ACCompressor implements Compressor {
 
     @Override
     public void writeEncodedText() {
-        freqs.calcCumFreq();
         try (BitsWriter out = new BitsWriter(new BufferedOutputStream(new FileOutputStream(filenameOutCompressed)));
                 InputStream in = new BufferedInputStream(new FileInputStream(filenameIn))) {
             ACEncoder encoder = new ACEncoder(freqs);

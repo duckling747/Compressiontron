@@ -9,7 +9,7 @@ import datastructs.MyQueue;
 public final class General {
 
     public static final int CODEVALUEBITS = 16;
-    public static final long TOPVALUE = 0xFFFF - 1;
+    public static final long TOPVALUE = (1L << CODEVALUEBITS) - 1;
     public static final long FIRSTQUARTER = TOPVALUE / 4 + 1;
     public static final long HALF = FIRSTQUARTER * 2;
     public static final long THIRDQUARTER = FIRSTQUARTER * 3;
