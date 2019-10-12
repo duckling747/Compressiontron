@@ -21,4 +21,5 @@ Date     | time | synopsis |
 2019/10/05 | 10h | Thought I made AC and Huffman work, but no. Experimented with different ways of writing the binaries to disk in an attempt to catch errors. |
 2019/10/06 | 5h | Found errors and corrected them. Now the Huffman stuff works for sure. AC still needs work. Somewhere there is an infinite loop that needs fixing. |
 2019/10/10 | 4h | Looked for errors and found one potential bug relating to decoder, but it should not have anything to do with longer than CODEVALUEBITS length files. So still don't know why output for decoder is empty string. |
-2019/10/12 | 6h | Wrote and rewrote everything several times, wrote tests for arithmetic coding with Strings. Intense late night testing. Still no work! |
+2019/10/11 | 6h | Wrote and rewrote everything several times, wrote tests for arithmetic coding with Strings. Intense late night testing. Still no work! |
+2019/10/12 | 3h | Looked at the code for the arithmetic encoding. Removed useless AC tests for Strings. |
