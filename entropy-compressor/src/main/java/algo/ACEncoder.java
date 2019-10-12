@@ -7,7 +7,7 @@ import java.io.IOException;
 public class ACEncoder implements Encoder {
 
     private FreqTableCumulative freqs;
-    private long low, high;
+    private int low, high;
 
     private long bitsToFollow;
 
@@ -27,17 +27,17 @@ public class ACEncoder implements Encoder {
      */
     @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
-        long total = freqs.getTotalSumFreq();
-        long range = high - low + 1;
-        high = low + (range * Long.divideUnsigned(freqs.getCumFreqHigh(symbol), total)) - 1;
-        low = low + (range * Long.divideUnsigned(freqs.getCumFreqLow(symbol), total));
+        int total = freqs.getTotalSumFreq();
+        int range = high - low + 1;
+        high = low + (range * Integer.divideUnsigned(freqs.getCumFreqHigh(symbol), total)) - 1;
+        low = low + (range * Integer.divideUnsigned(freqs.getCumFreqLow(symbol), total));
         while (true) {
-            if (Long.compareUnsigned(high, General.HALF) < 0) {
+            if (high < General.HALF) {
                 bitPlusFollow(0, out);
-            } else if (Long.compareUnsigned(low, General.HALF) >= 0) {
+            } else if (low >= General.FIRSTQUARTER) {
                 bitPlusFollow(1, out);
-            } else if (Long.compareUnsigned(low, General.FIRSTQUARTER) >= 0
-                    && Long.compareUnsigned(high, General.THIRDQUARTER) < 0) {
+            } else if (low >= General.FIRSTQUARTER
+                    && high < General.THIRDQUARTER) {
                 bitsToFollow++;
                 low -= General.FIRSTQUARTER;
                 high -= General.FIRSTQUARTER;
@@ -60,7 +60,7 @@ public class ACEncoder implements Encoder {
      */
     public void done(BitsWriter out) throws IOException {
         bitsToFollow++;
-        if (Long.compareUnsigned(low, General.FIRSTQUARTER) < 0) {
+        if (low < General.FIRSTQUARTER) {
             bitPlusFollow(0, out);
         } else {
             bitPlusFollow(1, out);
@@ -76,10 +76,9 @@ public class ACEncoder implements Encoder {
      */
     private void bitPlusFollow(int bit, BitsWriter out) throws IOException {
         out.writeBit(bit);
-        for (int i = 0; i < bitsToFollow; i++) {
+        while (bitsToFollow-- > 0) {
             out.writeBit(bit ^ 1);
         }
-        bitsToFollow = 0;
     }
 
 }

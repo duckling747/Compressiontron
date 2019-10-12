@@ -8,8 +8,8 @@ import java.io.IOException;
 public class ACDecoder implements Decoder {
 
     private FreqTableCumulative freqs;
-    private long low, high;
-    private long value;
+    private int low, high;
+    private int value;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
@@ -29,30 +29,30 @@ public class ACDecoder implements Decoder {
      * Decodes a given symbol.
      *
      * @param in
-     * @return
+     * @return symbol
      * @throws IOException
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
-        long range = high - low + 1;
+        int range = high - low + 1;
         int total = freqs.getTotalSumFreq();
-        long cum = Long.divideUnsigned(((value - low + 1)
+        int cum = Integer.divideUnsigned(((value - low + 1)
                 * total - 1), range);
         int symbol = freqs.findCumFreq(cum);
         if (symbol == freqs.getSymbolLimit()) {
             return symbol;
         }
-        high = low + Long.divideUnsigned((range * freqs.getCumFreqHigh(symbol)), total) - 1;
-        low = low + Long.divideUnsigned((range * freqs.getCumFreqLow(symbol)), total);
+        high = low + Integer.divideUnsigned((range * freqs.getCumFreqHigh(symbol)), total) - 1;
+        low = low + Integer.divideUnsigned((range * freqs.getCumFreqLow(symbol)), total);
         while (true) {
-            if (Long.compareUnsigned(high, General.HALF) < 0) {
+            if (high < General.HALF) {
                 // nothing, bit is zero
-            } else if (Long.compareUnsigned(low, General.HALF) >= 0) {
+            } else if (low >= General.HALF) {
                 value -= General.HALF;
                 low -= General.HALF;
                 high -= General.HALF;
-            } else if (Long.compareUnsigned(low, General.FIRSTQUARTER) >= 0 
-                    && Long.compareUnsigned(high, General.THIRDQUARTER) < 0) {
+            } else if (low >= General.FIRSTQUARTER
+                    && high < General.THIRDQUARTER) {
                 value -= General.FIRSTQUARTER;
                 low -= General.FIRSTQUARTER;
                 high -= General.FIRSTQUARTER;
