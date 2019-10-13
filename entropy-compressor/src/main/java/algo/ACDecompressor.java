@@ -47,7 +47,6 @@ public class ACDecompressor implements Decompressor {
         if (freqs == null) {
             throw new AssertionError("Frequency table not initialized ");
         }
-        freqs.calcCumFreq();
     }
 
     @Override
@@ -61,6 +60,7 @@ public class ACDecompressor implements Decompressor {
                     throw new EOFException();
                 }
                 out.write(symbol);
+                freqs.update(symbol);
             }
         } catch (IOException e) {
         }

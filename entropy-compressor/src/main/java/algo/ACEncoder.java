@@ -7,7 +7,7 @@ import java.io.IOException;
 public class ACEncoder implements Encoder {
 
     private FreqTableCumulative freqs;
-    private int low, high;
+    private long low, high;
 
     private long bitsToFollow;
 
@@ -27,10 +27,10 @@ public class ACEncoder implements Encoder {
      */
     @Override
     public void encodeSymbol(int symbol, BitsWriter out) throws IOException {
-        int total = freqs.getTotalSumFreq();
-        int range = high - low + 1;
-        high = low + (range * Integer.divideUnsigned(freqs.getCumFreqHigh(symbol), total)) - 1;
-        low = low + (range * Integer.divideUnsigned(freqs.getCumFreqLow(symbol), total));
+        long total = freqs.getTotalSumFreq();
+        long range = high - low + 1;
+        high = low + (range * (freqs.getCumFreqHigh(symbol) / total)) - 1;
+        low = low + (range * (freqs.getCumFreqLow(symbol) / total));
         while (true) {
             if (high < General.HALF) {
                 bitPlusFollow(0, out);

@@ -4,22 +4,34 @@ public class FreqTableCumulative extends FreqTable {
 
     private int[] cum;
 
+    /**
+     * Create a new cumulative frequency table. Frequencies are taken to be at
+     * least one.
+     *
+     * @param freqs
+     */
     public FreqTableCumulative(int[] freqs) {
         super(freqs);
         for (int i = 0; i < freqs.length; i++) {
+            if (freqs[i] < 0) {
+                throw new AssertionError();
+            }
             freqs[i]++; // "Initialize" all frequencies to 1
         }
         cum = new int[freqs.length + 1];
+        for (int i = 0; i < cum.length; i++) {
+            cum[i] = i;
+        }
     }
 
     /**
-     * Calculates the cumulative frequencies.
+     * Update the model
+     *
+     * @param c
      */
-    public void calcCumFreq() {
-        int sum = 0;
-        for (int i = 0; i < freqs.length; i++) {
-            sum += freqs[i];
-            cum[i + 1] = sum;
+    public void update(int c) {
+        for (int i = c + 1; i < freqs.length; i++) {
+            cum[i]++;
         }
     }
 

@@ -23,3 +23,4 @@ Date     | time | synopsis |
 2019/10/10 | 4h | Looked for errors and found one potential bug relating to decoder, but it should not have anything to do with longer than CODEVALUEBITS length files. So still don't know why output for decoder is empty string. |
 2019/10/11 | 6h | Wrote and rewrote everything several times, wrote tests for arithmetic coding with Strings. Intense late night testing. Still no work! |
 2019/10/12 | 6h | Looked at the code for the arithmetic encoding. Removed useless AC tests for Strings, tested with unsigned arithmetic and with ints instead of longs, as per the code value. Every time AC decoder returns empty String. A real frustrating mystery for me. |
+2019/10/13 | 4h | Wrote something dirty in C (see week report #6). |

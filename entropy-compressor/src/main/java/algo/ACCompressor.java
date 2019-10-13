@@ -44,7 +44,6 @@ public class ACCompressor implements Compressor {
                 freqs.addFreq(readByte);
             }
             freqs.setFreq(freqs.getSymbolLimit(), 1); // SET EOF
-            freqs.calcCumFreq();
         } catch (IOException e) {
         }
     }
@@ -70,6 +69,7 @@ public class ACCompressor implements Compressor {
             int readByte;
             while ((readByte = in.read()) != -1) {
                 encoder.encodeSymbol(readByte, out);
+                freqs.update(readByte);
             }
             encoder.encodeSymbol(freqs.getSymbolLimit(), out); // EOF
             encoder.done(out);

@@ -8,8 +8,8 @@ import java.io.IOException;
 public class ACDecoder implements Decoder {
 
     private FreqTableCumulative freqs;
-    private int low, high;
-    private int value;
+    private long low, high;
+    private long value;
 
     public ACDecoder(FreqTableCumulative f, BitsReader in) throws IOException {
         value = 0;
@@ -34,16 +34,16 @@ public class ACDecoder implements Decoder {
      */
     @Override
     public int decodeSymbol(BitsReader in) throws IOException {
-        int range = high - low + 1;
-        int total = freqs.getTotalSumFreq();
-        int cum = Integer.divideUnsigned(((value - low + 1)
-                * total - 1), range);
+        long range = high - low + 1;
+        long total = freqs.getTotalSumFreq();
+        long cum = (((value - low + 1)
+                * total - 1) / range);
         int symbol = freqs.findCumFreq(cum);
         if (symbol == freqs.getSymbolLimit()) {
             return symbol;
         }
-        high = low + Integer.divideUnsigned((range * freqs.getCumFreqHigh(symbol)), total) - 1;
-        low = low + Integer.divideUnsigned((range * freqs.getCumFreqLow(symbol)), total);
+        high = low + ((range * freqs.getCumFreqHigh(symbol)) / total) - 1;
+        low = low + ((range * freqs.getCumFreqLow(symbol)) / total);
         while (true) {
             if (high < General.HALF) {
                 // nothing, bit is zero
