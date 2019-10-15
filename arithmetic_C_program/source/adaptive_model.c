@@ -2,7 +2,8 @@
 
 int freq[No_of_symbols + 1];
 
-start_model()
+/*  */
+void start_model()
 {
     int i;
     for (i = 0; i < No_of_chars; i++) {
@@ -16,9 +17,9 @@ start_model()
     freq[0] = 0;
 }
 
-update_model(symbol)
-    int symbol;
-{   int i;
+void update_model(int symbol)
+{   
+    int i;
     if (cum_freq[0] == Max_frequency) {
         int cum;
         cum = 0;

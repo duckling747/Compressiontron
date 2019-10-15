@@ -11,3 +11,6 @@ unsigned char index_to_char[No_of_symbols + 1];
 
 int cum_freq[No_of_symbols + 1];
 
+void start_model();
+
+void update_model(int symbol);

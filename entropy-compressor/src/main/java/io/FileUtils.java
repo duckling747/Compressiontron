@@ -24,6 +24,6 @@ public final class FileUtils {
         }
         long spaceOrig = orig.length();
         long spaceCompr = compres.length();
-        return String.format("%.1f%%", 1.0 * spaceCompr / spaceOrig);
+        return String.format("%.1f%%", 100.0 * spaceCompr / spaceOrig);
     }
 }
