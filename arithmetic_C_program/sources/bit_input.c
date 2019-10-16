@@ -1,5 +1,5 @@
 /**
- * Maintain a buffer of bits and write to standard out each time eight are ready.
+ * Maintain a buffer of bits and read from standard in each time eight are ready.
  */
 
 #include "bit_input.h"
