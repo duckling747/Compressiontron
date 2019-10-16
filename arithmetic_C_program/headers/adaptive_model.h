@@ -1,3 +1,5 @@
+#ifndef ADAPTIVE_MODEL_H
+#define ADAPTIVE_MODEL_H
 
 #define No_of_chars 256
 #define EOF_symbol (No_of_chars + 1)
@@ -11,6 +13,10 @@ unsigned char index_to_char[No_of_symbols + 1];
 
 int cum_freq[No_of_symbols + 1];
 
-void start_model();
+int freq[No_of_symbols + 1];
+
+void start_model(void);
 
 void update_model(int symbol);
+
+#endif

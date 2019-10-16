@@ -1,21 +1,22 @@
-#include "arithmetic_coding.h"
+#include "arithmetic_encode.h"
+#include "bit_output.h"
 
-static void bit_plus_follow();
 
 static code_value low, high;
 static long bits_to_follow;
 
-start_encoding()
+static void bit_plus_follow(int bit);
+
+void start_encoding(void)
 {
     low = 0;
     high = Top_value;
     bits_to_follow = 0;
 }
 
-encode_symbol(symbol, cum_freq)
-    int symbol;
-    int cum_freq[];
-{   long range;
+void encode_symbol(int symbol, int cum_freq[])
+{   
+    long range;
     range = (long) (high - low) + 1;
     high = low + (range * cum_freq[symbol - 1]) / cum_freq[0] - 1;
     low = low + (range * cum_freq[symbol]) / cum_freq[0];
@@ -38,7 +39,7 @@ encode_symbol(symbol, cum_freq)
     }
 }
 
-done_encoding()
+void done_encoding(void)
 {
     bits_to_follow++;
     if (low < First_qtr) {
@@ -48,9 +49,9 @@ done_encoding()
     }
 }
 
-static void bit_plus_follow(bit)
-    int bit;
-{   output_bit(bit);
+static void bit_plus_follow(int bit)
+{   
+    output_bit(bit);
     while(bits_to_follow > 0) {
         output_bit(!bit);
         bits_to_follow--;

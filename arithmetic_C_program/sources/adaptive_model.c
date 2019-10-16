@@ -1,9 +1,8 @@
-#include "model.h"
+#include "adaptive_model.h"
 
-int freq[No_of_symbols + 1];
 
 /*  */
-void start_model()
+void start_model(void)
 {
     int i;
     for (i = 0; i < No_of_chars; i++) {

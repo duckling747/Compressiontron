@@ -1,9 +1,11 @@
-#include "arithmetic_coding.h"
+#include "arithmetic_decode.h"
+#include "bit_input.h"
+
 
 static code_value value;
 static code_value low, high;
 
-start_decoding()
+void start_decoding(void)
 {
     int i;
     value = 0;
@@ -14,9 +16,9 @@ start_decoding()
     high = Top_value;
 }
 
-int decode_symbol(cum_freq)
-    int cum_freq[];
-{   long range;
+int decode_symbol(int cum_freq[])
+{   
+    long range;
     int cum;
     int symbol;
     range = (long)(high - low) + 1;

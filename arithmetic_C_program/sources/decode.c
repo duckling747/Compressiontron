@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "model.h"
+#include "decode.h"
+#include "bit_input.h"
 
-main()
+
+int main(void)
 {
     start_model();
     start_inputing_bits();

@@ -1,17 +1,18 @@
-#include <stdio.h>
+#include "bit_output.h"
+
 
 static int buffer;
 static int bits_to_go;
 
-start_outputing_bits()
+void start_outputing_bits(void)
 {
     buffer = 0;
     bits_to_go = 8;
 }
 
-output_bit(bit)
-    int bit;
-{   buffer >>= 1;
+void output_bit(int bit)
+{   
+    buffer >>= 1;
     if (bit) {
         buffer |= 0x80;
     }
@@ -22,7 +23,7 @@ output_bit(bit)
     }
 }
 
-done_outputing_bits()
+void done_outputing_bits(void)
 {
     putc(buffer >> bits_to_go, stdout);
 }

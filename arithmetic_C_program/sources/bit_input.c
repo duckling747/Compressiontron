@@ -1,17 +1,17 @@
-#include <stdio.h>
-#include "arithmetic_coding.h"
+#include "bit_input.h"
+
 
 static int buffer;
 static int bits_to_go;
 static int garbage_bits;
 
-start_inputing_bits()
+void start_inputing_bits(void)
 {
     bits_to_go = 0;
     garbage_bits = 0;
 }
 
-int input_bit()
+int input_bit(void)
 {
     int t;
     if (bits_to_go == 0) {

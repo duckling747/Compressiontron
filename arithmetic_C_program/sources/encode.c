@@ -1,8 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "model.h"
+#include "encode.h"
+#include "arithmetic_encode.h"
+#include "bit_output.h"
 
-main()
+
+int main(void)
 {
     start_model();
     start_outputing_bits();
