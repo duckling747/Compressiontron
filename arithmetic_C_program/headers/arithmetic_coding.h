@@ -1,3 +1,9 @@
+/**
+ * A simple set of generally used constants that set up the code range.
+ * The precision for the binary arithmetic will be >= Code_value_bits + how many
+ * bits will be required for the frequency of each symbol.
+ */
+
 #ifndef ARITHMETIC_CODING_H
 #define ARITHMETIC_CODING_H
 

@@ -1,3 +1,7 @@
+/**
+ * Maintain a buffer of bits and write to disk each time eight are ready.
+ */
+
 #include "bit_input.h"
 
 

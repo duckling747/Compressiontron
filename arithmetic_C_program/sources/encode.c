@@ -1,3 +1,9 @@
+/**
+ * Set things up for encoding and while EOF symbol is not encountered, keep
+ * encoding symbols. The encode_symbol function calls the necessary standard
+ * I/O functions.
+ */
+
 #include "encode.h"
 #include "arithmetic_encode.h"
 #include "bit_output.h"

@@ -1,3 +1,9 @@
+/**
+ * Bit output writes to the standard output (stdout) and keeps a buffer of bits, until
+ * eight of them are ready at a time; I/O needs one byte, which is eight bits.
+ */
+
+
 #ifndef BIT_OUTPUT_H
 #define BIT_OUTPUT_H
 

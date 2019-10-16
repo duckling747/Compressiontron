@@ -1,3 +1,9 @@
+/**
+ * Arithmetic decode file does the decoding of the symbols based on the frequencies in
+ * the model.
+ */
+
+
 #ifndef ARITHMETIC_DECODE_H
 #define ARITHMETIC_DECODE_H
 

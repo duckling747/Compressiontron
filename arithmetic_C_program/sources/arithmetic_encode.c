@@ -7,6 +7,9 @@ static long bits_to_follow;
 
 static void bit_plus_follow(int bit);
 
+/**
+ * Initialize high and low, and the amount of underflow bits, bits_to_follow
+ */
 void start_encoding(void)
 {
     low = 0;
@@ -14,6 +17,11 @@ void start_encoding(void)
     bits_to_follow = 0;
 }
 
+/**
+ * The main encoding loop. On each call, calculate the new range, update
+ * high and low, and keep shifting high order bits and receiving new low 
+ * order ones until a symbol is encoded.
+ */
 void encode_symbol(int symbol, int cum_freq[])
 {   
     long range;
@@ -39,6 +47,10 @@ void encode_symbol(int symbol, int cum_freq[])
     }
 }
 
+/**
+ * Arithmetic coding must send two extra bits at the end to be able to 
+ * differentiate the last symbol.
+ */
 void done_encoding(void)
 {
     bits_to_follow++;
@@ -49,6 +61,10 @@ void done_encoding(void)
     }
 }
 
+/**
+ * Underflow prevention measure; write a bit and its opposite bits as many 
+ * as there are underflow bits waiting.
+ */
 static void bit_plus_follow(int bit)
 {   
     output_bit(bit);

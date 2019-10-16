@@ -24,3 +24,5 @@ Date     | time | synopsis |
 2019/10/11 | 6h | Wrote and rewrote everything several times, wrote tests for arithmetic coding with Strings. Intense late night testing. Still no work! |
 2019/10/12 | 6h | Looked at the code for the arithmetic encoding. Removed useless AC tests for Strings, tested with unsigned arithmetic and with ints instead of longs, as per the code value. Every time AC decoder returns empty String. A real frustrating mystery for me. |
 2019/10/13 | 4h | Wrote something dirty in C (see week report #6). |
+2019/10/15 | 4h | Clean up C code, create a makefile |
+2019/10/16 | 3h | Write comments for C code |

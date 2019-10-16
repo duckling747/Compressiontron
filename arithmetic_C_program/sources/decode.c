@@ -1,3 +1,10 @@
+/**
+ * Set things up and while EOF symbol is not encountered, keep
+ * outputing the decoded characters and updating the model on each
+ * symbol.
+ */
+
+
 #include "decode.h"
 #include "bit_input.h"
 
