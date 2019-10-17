@@ -4,7 +4,7 @@ The Compressiontron encodes text files' data in order to compress them to make t
 
 Two algorithms are implemented, the Huffman coding and the arithmetic coding (AC) algorithms, both can be used for lossless data compression. The programming languages used are Java and C. Both are meant to be used from the command line, see [here](https://github.com/duckling747/Compressiontron/blob/master/documentation/user_guide.md).
 
-## Time complexities, space complexities and design
+## Time complexities and design
 
 The Java program is divided package-wise into the ui classes, io classes, classes to do with the algorithms, and classes that contain utility data structures for those algorithms. In the C program, headers are found in their own directory, containing all function declarations, constants and so on, and the sources in their own directory. The design is such that the headers are almost analogous to Java interfaces. If you wish to look at some Javadoc for the Huffman algorithm, simply run 
 ```

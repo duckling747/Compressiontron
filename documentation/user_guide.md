@@ -4,7 +4,7 @@ Here are simple instructions to run the two programs in the compression algorith
 
 ## How to run the Java program
 
-First navigate into the program directory, [here](https://github.com/duckling747/Compressiontron/tree/master/entropy-compressor). Then generate the jar-file, by executing
+First navigate into the program directory, [here](https://github.com/duckling747/Compressiontron/tree/master/entropy-compressor). Then generate the jar file, by executing
 ```
 mvn package
 ```
@@ -26,7 +26,7 @@ This will decompress the given data file "outputted_bits.huff" into a text file 
 
 ## How to run the C program
 
-First navigate into the program directory [here](https://github.com/duckling747/Compressiontron/tree/master/arithmetic_C_program). Then generate the executables, by executing
+First navigate into the program directory [here](https://github.com/duckling747/Compressiontron/tree/master/arithmetic_C_program). Then generate the executables, by running
 ```
 make
 ```
