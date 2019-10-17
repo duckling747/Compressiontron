@@ -29,9 +29,9 @@ If the output of the diff is an empty string, then the files match.
 
 Benchmarking was done using two Project Gutenberg books, Pride and Prejudice (by Jane Austen) and War and Peace (by Leo Tolstoy), and with some random strings. Here are the encoding results for the books with compression ratios compared: 
 
-![Figure 1](https://github.com/duckling747/Compressiontron/tree/master/documentation/plots/comparison_plot_1.png)
+![Fig1](https://github.com/duckling747/Compressiontron/blob/master/documentation/plots/comparison_plot_1.png)
 
 
 And finally, the following graph compares the ratios for the two algorithms with random strings between length 1-2500. As we can see, Huffman performs better with randomized input:
 
-![Figure 2](https://github.com/duckling747/Compressiontron/tree/master/documentation/plots/comparison_plot_2.png)
+![Fig2](https://github.com/duckling747/Compressiontron/blob/master/documentation/plots/comparison_plot_2.png)
