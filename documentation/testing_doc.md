@@ -27,7 +27,7 @@ If the output of the diff is an empty string, then the files match.
 
 ## Benchmarking
 
-Benchmarking was done using two Project Gutenberg books, Pride and Prejudice (by Jane Austen) and War and Peace (by Leo Tolstoy), and with some pseudorandom strings. Here are the encoding results for the books with compression ratios compared: 
+Benchmarking was done using two [Project Gutenberg](https://www.gutenberg.org/) books, Pride and Prejudice (by Jane Austen) and War and Peace (by Leo Tolstoy), and with some pseudorandom strings. Here are the encoding results for the books with compression ratios compared: 
 
 ![Fig1](https://github.com/duckling747/Compressiontron/blob/master/documentation/plots/comparison_plot_1.png)
 
