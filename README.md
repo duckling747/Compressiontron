@@ -9,6 +9,8 @@ Two programs to compress text files using two different [entropy-based compressi
 
 [Testing document](https://github.com/duckling747/Compressiontron/blob/master/documentation/testing_doc.md)
 
+[User guide](https://github.com/duckling747/Compressiontron/blob/master/documentation/user_guide.md)
+
 ### Weekly reporting
 * [Week 1](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_1.md)
 * [Week 2](https://github.com/duckling747/Compressiontron/blob/master/documentation/week_report_2.md)
