@@ -26,3 +26,4 @@ Date     | time | synopsis |
 2019/10/13 | 4h | Wrote something dirty in C (see week report #6). |
 2019/10/15 | 4h | Clean up C code, create a makefile |
 2019/10/16 | 3h | Write comments for C code |
+2019/10/17 | 3h | Make relevant changes to docs, write user manual |

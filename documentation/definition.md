@@ -1,6 +1,6 @@
 # Project definition
 
-The aim of this project is to create two simple, as-easy-to-understand-as-possible compression/decompression tools, using the Huffman coding and arithmetic coding algorithms, respectively. The algorithms are lossless, and so there should be no loss of information during the encoding/decoding process. The other algorithm is implemented in C and the other in Java. Automated unit testing is done using JUnit for the Java program, and it uses Maven for automated build assistance. 
+The aim of this project is to create two simple, as-easy-to-understand-as-possible compression/decompression tools, using the Huffman coding and arithmetic coding algorithms, respectively. The algorithms are lossless, and so there should be no loss of information during the encoding/decoding process. The other algorithm is implemented in C and the other in Java. Automated unit testing is done using JUnit for the Java program, and it uses Maven for automated build assistance. The C program uses Make for automated building.
 
 ## Algorithms and data structures
 
