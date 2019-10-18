@@ -1,7 +1,8 @@
 /**
  * Set things up for encoding and while EOF symbol is not encountered, keep
  * encoding symbols. The encode_symbol function calls the necessary standard
- * I/O functions.
+ * I/O functions. Notice: the program's designated EOF symbol is in the constant 
+ * EOF_symbol, and the EOF here is a C-language specific end-of-file constant.
  */
 
 #include "encode.h"
