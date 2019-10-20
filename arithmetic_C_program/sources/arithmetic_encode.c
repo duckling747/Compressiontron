@@ -1,6 +1,6 @@
+
 #include "arithmetic_encode.h"
 #include "bit_output.h"
-
 
 static code_value low, high;
 static long bits_to_follow;
@@ -24,8 +24,7 @@ void start_encoding(void)
  */
 void encode_symbol(int symbol, int cum_freq[])
 {   
-    long range;
-    range = (long) (high - low) + 1;
+    long range = (long) (high - low) + 1;
     high = low + (range * cum_freq[symbol - 1]) / cum_freq[0] - 1;
     low = low + (range * cum_freq[symbol]) / cum_freq[0];
     for (;;) {
@@ -42,8 +41,8 @@ void encode_symbol(int symbol, int cum_freq[])
         } else {
             break;
         }
-        low = 2 * low;
-        high = 2 * high + 1;
+        low <<= 1;
+        high = (high << 1) | 1;
     }
 }
 

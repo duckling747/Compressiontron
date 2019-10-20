@@ -1,11 +1,10 @@
+
 /**
  * Same as in bit_input, write to the standard output by maintaining a 
  * buffer of eight bits, writing each time eight bits are ready.
  */
 
-
 #include "bit_output.h"
-
 
 static int buffer;
 static int bits_to_go;

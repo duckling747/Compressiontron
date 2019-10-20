@@ -1,3 +1,4 @@
+
 /**
  * Set things up for encoding and while EOF symbol is not encountered, keep
  * encoding symbols. The encode_symbol function calls the necessary standard
@@ -9,20 +10,17 @@
 #include "arithmetic_encode.h"
 #include "bit_output.h"
 
-
 int main(void)
 {
     start_model();
     start_outputing_bits();
     start_encoding();
     for(;;) {
-        int ch;
-        int symbol;
-        ch = getc(stdin);
+        int ch = getc(stdin);
         if (ch == EOF) {
             break;
         }
-        symbol = char_to_index[ch];
+        int symbol = char_to_index[ch];
         encode_symbol(symbol, cum_freq);
         update_model(symbol);
     }

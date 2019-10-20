@@ -1,5 +1,5 @@
-#include "adaptive_model.h"
 
+#include "adaptive_model.h"
 
 /**
  * Sets up the model so that it has two arrays, char_to_index and index_to_char,

@@ -1,9 +1,9 @@
+
 /**
  * Maintain a buffer of bits and read from standard in each time eight are ready.
  */
 
 #include "bit_input.h"
-
 
 static int buffer;
 static int bits_to_go;
@@ -17,7 +17,6 @@ void start_inputing_bits(void)
 
 int input_bit(void)
 {
-    int t;
     if (bits_to_go == 0) {
         buffer = getc(stdin);
         if (buffer == EOF) {
@@ -29,7 +28,7 @@ int input_bit(void)
         }
         bits_to_go = 8;
     }
-    t = buffer & 1;
+    int t = buffer & 1;
     buffer >>= 1;
     bits_to_go--;
     return t;

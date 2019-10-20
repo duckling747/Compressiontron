@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include "adaptive_model.h"
 
-
 int main(void);
 
 #endif

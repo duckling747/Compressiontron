@@ -1,6 +1,6 @@
+
 #include "arithmetic_decode.h"
 #include "bit_input.h"
-
 
 static code_value value;
 static code_value low, high;
@@ -10,10 +10,9 @@ static code_value low, high;
  */
 void start_decoding(void)
 {
-    int i;
     value = 0;
-    for (i = 1; i <= Code_value_bits; i++) {
-        value = 2 * value + input_bit();
+    for (int i = 1; i <= Code_value_bits; i++) {
+        value = (value << 1) | input_bit();
     }
     low = 0;
     high = Top_value;
@@ -25,11 +24,9 @@ void start_decoding(void)
  */
 int decode_symbol(int cum_freq[])
 {   
-    long range;
-    int cum;
     int symbol;
-    range = (long)(high - low) + 1;
-    cum = (((long)(value - low) + 1) * cum_freq[0] - 1) / range;
+    long range = (long)(high - low) + 1;
+    int cum = (((long)(value - low) + 1) * cum_freq[0] - 1) / range;
     /**
      * Find the symbol such that it has the greatest cumulative frequency less than
      * or equal to that of cum.
@@ -52,9 +49,9 @@ int decode_symbol(int cum_freq[])
         } else {
             break;
         }
-        low = 2 * low;
-        high = 2 * high + 1;
-        value = 2 * value + input_bit();
+        low <<= 1;
+        high = (high << 1) | 1;
+        value = (value << 1) | input_bit();
     }
     return symbol;
 }   
